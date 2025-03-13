@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spotify Clone</title>
+        <style>
+            body { font-family: Arial, sans-serif; background-color: #121212; color: white; text-align: center; }
+            header { background-color: #1DB954; padding: 10px; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+            .search-bar { padding: 8px; width: 200px; border-radius: 5px; border: none; }
+            .controls { margin: 20px; }
+            button {
+                font-size: 16px; padding: 10px; border: none; cursor: pointer;
+                border-radius: 5px; margin: 5px; transition: 0.3s;
+            }
+            #playPause { background-color: green; color: white; }
+            #download { background-color: blue; color: white; }
+            #devices { background-color: orange; color: white; }
+            #settings { background-color: purple; color: white; }
+            #volumeUp { background-color: red; color: white; }
+            #volumeDown { background-color: cyan; color: black; }
+            .playlist { margin-top: 20px; }
+            .playlist div {
+                background-color: #282828; padding: 10px; margin: 5px;
+                border-radius: 5px; cursor: pointer; transition: 0.3s;
+            }
+            .playlist div:hover { background-color: #3A3A3A; }
+            .volume-container {
+                width: 50%; margin: 20px auto; text-align: center;
+            }
+            .volume-bar {
+                width: 100%; height: 20px; background-color: #333;
+                border-radius: 10px; overflow: hidden;
+            }
+            .volume-fill {
+                width: 50%; height: 100%; background-color: #1DB954; transition: width 0.3s;
+            }
+            .downloaded-songs {
+                margin-top: 20px; display: none;
+                background-color: #282828; padding: 10px; border-radius: 5px;
+            }
+            .song-display {
+                margin-top: 10px; font-size: 18px; font-weight: bold; color: yellow;
+            }
+        </style>
+        <script>
+            let volumeLevel = 50;
+            let playlistSongs = {
+                "Workout Mix": ["Eye of the Tiger - Survivor", "Lose Yourself - Eminem", "Stronger - Kanye West"],
+                "Chill & Relax": ["Better Now - Post Malone", "Sunflower - Post Malone", "Lovely - Billie Eilish"],
+                "Top 50 Global": ["Despacito - Luis Fonsi", "Shape of You - Ed Sheeran", "Blinding Lights - The Weeknd"],
+                "Hip-Hop Beats": ["Sicko Mode - Travis Scott", "Goosebumps - Travis Scott", "God's Plan - Drake"],
+                "Sleep Music": ["Weightless - Marconi Union", "Blue Lagoon - Enya", "Moonlight Sonata - Beethoven"]
+            };
+
+            function togglePlayPause() {
+                let btn = document.getElementById('playPause');
+                if (btn.innerHTML === 'Play') {
+                    btn.innerHTML = 'Pause';
+                    btn.style.backgroundColor = 'red';
+                } else {
+                    btn.innerHTML = 'Play';
+                    btn.style.backgroundColor = 'green';
+                }
+            }
+
+            function adjustVolume(change) {
+                volumeLevel = Math.max(0, Math.min(100, volumeLevel + change));
+                document.getElementById('volumeFill').style.width = volumeLevel + '%';
+            }
+
+            function showDownloadedSongs() {
+                let songList = document.getElementById('downloadedSongs');
+                songList.style.display = 'block';
+            }
+
+            function displayRandomSong(playlist) {
+                let songList = playlistSongs[playlist];
+                let randomSong = songList[Math.floor(Math.random() * songList.length)];
+                document.getElementById('songDisplay').innerHTML = "🎵 Now Playing: " + randomSong;
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <span>Spotify Clone</span>
+            <input type="text" class="search-bar" placeholder="Search...">
+        </header>
+        
+        <div class="controls">
+            <button id="playPause" onclick="togglePlayPause()">Play</button>
+            <button id="download" onclick="showDownloadedSongs()">Download</button>
+            <button id="devices">Devices</button>
+            <button id="settings">Settings</button>
+            <button id="volumeUp" onclick="adjustVolume(10)">Volume Up</button>
+            <button id="volumeDown" onclick="adjustVolume(-10)">Volume Down</button>
+        </div>
+
+        <div class="volume-container">
+            <h3>Volume</h3>
+            <div class="volume-bar">
+                <div class="volume-fill" id="volumeFill"></div>
+            </div>
+        </div>
+
+        <div class="playlist">
+            <h2>Your Playlists</h2>
+            <div onclick="displayRandomSong('Workout Mix')">🔥 Workout Mix</div>
+            <div onclick="displayRandomSong('Chill & Relax')">🎶 Chill & Relax</div>
+            <div onclick="displayRandomSong('Top 50 Global')">🚀 Top 50 Global</div>
+            <div onclick="displayRandomSong('Hip-Hop Beats')">🎵 Hip-Hop Beats</div>
+            <div onclick="displayRandomSong('Sleep Music')">💤 Sleep Music</div>
+        </div>
+
+        <div class="song-display" id="songDisplay">🎧 Click a playlist to play a random song</div>
+
+        <div id="downloadedSongs" class="downloaded-songs">
+            <h3>Downloaded Songs</h3>
+            <p>🎧 "By name " - Gippy Grewal</p>
+            <p>🎵 "Millionare" - Honey singh</p>
+            <p>🎶 "Maharani" - Arpit bala</p>
+            <p>🔥 "One Love" - Shubh X</p>
+        </div>
+    </body>
+    </html>

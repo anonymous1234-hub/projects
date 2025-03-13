@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Clone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: white;
+        }
+
+        header {
+            background-color: #1DB954;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            cursor: pointer;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .playlist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .track {
+            background-color: #282828;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .track:hover {
+            background-color: #3A3A3A;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #1DB954;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Spotify Clone</div>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Search</li>
+                <li>Your Library</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Featured Playlists</h1>
+        <div class="playlist">
+            <div class="track">Playlist 1</div>
+            <div class="track">Playlist 2</div>
+            <div class="track">Playlist 3</div>
+            <div class="track">Playlist 4</div>
+            <div class="track">Playlist 5</div>
+            <div class="track">Playlist 6</div>
+        </div>
+    </main>
+   
+</body>
+</html>

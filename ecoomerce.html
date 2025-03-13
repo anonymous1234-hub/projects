@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venika's Online Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, rgb(34, 193, 195), rgb(253, 187, 45));
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            background: linear-gradient(90deg, rgb(255, 0, 102), rgb(255, 94, 0));
+            color: white;
+            padding: 20px;
+            font-size: 28px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            border-bottom: 5px solid rgb(255, 255, 255);
+            animation: colorShift 5s infinite alternate;
+        }
+
+        @keyframes colorShift {
+            0% { background: rgb(255, 0, 102); }
+            100% { background: rgb(255, 94, 0); }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background: linear-gradient(90deg, rgb(20, 20, 20), rgb(50, 50, 50));
+            padding: 15px 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 12px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: all 0.3s;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: rgb(255, 0, 102);
+            bottom: 0;
+            left: 50%;
+            transition: all 0.3s;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .section {
+            background: linear-gradient(45deg, rgb(50, 50, 150), rgb(255, 94, 0));
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            width: 90%;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 1.5s ease-in;
+            display: none; /* Hide sections by default */
+        }
+
+        .item {
+            background: linear-gradient(45deg, rgb(63, 94, 251), rgb(252, 70, 107));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            width: 220px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        .item:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, rgb(0, 255, 132), rgb(25, 0, 255));
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .welcome-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            animation: colorChange 5s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% { color: rgb(255, 0, 102); }
+            50% { color: rgb(0, 255, 132); }
+            100% { color: rgb(25, 0, 255); }
+        }
+
+        .sub-products {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .sub-product {
+            background: linear-gradient(45deg, rgb(100, 100, 200), rgb(200, 100, 100));
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sub-product h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .sub-product p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .cart {
+            margin-top: 20px;
+            padding: 10px;
+            background : rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .cart h3 {
+            margin: 0;
+            font-size: 20px;
+            color: white;
+        }
+
+        .total-price {
+            font-size: 18px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .checkout-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgb(0, 255, 132);
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .checkout-button:hover {
+            background: rgb(25, 0, 255);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>🛒 Welcome to Venika's Online Store 🛒</header>
+
+    <marquee class="welcome-text">Welcome to Venika's Store - Best Deals & Quality Products! ✨</marquee>
+
+    <nav class="navbar">
+        <a onclick="showSection('home')">🏠 Home</a>
+        <a onclick="showSection('store')">🛒 Store</a>
+        <a onclick="showSection('series')">🎥 Series</a>
+        <a onclick="showSection('games')">🎮 Games</a>
+        <a onclick="showSection('premium')">🌟 Premium</a>
+    </nav>
+
+    <!-- Home Section -->
+    <div id="home" class="section" style="display: block;"> <!-- Show Home by default -->
+        <h2>✨ Welcome to Venika's Online Store ✨</h2>
+        <p>Explore our amazing collection of products, series, and games. Click on the buttons above to get started!</p>
+    </div>
+
+    <!-- Store Section -->
+    <div id="store" class="section">
+        <h2>✨ Browse Our Products ✨</h2>
+        <div class="items">
+            <div class="item" onclick="addToCart('MacBook Pro 16"', 2999)">💻 Laptops</div>
+            <div class="sub-products" id="laptops">
+                <div class="sub-product" onclick="addToCart('MacBook Pro 16"', 2999)">
+                    <h3>MacBook Pro 16"</h3>
+                    <p>Specs: M2 Max, 32GB RAM, 1TB SSD</p>
+                    <p>Price: $2,999</p>
+                </div>
+                <div class="sub-product" onclick="addToCart('Dell XPS 15', 1799)">
+                    <h3>Dell XPS 15</h3>
+                    <p>Specs: Intel i7, 16GB RAM, 512GB SSD</p>
+                    <p>Price: $1,799</p>
+                </div>
+            </div>
+
+            <div class="item" onclick="addToCart('iPhone 15 Pro', 999)">📱 Smartphones</div>
+            <div class="sub-products" id="smartphones">
+                <div class="sub-product" onclick="addToCart('iPhone 15 Pro', 999)">
+                    <h3>iPhone 15 Pro</h3>
+                    <p>Specs: A17 Pro, 6.1" OLED, 256GB</p>
+                    <p>Price: $999</p>
+                </div>
+                <div class="sub-product" onclick="addToCart('Samsung Galaxy S23 Ultra', 1199)">
+                    <h3>Samsung Galaxy S23 Ultra</h3>
+                    <p>Specs: Snapdragon 8 Gen 2, 12GB RAM, 256GB</p>
+                    <p>Price: $1,199</p>
+                </div>
+            </div>
+
+            <div class="item" onclick="addToCart('Sony WH-1000XM5', 399)">🎧 Headphones</div>
+            <div class="sub-products" id="headphones">
+                <div class="sub-product" onclick="addToCart('Sony WH-1000XM5', 399)">
+                    <h3>Sony WH-1000XM5</h3>
+                    <p>Specs: Noise Canceling, 30hr Battery</p>
+                    <p>Price: $399</p>
+                </div>
+                <div class="sub-product" onclick="addToCart('Bose QuietComfort 45', 329)">
+                    <h3>Bose QuietComfort 45</h3>
+                    <p>Specs: Noise Canceling, 24hr Battery</p>
+                    <p>Price: $329</p>
+                </div>
+            </div>
+
+            <div class="item" onclick="addToCart('Master Replica Lightsaber', 299)">⚔️ Lightsabers</div>
+            <div class="sub-products" id="lightsabers">
+                <div class="sub-product" onclick="addToCart('Master Replica Lightsaber', 299)">
+                    <h3>Master Replica Lightsaber</h3>
+                    <p>Specs: Metal Hilt, RGB LED, Sound Effects</p>
+                    <p>Price: $299</p>
+                </div>
+                <div class="sub-product" onclick="addToCart('Custom Lightsaber', 199)">
+                    <h3>Custom Lightsaber</h3>
+                    <p>Specs: Adjustable Length, Duel-Ready</p>
+                    <p>Price: $199</p>
+                </div>
+            </div>
+
+            <div class="item" onclick="addToCart('Handcrafted Katana', 499)">🗡️ Katanas</div>
+            <div class="sub-products" id="katanas">
+                <div class="sub-product" onclick="addToCart('Handcrafted Katana', 499)">
+                    <h3>Handcrafted Katana</h3>
+                    <p>Specs: High Carbon Steel, Full Tang</p>
+                    <p>Price: $499</p>
+                </div>
+                <div class="sub-product" onclick="addToCart('Decorative Katana', 299)">
+                    <h3>Decorative Katana</h3>
+                    <p>Specs: Stainless Steel, Ornate Design</p>
+                    <p>Price: $299</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Series Section -->
+    <div id="series" class="section">
+        <h2>🎥 Popular Series 🎥</h2>
+        <div class="items">
+            <div class="item" onclick="toggleDetails('series1')">📺 Breaking Bad
+                <div id="series1" class="details">
+                    A high school chemistry teacher turned meth producer. A thrilling crime drama! ⭐⭐⭐⭐⭐
+                </div>
+            </div>
+            <div class="item" onclick="toggleDetails('series2')">🦇 The Dark Knight Trilogy
+                <div id="series2" class="details">
+                    The legendary Batman saga by Christopher Nolan. Dark, gripping, and unforgettable! ⭐⭐⭐⭐⭐
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Games Section -->
+    <div id="games" class="section">
+        <h2>🎮 Popular Games 🎮</h2>
+        <div class="items">
+            <div class="item" onclick="toggleDetails('game1')">🕵️ Grand Theft Auto V
+                <div id="game1" class="details">
+                    Open-world action game set in Los Santos. Play as three criminals in a world of crime and chaos. ⭐⭐⭐⭐⭐
+                </div>
+            </div>
+            <div class="item" onclick="toggleDetails('game2')">⚔️ The Witcher 3: Wild Hunt
+                <div id="game2" class="details">
+                    Play as Geralt of Rivia in an epic fantasy RPG with deep storytelling and intense battles. ⭐⭐⭐⭐⭐
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Section -->
+    <div id="premium" class="section">
+        <h2>🌟 Premium Products 🌟</h2>
+        <p>Explore our exclusive range of premium products available only for our valued customers!</p>
+        <div class="items">
+            <div class="item" onclick="addToCart('Premium Gaming Chair', 499)">🪑 Premium Gaming Chair</div>
+            <div class="sub-products" id="premium-chairs">
+                <div class="sub-product" onclick="addToCart('Premium Gaming Chair', 499)">
+                    <h3>Premium Gaming Chair</h3>
+                    <p>Specs: Ergonomic Design, Adjustable Height</p>
+                    <p>Price: $499</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <div class="total-price" id="totalPrice">Total Price: $0</div>
+        <button class="checkout-button" onclick="checkout()">Checkout</button>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(itemName, itemPrice) {
+            cart.push({ name: itemName, price: itemPrice });
+            total += itemPrice;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            cartItemsDiv.innerHTML = '';
+            cart.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.textContent = `${item.name} - $${item.price}`;
+                cartItemsDiv.appendChild(itemDiv);
+            });
+            document.getElementById('totalPrice').textContent = `Total Price: $${total}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+            } else {
+                alert(`Thank you for your purchase! Total: $${total}`);
+                cart = [];
+                total = 0;
+                updateCart();
+            }
+        }
+
+        // Function to toggle sub-products
+        function toggleSubProducts(id) {
+            var element = document.getElementById(id);
+            element.style.display = element.style.display === "block" ? "none" : "block";
+        }
+
+        // Function to show/hide sections
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Function to toggle details
+        function toggleDetails(id) {
+            var element = document.getElementById(id);
+            element.style.display = element.style.display === "block" ? "none" : "block";
+        }
+    </script>
+
+</body>
+</html>

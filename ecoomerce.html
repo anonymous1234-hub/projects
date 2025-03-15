@@ -302,6 +302,48 @@
                 width: 90%;
             }
         }
+
+        /* Login Form Styles */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-form input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid rgb(255, 0, 102);
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .login-form input:focus {
+            border-color: rgb(0, 255, 132);
+            outline: none;
+        }
+
+        .login-form button {
+            padding: 10px 15px;
+            background: rgb(0, 255, 132);
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .login-form button:hover {
+            background: rgb(25, 0, 255);
+            color: white;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -322,6 +364,8 @@
         <a onclick="showSection('games')"> Games</a>
         <a onclick="showSection('premium')"> Premium</a>
         <a onclick="showSection('checkout')"> Checkout</a>
+        <a onclick="showSection('wishlist')"> Wishlist</a>
+        <a onclick="showSection('login')"> Login</a>
     </nav>
 
     <div class="search-bar">
@@ -334,6 +378,11 @@
         <p>Explore our amazing collection of products, series, and games. Click on the buttons above to get started!</p>
         <p>Refer a friend and earn rewards!</p>
         <button onclick="referFriend()">Refer a Friend</button>
+        <div>
+            <h3>Subscribe to our Newsletter</h3>
+            <input type="email" id="newsletterEmail" placeholder="Enter your email">
+            <button onclick="subscribeNewsletter()">Subscribe</button>
+        </div>
     </div>
 
     <div id="store" class="section">
@@ -349,12 +398,28 @@
                     <p>Specs: M2 Max, 32GB RAM, 1TB SSD</p>
                     <p>Price: ₹260746</p>
                     <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('MacBook Pro 16\"'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
                 <div class="sub-product" onclick="addToCart('Dell XPS 15', 26083.35); event.stopPropagation();">
                     <h3>Dell XPS 15</h3>
                     <p>Specs: Intel i7, 16GB RAM, 512GB SSD</p>
                     <p>Price: ₹26083.35</p>
                     <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Dell XPS 15'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('HP Spectre x360', 150000); event.stopPropagation();">
+                    <h3>HP Spectre x360</h3>
+                    <p>Specs: Intel i7, 16GB RAM, 1TB SSD</p>
+                    <p>Price: ₹150000</p>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('HP Spectre x360'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('Lenovo ThinkPad X1', 120000); event.stopPropagation();">
+                    <h3>Lenovo ThinkPad X1</h3>
+                    <p>Specs: Intel i7, 16GB RAM, 512GB SSD</p>
+                    <p>Price: ₹120000</p>
+                    <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Lenovo ThinkPad X1'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
             </div>
 
@@ -368,12 +433,28 @@
                     <p>Specs: A17 Pro, 6.1" OLED, 256GB</p>
                     <p>Price: ₹999</p>
                     <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('iPhone 15 Pro'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
                 <div class="sub-product" onclick="addToCart('Samsung Galaxy S23 Ultra', 1199); event.stopPropagation();">
                     <h3>Samsung Galaxy S23 Ultra</h3>
                     <p>Specs: Snapdragon 8 Gen 2, 12GB RAM, 256GB</p>
                     <p>Price: ₹1,199</p>
                     <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Samsung Galaxy S23 Ultra'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('Google Pixel 7 Pro', 899); event.stopPropagation();">
+                    <h3>Google Pixel 7 Pro</h3>
+                    <p>Specs: Google Tensor G2, 12GB RAM, 128GB</p>
+                    <p>Price: ₹899</p>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Google Pixel 7 Pro'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('OnePlus 11', 749); event.stopPropagation();">
+                    <h3>OnePlus 11</h3>
+                    <p>Specs: Snapdragon 8 Gen 2, 8GB RAM, 128GB</p>
+                    <p>Price: ₹749</p>
+                    <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('OnePlus 11'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
             </div>
 
@@ -387,12 +468,28 @@
                     <p>Specs: Noise Canceling, 30hr Battery</p>
                     <p>Price: ₹399</p>
                     <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Sony WH-1000XM5'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
                 <div class="sub-product" onclick="addToCart('Bose QuietComfort 45', 329); event.stopPropagation();">
                     <h3>Bose QuietComfort 45</h3>
                     <p>Specs: Noise Canceling, 24hr Battery</p>
                     <p>Price: ₹329</p>
                     <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Bose QuietComfort 45'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('Apple AirPods Max', 549); event.stopPropagation();">
+                    <h3>Apple AirPods Max</h3>
+                    <p>Specs: Active Noise Cancellation, 20hr Battery</p>
+                    <p>Price: ₹549</p>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Apple AirPods Max'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('Sennheiser HD 800S', 999); event.stopPropagation();">
+                    <h3>Sennheiser HD 800S</h3>
+                    <p>Specs: Open Back, 56mm Drivers</p>
+                    <p>Price: ₹999</p>
+                    <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Sennheiser HD 800S'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
             </div>
 
@@ -406,12 +503,28 @@
                     <p>Specs: Metal Hilt, RGB LED, Sound Effects</p>
                     <p>Price: ₹299</p>
                     <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Master Replica Lightsaber'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
                 <div class="sub-product" onclick="addToCart('Custom Lightsaber', 199); event.stopPropagation();">
                     <h3>Custom Lightsaber</h3>
                     <p>Specs: Adjustable Length, Duel-Ready</p>
                     <p>Price: ₹199</p>
                     <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Custom Lightsaber'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('Duel Lightsaber', 249); event.stopPropagation();">
+                    <h3>Duel Lightsaber</h3>
+                    <p>Specs: Heavy Duty, Sound Effects</p>
+                    <p>Price: ₹249</p>
+                    <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Duel Lightsaber'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('LED Lightsaber', 149); event.stopPropagation();">
+                    <h3>LED Lightsaber</h3>
+                    <p>Specs: Color Changing, Rechargeable</p>
+                    <p>Price: ₹149</p>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('LED Lightsaber'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
             </div>
 
@@ -425,12 +538,28 @@
                     <p>Specs: High Carbon Steel, Full Tang</p>
                     <p>Price: ₹499</p>
                     <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Handcrafted Katana'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
                 <div class="sub-product" onclick="addToCart('Decorative Katana', 299); event.stopPropagation();">
                     <h3>Decorative Katana</h3>
                     <p>Specs: Stainless Steel, Ornate Design</p>
                     <p>Price: ₹299</p>
                     <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Decorative Katana'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('Samurai Katana', 599); event.stopPropagation();">
+                    <h3>Samurai Katana</h3>
+                    <p>Specs: Authentic Design, Sharp Blade</p>
+                    <p>Price: ₹599</p>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Samurai Katana'); event.stopPropagation();">Add to Wishlist</button>
+                </div>
+                <div class="sub-product" onclick="addToCart('Training Katana', 199); event.stopPropagation();">
+                    <h3>Training Katana</h3>
+                    <p>Specs: Blunt Edge, Safe for Practice</p>
+                    <p>Price: ₹199</p>
+                    <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Training Katana'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
             </div>
         </div>
@@ -450,6 +579,16 @@
                 <span class="close-details" onclick="toggleDetails('series2'); event.stopPropagation();">✖️ Close</span>
                 The legendary Batman saga by Christopher Nolan. Dark, gripping, and unforgettable! ⭐⭐⭐⭐⭐
             </div>
+            <div class="item" onclick="toggleDetails('series3')">🌌 Stranger Things</div>
+            <div id="series3" class="details">
+                <span class="close-details" onclick="toggleDetails('series3'); event.stopPropagation();">✖️ Close</span>
+                A group of kids uncover supernatural mysteries in their small town. ⭐⭐⭐⭐⭐
+            </div>
+            <div class="item" onclick="toggleDetails('series4')">🧙‍♂️ The Witcher</div>
+            <div id="series4" class="details">
+                <span class="close-details" onclick="toggleDetails('series4'); event.stopPropagation();">✖️ Close</span>
+                Follow Geralt of Rivia as he battles monsters and navigates a world of magic. ⭐⭐⭐⭐⭐
+            </div>
         </div>
     </div>
 
@@ -466,6 +605,16 @@
             <div id="game2" class="details">
                 <span class="close-details" onclick="toggleDetails('game2'); event.stopPropagation();">✖️ Close</span>
                 Play as Geralt of Rivia in an epic fantasy RPG with deep storytelling and intense battles. ⭐⭐⭐⭐⭐
+            </div>
+            <div class="item" onclick="toggleDetails('game3')">🚀 Star Wars Jedi: Fallen Order</div>
+            <div id="game3" class="details">
+                <span class="close-details" onclick="toggleDetails('game3'); event.stopPropagation();">✖️ Close</span>
+                A third-person action-adventure game set in the Star Wars universe. ⭐⭐⭐⭐⭐
+            </div>
+            <div class="item" onclick="toggleDetails('game4')">🏎️ Forza Horizon 5</div>
+            <div id="game4" class="details">
+                <span class="close-details" onclick="toggleDetails('game4'); event.stopPropagation();">✖️ Close</span>
+                An open-world racing game set in a vibrant Mexico. ⭐⭐⭐⭐⭐
             </div>
         </div>
     </div>
@@ -491,12 +640,14 @@
                     <p>Features: Same Day and 10-Minute Delivery</p>
                     <p>Price: ₹999</p>
                     <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Premium Delivery Service'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
                 <div class="sub-product" onclick="addToCart('Buy One Get One Free Offer', 499); event.stopPropagation();">
                     <h3>Buy One Get One Free Offer</h3>
                     <p>Applicable on selected items</p>
                     <p>Price: ₹499</p>
                     <div class="rating">⭐⭐⭐⭐</div>
+                    <button onclick="addToWishlist('Buy One Get One Free Offer'); event.stopPropagation();">Add to Wishlist</button>
                 </div>
             </div>
         </div>
@@ -525,11 +676,28 @@
         </form>
     </div>
 
+    <div id="wishlist" class="section" style="display: none;">
+        <h2>Your Wishlist</h2>
+        <div id="wishlistItems"></div>
+    </div>
+
+    <!-- Login Section -->
+    <div id="login" class="section" style="display: none;">
+        <h2>Login</h2>
+        <div class="login-form">
+            <input type="email" id="email" required placeholder="Enter your email">
+            <input type="password" id="password" required placeholder="Enter your password">
+            <button onclick="handleLogin()">Login</button>
+            <p id="loginMessage" style="color: red;"></p>
+        </div>
+    </div>
+
     <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑ Back to Top</button>
 
     <script>
         let cart = [];
         let total = 0;
+        let wishlist = [];
 
         function addToCart(itemName, itemPrice) {
             cart.push({ name: itemName, price: itemPrice });
@@ -537,10 +705,19 @@
             updateCart();
         }
 
+        function addToWishlist(itemName) {
+            if (!wishlist.includes(itemName)) {
+                wishlist.push(itemName);
+                updateWishlist();
+            } else {
+                alert(`${itemName} is already in your wishlist.`);
+            }
+        }
+
         function updateCart() {
             const cartItemsDiv = document.getElementById('cartItems');
             cartItemsDiv.innerHTML = '';
-            cart.forEach ((item, index) => {
+            cart.forEach((item, index) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.textContent = `${item.name} - ₹${item.price}`;
                 const removeButton = document.createElement('button');
@@ -554,6 +731,16 @@
             });
             document.getElementById('totalPrice').textContent = `Total Price: ₹${total}`;
             toggleBackToTopButton();
+        }
+
+        function updateWishlist() {
+            const wishlistItemsDiv = document.getElementById('wishlistItems');
+            wishlistItemsDiv.innerHTML = '';
+            wishlist.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.textContent = item;
+                wishlistItemsDiv.appendChild(itemDiv);
+            });
         }
 
         function removeFromCart(index) {
@@ -632,6 +819,29 @@
             alert('Share this link with your friends to earn rewards: [Your Referral Link]');
         }
 
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email) {
+                alert(`Thank you for subscribing with ${email}!`);
+                document.getElementById('newsletterEmail').value = ''; // Clear input
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Simple validation (for demonstration purposes)
+            if (email === "user@example.com" && password === "password123") {
+                alert('Login successful!');
+                showSection('home'); // Redirect to home after successful login
+            } else {
+                document.getElementById('loginMessage').textContent = 'Invalid email or password. Please try again.';
+            }
+        }
+
         window.onscroll = function() {
             toggleBackToTopButton();
         };
@@ -642,7 +852,7 @@
         document.getElementById('paymentForm').onsubmit = function(event) {
             event.preventDefault();
             alert('Payment processed successfully!');
-            checkout();
+ checkout();
         };
     </script>
 

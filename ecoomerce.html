@@ -48,7 +48,7 @@
             padding: 12px 20px;
             margin: 0 10px;
             font-size: 18px;
-            transition: all 0.3s;
+            transition: background-color 0.3s, border 0.3s; /* Added transition */
             border-radius: 5px;
             position: relative;
             cursor: pointer;
@@ -73,7 +73,7 @@
             border: 2px solid rgb(255, 0, 102);
             border-radius: 5px;
             width: 300px;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s; /* Added transition */
         }
 
         .search-bar input:focus {
@@ -89,7 +89,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-left: 10px;
-            transition: background 0.3s, transform 0.3s;
+            transition: background 0.3s, transform 0.3s; /* Already present */
         }
 
         .search-bar button:hover {
@@ -115,7 +115,7 @@
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0px 5px 10px rgba(0,0,0,0.3);
-            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s; /* Already present */
             width: 220px;
             text-align: center;
             cursor: pointer;
@@ -151,11 +151,13 @@
         }
 
         .sub-products {
-            display: none;
+            max-height: 0; /* Start hidden */
             margin-top: 20px;
             padding: 10px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
+            overflow: hidden; /* Prevent overflow during transition */
+            transition: max-height 0.3s ease-in-out; /* Added transition */
         }
 
         .sub-product {
@@ -205,7 +207,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 18px;
-            transition: background 0.3s, transform 0.3s;
+            transition: background 0.3s, transform 0.3s; /* Already present */
         }
 
         .checkout-button:hover {
@@ -699,7 +701,7 @@
         let total = 0;
         let wishlist = [];
 
-        function addToCart(itemName, itemPrice) {
+        function addToCart(itemName, itemPrice ) {
             cart.push({ name: itemName, price: itemPrice });
             total += itemPrice;
             updateCart();
@@ -762,7 +764,11 @@
 
         function toggleSubProducts(id) {
             var element = document.getElementById(id);
-            element.style.display = element.style.display === "block" ? "none" : "block";
+            if (element.style.maxHeight) {
+                element.style.maxHeight = null; // Collapse
+            } else {
+                element.style.maxHeight = element.scrollHeight + "px"; // Expand
+            }
         }
 
         function showSection(sectionId) {
@@ -838,7 +844,7 @@
                 alert('Login successful!');
                 showSection('home'); // Redirect to home after successful login
             } else {
-                document.getElementById('loginMessage').textContent = 'Invalid email or password. Please try again.';
+                document.getElementById(' loginMessage').textContent = 'Invalid email or password. Please try again.';
             }
         }
 
@@ -852,7 +858,7 @@
         document.getElementById('paymentForm').onsubmit = function(event) {
             event.preventDefault();
             alert('Payment processed successfully!');
- checkout();
+            checkout();
         };
     </script>
 

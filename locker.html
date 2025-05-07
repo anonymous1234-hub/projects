@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Locker Puzzle</title>
+    <style>
+        :root {
+            --primary: rgb(76, 175, 80);
+            --secondary: rgb(33, 150, 243);
+            --accent: rgb(255, 193, 7);
+            --dark: rgb(18, 18, 18);
+            --darker: rgb(10, 10, 10);
+            --light: rgb(245, 245, 245);
+            --metal-light: linear-gradient(145deg, rgb(224, 224, 224), rgb(192, 192, 192));
+            --metal-dark: linear-gradient(145deg, rgb(160, 160, 160), rgb(128, 128, 128));
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Dynamic background elements */
+        .bg-element {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .bg-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bg-element:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .bg-element:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            background: var(--accent);
+            top: 50%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(0, 100px); }
+            75% { transform: translate(-50px, 50px); }
+        }
+
+        h1 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(255, 193, 7, 0.3);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate, floatTitle 6s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(33, 150, 243, 0.7); }
+            100% { text-shadow: 0 0 20px rgba(255, 193, 7, 0.9); }
+        }
+
+        @keyframes floatTitle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.5rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .progress-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            animation: progressShine 2s infinite linear;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .locker-stack {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            perspective: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        .locker {
+            width: 100%;
+            background: var(--metal-dark);
+            border: 8px solid rgb(80, 80, 80);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.3),
+                inset 0 0 30px rgba(0, 0, 0, 0.2);
+            animation: lockerFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes lockerFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(0) rotate(-1deg); }
+            75% { transform: translateY(-5px) rotate(1deg); }
+        }
+
+        .locker::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .locker.active {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(76, 175, 80, 0.5);
+            z-index: 10;
+            border-color: var(--primary);
+            animation: activePulse 2s infinite ease-in-out;
+        }
+
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(76, 175, 80, 0.5); }
+            50% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 50px rgba(76, 175, 80, 0.7); }
+        }
+
+        .locker.open {
+            transform: rotateX(60deg) translateY(50px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .locker-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--metal-light);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 
+                0 2px 5px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+            border: 3px solid var(--primary);
+            z-index: 2;
+            animation: numberGlow 2s infinite alternate;
+        }
+
+        @keyframes numberGlow {
+            0% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+            100% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.8); }
+        }
+
+        .locker-handle {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 50px;
+            background: var(--metal-light);
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 
+                2px 2px 5px rgba(0, 0, 0, 0.3),
+                inset 1px 1px 3px rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .locker-handle::after {
+            content: '';
+            width: 10px;
+            height: 20px;
+            background: rgb(80, 80, 80);
+            border-radius: 3px;
+        }
+
+        .locker-handle:hover {
+            background: var(--metal-dark);
+            transform: translateY(-50%) translateX(2px);
+            animation: handleJiggle 0.3s ease;
+        }
+
+        @keyframes handleJiggle {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            25% { transform: translateY(-50%) rotate(5deg); }
+            50% { transform: translateY(-50%) rotate(-5deg); }
+            75% { transform: translateY(-50%) rotate(5deg); }
+        }
+
+        .locker-vents {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 15px;
+            background: repeating-linear-gradient(
+                to right,
+                rgb(96, 96, 96),
+                rgb(96, 96, 96) 3px,
+                transparent 3px,
+                transparent 8px
+            );
+            border-radius: 3px;
+        }
+
+        .locker-content {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-top: 1rem;
+            animation: fadeIn 0.5s ease-out;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .riddle {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            font-style: italic;
+            text-align: center;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .riddle::before, .riddle::after {
+            content: '"';
+            color: var(--accent);
+            font-size: 1.5em;
+            position: absolute;
+            opacity: 0.5;
+        }
+
+        .riddle::before {
+            top: -10px;
+            left: -15px;
+        }
+
+        .riddle::after {
+            bottom: -15px;
+            right: -15px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+            animation: btnPulse 1.5s infinite;
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { transform: translateY(-2px) scale(1); }
+            50% { transform: translateY(-2px) scale(1.03); }
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 50px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover::after {
+            left: 110%;
+        }
+
+        .hint-container {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .show-hint {
+            background: none;
+            border: none;
+            color: var(--accent);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .show-hint:hover {
+            color: rgb(255, 215, 0);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .show-hint::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .show-hint:hover::after {
+            width: 100%;
+        }
+
+        .hint {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .congrats {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--accent);
+            font-size: 1.8rem;
+            display: none;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .congrats h2 {
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            animation: congratsGlow 2s infinite alternate;
+        }
+
+        @keyframes congratsGlow {
+            0% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+            33% { text-shadow: 0 0 15px rgba(33, 150, 243, 0.5); }
+            66% { text-shadow: 0 0 20px rgba(255, 193, 7, 0.5); }
+            100% { text-shadow: 0 0 25px rgba(76, 175, 80, 0.7); }
+        }
+
+        .projects-container {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .project, .product {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project {
+            border-left: 5px solid var(--primary);
+        }
+
+        .product {
+            border-right: 5px solid var(--secondary);
+        }
+
+        .project.animate, .product.animate {
+            animation: projectAppear 0.6s forwards;
+        }
+
+        @keyframes projectAppear {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .project::before, .product::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .project:hover::before, .product:hover::before {
+            left: 100%;
+        }
+
+        .project:hover, .product:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(76, 175, 80, 0.3);
+        }
+
+        .product:hover {
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(33, 150, 243, 0.3);
+        }
+
+        .project h3, .product h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .product h3 {
+            color: var(--secondary);
+        }
+
+        .project h3::after, .product h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .project:hover h3::after, .product:hover h3::after {
+            width: 100%;
+        }
+
+        .project p, .product p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            transform: translateX(-10px);
+            opacity: 0;
+            transition: all 0.4s ease 0.1s;
+        }
+
+        .project:hover p, .product:hover p {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .price {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin: 1rem 0;
+            display: inline-block;
+            position: relative;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50px;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .project:hover .price, .product:hover .price {
+            transform: scale(1);
+            box-shadow: 
+                0 0 15px rgba(255, 193, 7, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+            animation: pricePulse 2s infinite;
+        }
+
+        @keyframes pricePulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 0 15px rgba(255, 193, 7, 0.3),
+                    inset 0 0 10px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 
+                    0 0 20px rgba(255, 193, 7, 0.5),
+                    inset 0 0 15px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        .contact-info {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            backdrop-filter: blur(5px);
+            border-top: 3px solid var(--secondary);
+            border-bottom: 3px solid var(--secondary);
+            animation: fadeIn 1s ease-out;
+            display: none;
+            transform: scale(0.95);
+            transition: all 0.5s ease;
+        }
+
+        .contact-info:hover {
+            transform: scale(1);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(33, 150, 243, 0.4);
+        }
+
+        .contact-info h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            animation: textGlow 3s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+            50% { text-shadow: 0 0 10px rgba(33, 150, 243, 0.5); }
+            100% { text-shadow: 0 0 15px rgba(255, 193, 7, 0.5); }
+        }
+
+        .contact-info p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .phone {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 1.5rem 0;
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+            transition: all 0.3s ease;
+            animation: phonePulse 2s infinite;
+        }
+
+        @keyframes phonePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .phone:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
+            animation: none;
+        }
+
+        .availability {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Confetti effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0;
+            animation: confettiFall 5s ease-in-out infinite;
+            z-index: 1000;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .locker {
+                padding: 1rem;
+            }
+            
+            .riddle {
+                font-size: 1.1rem;
+            }
+            
+            .project h3, .product h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+    
+    <h1>Ultimate Locker Puzzle Challenge</h1>
+    
+    <div class="progress-container">
+        <div class="progress-text">
+            <span>Progress:</span>
+            <span id="progressText">0/10 Lockers Opened</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+    
+    <div class="locker-stack" id="lockerStack">
+        <!-- Lockers will be added here by JavaScript -->
+    </div>
+
+    <div class="congrats" id="congratsMessage">
+        <h2>Congratulations!</h2>
+        <p>You've successfully unlocked all the lockers!</p>
+    </div>
+
+    <div class="projects-container" id="projectsContainer">
+        <div class="project">
+            <h3>E-Commerce Website</h3>
+            <p>A fully responsive e-commerce platform with product management, shopping cart, user authentication, and payment integration.</p>
+            <div class="price">Price: rs1200</div>
+        </div>
+        <div class="project">
+            <h3>Calculator</h3>
+            <p>Calculate anything by using this project.</p>
+            <div class="price">Price: rs 900</div>
+        </div>
+        <div class="project">
+            <h3>Fictional Stories</h3>
+            <p>You can read and write fictional stories with the proper interaction with beautiful animations.</p>
+            <div class="price">Price: rs 1000</div>
+        </div>
+        <div class="project">
+            <h3>Medical Website</h3>
+            <p>This is an interactive medical website</p>
+            <div class="price">Price: rs 1000</div>
+        </div>
+        <div class="project"> 
+            <h3>Mental Health Website</h3>
+            <p>This is a website to check your mental state</p>
+            <div class="price">Price: rs 1000</div>
+        </div>
+        <div class="project"> 
+            <h3>Tic Tac Toe Game</h3>
+            <p>A fully responsive game of tic tac toe</p>
+            <div class="price">Price: rs 800</div>
+        </div>
+        <div class="product"> 
+            <h3>Amazon Clone</h3>
+            <p>A fully functional Amazon-like e-commerce site</p>
+            <div class="price">Price: rs 900</div>
+        </div>
+        <div class="product"> 
+            <h3>Spotify Clone</h3>
+            <p>Music streaming platform with playlist functionality</p>
+            <div class="price">Price: rs 1000</div>
+        </div>
+        <div class="product"> 
+            <h3>Quiz Website</h3>
+            <p>Interactive quiz platform with multiple question types</p>
+            <div class="price">Price: rs 1000</div>
+        </div>
+    </div>
+    <div class="contact-info" id="contactInfo">
+        <h2>Interested in any project?</h2>
+        <p>Contact me directly to discuss your requirements or make a purchase:</p>
+        <div class="phone">+1 (555) 123-4567</div>
+        <p class="availability">Available 9AM - 5PM, Monday to Friday</p>
+    </div>
+
+    <script>
+        // Enhanced locker data with riddles and answers
+        const lockers = [
+            {
+                riddle: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
+                answer: "echo",
+                hint: "It's what you hear in mountains or empty halls"
+            },
+            {
+                riddle: "The more you take, the more you leave behind. What am I?",
+                answer: "footsteps",
+                hint: "Think about walking"
+            },
+            {
+                riddle: "What has keys but can't open locks, has space but no room, and you can enter but not go in?",
+                answer: "keyboard",
+                hint: "You're using it right now"
+            },
+            {
+                riddle: "I'm not alive, but I can grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?",
+                answer: "fire",
+                hint: "It can be both helpful and dangerous"
+            },
+            {
+                riddle: "What has a head, a tail, is brown, and has no legs?",
+                answer: "penny",
+                hint: "Think of coins"
+            },
+            {
+                riddle: "What can you hold in your right hand but not in your left?",
+                answer: "left elbow",
+                hint: "Think about body parts"
+            },
+            {
+                riddle: "What has cities but no houses, forests but no trees, and rivers but no water?",
+                answer: "map",
+                hint: "Used for navigation"
+            },
+            {
+                riddle: "What gets wetter as it dries?",
+                answer: "towel",
+                hint: "Used after bathing"
+            },
+            {
+                riddle: "What has a neck but no head?",
+                answer: "bottle",
+                hint: "Used for liquids"
+            },
+            {
+                riddle: "What can travel around the world while staying in a corner?",
+                answer: "stamp",
+                hint: "Used on letters"
+            }
+        ];
+
+        // Game state
+        let openedLockers = 0;
+        const totalLockers = lockers.length;
+        let currentLockerIndex = 0;
+
+        // DOM elements
+        const lockerStack = document.getElementById('lockerStack');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const congratsMessage = document.getElementById('congratsMessage');
+        const projectsContainer = document.getElementById('projectsContainer');
+        const contactInfo = document.getElementById('contactInfo');
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0'];
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 7000);
+            }
+        }
+
+        // Create lockers
+        function createLockers() {
+            lockers.forEach((locker, index) => {
+                const lockerElement = document.createElement('div');
+                lockerElement.className = 'locker';
+                if (index === 0) lockerElement.classList.add('active');
+                
+                lockerElement.innerHTML = `
+                    <div class="locker-number">${index + 1}</div>
+                    <div class="locker-handle"></div>
+                    <div class="locker-vents"></div>
+                    <div class="riddle">${locker.riddle}</div>
+                    <input type="text" class="answer-input" placeholder="Your answer..." data-index="${index}">
+                    <button class="submit-btn">Submit Answer</button>
+                    <div class="hint-container">
+                        <button class="show-hint">Show Hint</button>
+                        <div class="hint">Hint: ${locker.hint}</div>
+                    </div>
+                    <div class="locker-content">
+                        <p>Correct! Locker ${index + 1} is now open.</p>
+                    </div>
+                `;
+                lockerStack.appendChild(lockerElement);
+
+                // Add event listeners
+                const submitBtn = lockerElement.querySelector('.submit-btn');
+                const answerInput = lockerElement.querySelector('.answer-input');
+                const hintBtn = lockerElement.querySelector('.show-hint');
+                const hint = lockerElement.querySelector('.hint');
+                const handle = lockerElement.querySelector('.locker-handle');
+
+                // Handle click for visual feedback
+                handle.addEventListener('click', () => {
+                    handle.style.transform = 'translateY(-50%) translateX(5px)';
+                    setTimeout(() => {
+                        handle.style.transform = 'translateY(-50%)';
+                    }, 200);
+                });
+
+                submitBtn.addEventListener('click', () => checkAnswer(index, answerInput, lockerElement));
+                answerInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer(index, answerInput, lockerElement);
+                    }
+                });
+
+                hintBtn.addEventListener('click', () => {
+                    hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+                    hintBtn.textContent = hint.style.display === 'block' ? 'Hide Hint' : 'Show Hint';
+                });
+            });
+        }
+
+        // Check answer
+        function checkAnswer(index, inputElement, lockerElement) {
+            const userAnswer = inputElement.value.trim().toLowerCase();
+            const correctAnswer = lockers[index].answer.toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                // Correct answer
+                lockerElement.classList.add('open');
+                inputElement.disabled = true;
+                lockerElement.querySelector('.submit-btn').disabled = true;
+                lockerElement.querySelector('.show-hint').style.display = 'none';
+                
+                openedLockers++;
+                updateProgress();
+                
+                // Move to next locker
+                setTimeout(() => {
+                    lockerElement.style.display = 'none';
+                    currentLockerIndex++;
+                    
+                    if (currentLockerIndex < totalLockers) {
+                        const nextLocker = document.querySelectorAll('.locker')[currentLockerIndex];
+                        nextLocker.classList.add('active');
+                    }
+                    
+                    // Check if all lockers are open
+                    if (openedLockers === totalLockers) {
+                        createConfetti();
+                        congratsMessage.style.display = 'block';
+                        projectsContainer.style.display = 'block';
+                        contactInfo.style.display = 'block';
+                        
+                        // Animate projects one by one
+                        const projects = document.querySelectorAll('.project, .product');
+                        projects.forEach((project, index) => {
+                            setTimeout(() => {
+                                project.classList.add('animate');
+                            }, index * 200);
+                        });
+                    }
+                }, 500);
+            } else {
+                // Wrong answer
+                inputElement.style.border = '2px solid rgb(255, 68, 68)';
+                inputElement.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    inputElement.style.border = '2px solid rgba(255, 255, 255, 0.2)';
+                    inputElement.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progressPercentage = (openedLockers / totalLockers) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${openedLockers}/${totalLockers} Lockers Opened`;
+            
+            // Add pulse effect when progress updates
+            progressBar.style.animation = 'pulse 0.5s';
+            setTimeout(() => {
+                progressBar.style.animation = '';
+            }, 500);
+        }
+
+        // Initialize the game
+        createLockers();
+
+        // Add shake animation for wrong answers
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

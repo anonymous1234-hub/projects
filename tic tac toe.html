@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌈 Ultimate Rainbow Tic-Tac-Toe 💥</title>
+    <style>
+        /* ================ */
+        /* Global Variables */
+        /* ================ */
+        :root {
+            /* Color Palette */
+            --primary: #ff00ff;
+            --secondary: #00ffff;
+            --accent: #ffff00;
+            --text: #ffffff;
+            --x-color: #ff3366;
+            --o-color: #33ffcc;
+            --win-color: #ff00ff;
+            --sidebar-bg: rgba(0, 0, 0, 0.5);
+            --cell-bg: rgba(255, 255, 255, 0.1);
+            --container-bg: rgba(0, 0, 0, 0.3);
+            
+            /* Animation Durations */
+            --bg-animation-duration: 15s;
+            --shine-animation-duration: 5s;
+            --text-animation-duration: 5s;
+            --float-animation-duration: 3s;
+            --glow-animation-duration: 2s;
+            --pulse-animation-duration: 2s;
+            --cell-appear-duration: 0.5s;
+            --rainbow-win-duration: 1s;
+            --button-animation-duration: 3s;
+            --confetti-animation-duration: 5s;
+            --firework-animation-duration: 1s;
+            --particle-animation-duration: 10s;
+            
+            /* Sizes */
+            --container-width: 500px;
+            --cell-size: 90px;
+            --sidebar-width: 150px;
+            --button-padding: 15px 25px;
+        }
+
+        /* ============= */
+        /* Base Styles */
+        /* ============= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 900;
+            src: url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            color: var(--text);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(-45deg, 
+                #ff00ff, #00ffff, #ffff00, #ff3366, #33ffcc);
+            background-size: 400% 400%;
+            animation: gradientBG var(--bg-animation-duration) ease infinite;
+        }
+
+        /* ============= */
+        /* Animations */
+        /* ============= */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg) translate(-50%, -50%); }
+            100% { transform: rotate(360deg) translate(-50%, -50%); }
+        }
+
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            100% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.9); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+        }
+
+        @keyframes pulseText {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        @keyframes xAppear {
+            0% { transform: scale(0) rotate(180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes oAppear {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes rainbowWin {
+            0% { background-color: #ff00ff; box-shadow: 0 0 30px #ff00ff; }
+            20% { background-color: #00ffff; box-shadow: 0 0 30px #00ffff; }
+            40% { background-color: #ffff00; box-shadow: 0 0 30px #ffff00; }
+            60% { background-color: #ff3366; box-shadow: 0 0 30px #ff3366; }
+            80% { background-color: #33ffcc; box-shadow: 0 0 30px #33ffcc; }
+            100% { background-color: #ff00ff; box-shadow: 0 0 30px #ff00ff; }
+        }
+
+        @keyframes gradientButton {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 0.5; }
+            100% { transform: scale(20, 20); opacity: 0; }
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes fireworkExplode {
+            0% { transform: translate(var(--x), var(--y)) scale(0); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(1); opacity: 0; }
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+        }
+
+        /* ============= */
+        /* Layout Components */
+        /* ============= */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: floatParticle var(--particle-animation-duration) linear infinite;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 100;
+            width: var(--sidebar-width);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .sidebar-button {
+            padding: var(--button-padding);
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+            background-size: 200% 200%;
+            color: black;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            animation: gradientButton var(--button-animation-duration) ease infinite;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+            animation: gradientButton 1s ease infinite;
+        }
+
+        .sidebar-button:active {
+            transform: translateY(1px);
+        }
+
+        .sidebar-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .sidebar-button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        .container {
+            background-color: var(--container-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+            padding: 40px;
+            width: 100%;
+            max-width: var(--container-width);
+            text-align: center;
+            transform: translateY(0);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            margin: 0 auto;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 100%
+            );
+            animation: shine var(--shine-animation-duration) infinite linear;
+            z-index: -1;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            font-size: 3rem;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #ff3366, #33ffcc);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+           background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: 
+                rainbowText var(--text-animation-duration) linear infinite, 
+                float var(--float-animation-duration) ease-in-out infinite, 
+                glow var(--glow-animation-duration) ease-in-out infinite alternate;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px auto;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            max-width: 300px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: pulse var(--pulse-animation-duration) infinite;
+        }
+
+        .score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .score:hover {
+            transform: scale(1.05);
+        }
+
+        .score-x { 
+            color: var(--x-color);
+        }
+
+        .score-o { 
+            color: var(--o-color);
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 5px;
+            text-shadow: 0 0 10px currentColor;
+            transition: all 0.3s ease;
+        }
+
+        .status {
+            margin: 20px 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 0 10px white;
+            animation: pulseText 1.5s infinite;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-block;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 15px;
+            margin: 30px auto;
+            max-width: 300px;
+            perspective: 1000px;
+        }
+
+        .cell {
+            width: 100%;
+            height: var(--cell-size);
+            background-color: var(--cell-bg);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cell:hover {
+            transform: translateY(-5px) rotateX(10deg) rotateY(10deg);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .cell::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .cell:hover::before {
+            transform: translateX(100%);
+        }
+
+        .cell.x {
+            color: var(--x-color);
+            text-shadow: 0 0 20px var(--x-color);
+            animation: xAppear var(--cell-appear-duration) ease-out;
+        }
+
+        .cell.o {
+            color: var(--o-color);
+            text-shadow: 0 0 20px var(--o-color);
+            animation: oAppear var(--cell-appear-duration) ease-out;
+        }
+
+        .cell.win {
+            animation: 
+                rainbowWin var(--rainbow-win-duration) infinite, 
+                float var(--float-animation-duration) ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #ff00ff;
+            opacity: 0;
+            animation: confettiFall var(--confetti-animation-duration) ease-in-out forwards;
+            z-index: 1000;
+            border-radius: 50%;
+        }
+
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px;
+            animation: fireworkExplode var(--firework-animation-duration) ease-out forwards;
+            z-index: 1000;
+        }
+
+        /* ============= */
+        /* Responsive Design */
+        /* ============= */
+        @media (max-width: 768px) {
+            :root {
+                --container-width: 90%;
+                --cell-size: 80px;
+                --sidebar-width: 120px;
+                --button-padding: 12px 20px;
+            }
+
+            .sidebar {
+                left: 10px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .score-board {
+                padding: 10px;
+            }
+
+            .score-value {
+                font-size: 1.8rem;
+            }
+
+            .status {
+                font-size: 1.3rem;
+                padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --cell-size: 70px;
+                --sidebar-width: 100px;
+            }
+
+            .sidebar {
+                flex-direction: row;
+                top: auto;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: auto;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .score-value {
+                font-size: 1.5rem;
+            }
+
+            .status {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* ============= */
+        /* Special Effects */
+        /* ============= */
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 0%, rgba(255,255,255,0.1) 100%);
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .score-popup {
+            position: absolute;
+            font-size: 2rem;
+            font-weight: bold;
+            animation: scorePop 1s ease-out forwards;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        @keyframes scorePop {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -100%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -150%) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ============= */
+        /* Utility Classes */
+        /* ============= */
+        .text-center {
+            text-align: center;
+        }
+
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .uppercase {
+            text-transform: uppercase;
+        }
+
+        /* ============= */
+        /* Debug Styles */
+        /* ============= */
+        .debug {
+            border: 1px solid red;
+        }
+
+        /* ============= */
+        /* Print Styles */
+        /* ============= */
+        @media print {
+            .sidebar, .particles {
+                display: none;
+            }
+
+            .container {
+                background: white;
+                color: black;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+
+            .cell {
+                background: white;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Celebration Overlay -->
+    <div class="celebration-overlay" id="celebration"></div>
+    
+    <!-- Floating Sidebar -->
+    <div class="sidebar">
+        <button class="sidebar-button" id="reset">Reset Game</button>
+        <button class="sidebar-button" id="new-game">New Game</button>
+    </div>
+    
+    <!-- Main Game Container -->
+    <div class="container">
+        <h1>🌈 Tic-Tac-Toe 💥</h1>
+        
+        <div class="score-board">
+            <div class="score score-x">
+                <div>Player X</div>
+                <div class="score-value" id="score-x">0</div>
+            </div>
+            <div class="score">
+                <div>Draws</div>
+                <div class="score-value" id="score-draw">0</div>
+            </div>
+            <div class="score score-o">
+                <div>Player O</div>
+                <div class="score-value" id="score-o">0</div>
+            </div>
+        </div>
+        
+        <div class="status" id="status">Player X's Turn</div>
+        
+        <div class="game-board" id="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============= //
+        // Game Constants
+        // ============= //
+        const WINNING_COMBINATIONS = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6]             // Diagonals
+        ];
+
+        const PLAYER_SYMBOLS = {
+            X: 'X',
+            O: 'O'
+        };
+
+        const PLAYER_COLORS = {
+            X: '#ff3366',
+            O: '#33ffcc'
+        };
+
+        const ANIMATION_DURATIONS = {
+            CELL_APPEAR: 500,
+            WIN_HIGHLIGHT: 1000,
+            CONFETTI: 5000,
+            FIREWORK: 1000,
+            SCORE_POPUP: 1000,
+            CELEBRATION: 2000
+        };
+
+        // ============= //
+        // DOM Elements
+        // ============= //
+        const boardElement = document.getElementById('board');
+        const cellElements = document.querySelectorAll('.cell');
+        const statusElement = document.getElementById('status');
+        const resetButton = document.getElementById('reset');
+        const newGameButton = document.getElementById('new-game');
+        const scoreXElement = document.getElementById('score-x');
+        const scoreOElement = document.getElementById('score-o');
+        const scoreDrawElement = document.getElementById('score-draw');
+        const particlesContainer = document.getElementById('particles');
+        const celebrationOverlay = document.getElementById('celebration');
+
+        // ============= //
+        // Game State
+        // ============= //
+        let gameState = {
+            currentPlayer: PLAYER_SYMBOLS.X,
+            board: ['', '', '', '', '', '', '', '', ''],
+            isGameActive: true,
+            scores: {
+                x: 0,
+                o: 0,
+                draw: 0
+            }
+        };
+
+        // ============= //
+        // Initialization
+        // ============= //
+        function initializeGame() {
+            // Create background particles
+            createParticles(50);
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Initialize first game
+            startNewGame(false);
+        }
+
+        function createParticles(count) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random positioning
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Random size between 2px and 7px
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random animation duration between 5s and 15s
+                particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Random color
+                particle.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function setupEventListeners() {
+            // Cell click handlers
+            cellElements.forEach(cell => {
+                cell.addEventListener('click', handleCellClick);
+            });
+
+            // Button click handlers
+            resetButton.addEventListener('click', () => resetGame());
+            newGameButton.addEventListener('click', () => startNewGame(true));
+
+            // Keyboard support
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'r' || e.key === 'R') {
+                    resetGame();
+                } else if (e.key === 'n' || e.key === 'N') {
+                    startNewGame(true);
+                }
+            });
+        }
+
+        // ============= //
+        // Game Logic
+        // ============= //
+        function handleCellClick(event) {
+            const clickedCell = event.target;
+            const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
+
+            // Ignore if cell is already filled or game is inactive
+            if (gameState.board[clickedCellIndex] !== '' || !gameState.isGameActive) {
+                return;
+            }
+
+            // Update game state
+            gameState.board[clickedCellIndex] = gameState.currentPlayer;
+            
+            // Update UI
+            updateCell(clickedCell, clickedCellIndex);
+            
+            // Check for win or draw
+            checkGameResult();
+        }
+
+        function updateCell(cellElement, cellIndex) {
+            // Set cell content
+            cellElement.textContent = gameState.currentPlayer;
+            
+            // Add player class
+            cellElement.classList.add(gameState.currentPlayer.toLowerCase());
+            
+            // Add animation class
+            cellElement.classList.add('animated');
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                cellElement.classList.remove('animated');
+            }, ANIMATION_DURATIONS.CELL_APPEAR);
+        }
+
+        function checkGameResult() {
+            // Check for win
+            const roundWon = checkWin();
+            
+            if (roundWon) {
+                handleWin();
+                return;
+            }
+            
+            // Check for draw
+            if (!gameState.board.includes('')) {
+                handleDraw();
+                return;
+            }
+            
+            // Switch player
+            switchPlayer();
+        }
+
+        function checkWin() {
+            for (const combination of WINNING_COMBINATIONS) {
+                const [a, b, c] = combination;
+                
+                if (gameState.board[a] === '' || 
+                    gameState.board[b] === '' || 
+                    gameState.board[c] === '') {
+                    continue;
+                }
+                
+                if (gameState.board[a] === gameState.board[b] && 
+                    gameState.board[b] === gameState.board[c]) {
+                    // Highlight winning cells
+                    highlightWinningCells(combination);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function highlightWinningCells(cellIndices) {
+            cellIndices.forEach(index => {
+                cellElements[index].classList.add('win');
+            });
+        }
+
+        function handleWin() {
+            // Update game state
+            gameState.isGameActive = false;
+            
+            // Update status
+            statusElement.textContent = `Player ${gameState.currentPlayer} Wins!`;
+            
+            // Update scores
+            if (gameState.currentPlayer === PLAYER_SYMBOLS.X) {
+                gameState.scores.x++;
+                scoreXElement.textContent = gameState.scores.x;
+            } else {
+                gameState.scores.o++;
+                scoreOElement.textContent = gameState.scores.o;
+            }
+            
+            // Celebrate
+            celebrateWin();
+        }
+
+        function handleDraw() {
+            // Update game state
+            gameState.isGameActive = false;
+            
+            // Update status
+            statusElement.textContent = 'Game Ended in a Draw!';
+            
+            // Update scores
+            gameState.scores.draw++;
+            scoreDrawElement.textContent = gameState.scores.draw;
+            
+            // Small celebration for draw
+            createConfetti(50);
+        }
+
+        function switchPlayer() {
+            gameState.currentPlayer = gameState.currentPlayer === PLAYER_SYMBOLS.X 
+                ? PLAYER_SYMBOLS.O 
+                : PLAYER_SYMBOLS.X;
+            
+            // Update status
+            statusElement.textContent = `Player ${gameState.currentPlayer}'s Turn`;
+        }
+
+        // ============= //
+        // Game Controls
+        // ============= //
+        function resetGame() {
+            // Reset board state
+            gameState.board = ['', '', '', '', '', '', '', '', ''];
+            gameState.isGameActive = true;
+            gameState.currentPlayer = PLAYER_SYMBOLS.X;
+            
+            // Reset UI
+            cellElements.forEach(cell => {
+                cell.textContent = '';
+                cell.className = 'cell';
+            });
+            
+            // Reset status
+            statusElement.textContent = `Player ${gameState.currentPlayer}'s Turn`;
+        }
+
+        function startNewGame(resetScores) {
+            // Reset scores if requested
+            if (resetScores) {
+                gameState.scores = {
+                    x: 0,
+                    o: 0,
+                    draw: 0
+                };
+                
+                scoreXElement.textContent = '0';
+                scoreOElement.textContent = '0';
+                scoreDrawElement.textContent = '0';
+            }
+            
+            // Reset game
+            resetGame();
+        }
+
+        // ============= //
+        // Visual Effects
+        // ============= //
+        function celebrateWin() {
+            // Show celebration overlay
+            celebrationOverlay.style.opacity = '0.5';
+            
+            // Create confetti
+            createConfetti(150);
+            
+            // Create fireworks
+            createFireworks(20);
+            
+            // Hide overlay after celebration
+            setTimeout(() => {
+                celebrationOverlay.style.opacity = '0';
+            }, ANIMATION_DURATIONS.CELEBRATION);
+        }
+
+        function createConfetti(count) {
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random positioning
+                confetti.style.left = `${Math.random() * 100}vw`;
+                
+                // Random color
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                
+                // Random size between 5px and 15px
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                
+                // Random animation duration between 2s and 5s
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                
+                // Random delay
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                
+                // Random shape
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, ANIMATION_DURATIONS.CONFETTI);
+            }
+        }
+
+        function createFireworks(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    // Random position
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight / 2;
+                    
+                    // Create explosion particles
+                    for (let j = 0; j < 30; j++) {
+                        const angle = (Math.PI * 2) * (j / 30);
+                        const distance = Math.random() * 100 + 50;
+                        
+                        const firework = document.createElement('div');
+                        firework.className = 'firework';
+                        
+                        // Set explosion direction
+                        firework.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+                        firework.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+                        
+                        // Random color
+                        firework.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                        
+                        // Position
+                        firework.style.left = `${x}px`;
+                        firework.style.top = `${y}px`;
+                        
+                        document.body.appendChild(firework);
+                        
+                        // Remove after animation
+                        setTimeout(() => {
+                            firework.remove();
+                        }, ANIMATION_DURATIONS.FIREWORK);
+                    }
+                }, i * 200); // Stagger fireworks
+            }
+        }
+
+        function showScorePopup(element, value) {
+            const rect = element.getBoundingClientRect();
+            const popup = document.createElement('div');
+            popup.className = 'score-popup';
+            popup.textContent = `+${value}`;
+            
+            // Position at center of score element
+            popup.style.left = `${rect.left + rect.width / 2}px`;
+            popup.style.top = `${rect.top + rect.height / 2}px`;
+            
+            // Color based on player
+            if (element.id === 'score-x') {
+                popup.style.color = PLAYER_COLORS.X;
+            } else if (element.id === 'score-o') {
+                popup.style.color = PLAYER_COLORS.O;
+            }
+            
+            document.body.appendChild(popup);
+            
+            // Remove after animation
+            setTimeout(() => {
+                popup.remove();
+            }, ANIMATION_DURATIONS.SCORE_POPUP);
+        }
+
+        // ============= //
+        // Start the Game
+        // ============= //
+        document.addEventListener('DOMContentLoaded', initializeGame);
+    </script>
+</body>
+</html>

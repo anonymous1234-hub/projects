@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hourglass Video Loader</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        .hourglass {
+            width: 150px;
+            height: 220px;
+            position: relative;
+            margin: 0 auto 30px;
+        }
+
+        .glass {
+            width: 150px;
+            height: 220px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            border-radius: 5px 5px 60px 60px;
+            position: relative;
+            box-shadow: 
+                inset 0 0 20px rgba(0,0,0,0.2),
+                0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .glass:before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            top: 80px;
+            left: 45px;
+            box-shadow: 
+                inset 0 0 10px rgba(0,0,0,0.2),
+                inset 0 0 30px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .sand {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            top: 10px;
+            left: 5px;
+            overflow: hidden;
+            border-radius: 5px 5px 60px 60px;
+        }
+
+        .top-sand {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #e0b48d 0%, #c78a5a 100%);
+            border-radius: 5px 5px 60px 60px;
+            animation: drain 5s linear forwards;
+            transform-origin: bottom;
+        }
+
+        .bottom-sand {
+            position: absolute;
+            width: 140px;
+            height: 0;
+            bottom: 10px;
+            left: 5px;
+            background: linear-gradient(to bottom, #c78a5a 0%, #e0b48d 100%);
+            border-radius: 60px 60px 5px 5px;
+            animation: fill 5s linear forwards;
+            overflow: hidden;
+        }
+
+        .falling-sand {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #c78a5a;
+            border-radius: 50%;
+            top: -10px;
+            left: 65px;
+            animation: fall 5s linear infinite;
+        }
+
+        .stand {
+            width: 180px;
+            height: 20px;
+            background: linear-gradient(to right, #b0b0b0 0%, #d0d0d0 50%, #b0b0b0 100%);
+            margin: 0 auto;
+            border-radius: 3px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .stand:before, .stand:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 80px;
+            background: linear-gradient(to right, #a0a0a0 0%, #c0c0c0 50%, #a0a0a0 100%);
+            top: -80px;
+            border-radius: 3px;
+        }
+
+        .stand:before {
+            left: 20px;
+        }
+
+        .stand:after {
+            right: 20px;
+        }
+
+        .loading-text {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .video-container {
+            display: none;
+            position: relative;
+            width: 800px;
+            max-width: 90%;
+            margin: 0 auto;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @keyframes drain {
+            0% { height: 100%; }
+            100% { height: 0%; }
+        }
+
+        @keyframes fill {
+            0% { height: 0; }
+            100% { height: 100%; }
+        }
+
+        @keyframes fall {
+            0% { top: -10px; opacity: 1; }
+            10% { top: 70px; }
+            20% { top: 70px; opacity: 1; }
+            30% { top: 150px; opacity: 0; }
+            100% { top: 150px; opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .sand-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #c78a5a;
+            border-radius: 50%;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loader">
+            <div class="hourglass">
+                <div class="stand"></div>
+                <div class="glass">
+                    <div class="sand">
+                        <div class="top-sand"></div>
+                    </div>
+                    <div class="bottom-sand">
+                        <div class="falling-sand"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="loading-text">Time is passing...</div>
+        </div>
+        
+        <div class="video-container" id="video-container">
+            <!-- YouTube video will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const videoContainer = document.getElementById('video-container');
+            const hourglass = document.querySelector('.hourglass');
+            const loadingText = document.querySelector('.loading-text');
+            
+            // Create sand particles
+            function createSandParticles() {
+                const particlesContainer = document.createElement('div');
+                particlesContainer.style.position = 'absolute';
+                particlesContainer.style.width = '60px';
+                particlesContainer.style.height = '60px';
+                particlesContainer.style.top = '80px';
+                particlesContainer.style.left = '45px';
+                particlesContainer.style.overflow = 'hidden';
+                particlesContainer.style.borderRadius = '50%';
+                hourglass.appendChild(particlesContainer);
+                
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'sand-particle';
+                    particle.style.left = Math.random() * 50 + 'px';
+                    particle.style.animation = `fall ${0.5 + Math.random() * 1}s linear ${Math.random() * 2}s infinite`;
+                    particlesContainer.appendChild(particle);
+                    
+                    // Animate each particle
+                    setTimeout(() => {
+                        particle.style.opacity = '1';
+                        particle.style.transform = `translateY(${60 + Math.random() * 20}px)`;
+                    }, Math.random() * 2000);
+                }
+            }
+            
+            createSandParticles();
+            
+            // Change loading text periodically
+            const messages = [
+                "Time is passing...",
+                "Almost there...",
+                "Patience is a virtue...",
+                "Good things come...",
+                "Ready to watch!"
+            ];
+            
+            let messageIndex = 0;
+            const textInterval = setInterval(() => {
+                loadingText.textContent = messages[messageIndex];
+                messageIndex = (messageIndex + 1) % messages.length;
+            }, 1000);
+            
+            // After 5 seconds, show the video
+            setTimeout(function() {
+                clearInterval(textInterval);
+                loader.style.display = 'none';
+                videoContainer.style.display = 'block';
+                
+                // Insert YouTube iframe
+                videoContainer.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/IHzGBtSCllg?autoplay=1&si=UjZVOqM1hQwQvVqR" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                `;
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

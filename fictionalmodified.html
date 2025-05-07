@@ -1,0 +1,3070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fictional Stories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes colorChange {
+            0% { color: #ff0000; }
+            20% { color: #ff9900; }
+            40% { color: #33cc33; }
+            60% { color: #3399ff; }
+            80% { color: #cc33ff; }
+            100% { color: #ff0066; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255,255,255,0.5); }
+            50% { box-shadow: 0 0 20px rgba(255,255,255,0.9); }
+            100% { box-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
+        @keyframes bookFlip {
+            0% { transform: perspective(1000px) rotateY(0deg); }
+            100% { transform: perspective(1000px) rotateY(180deg); }
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes parallax {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: url('https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?q=80&w=2070&auto=format&fit=crop');
+            background-attachment: fixed;
+            background-size: cover;
+            background-blend-mode: overlay;
+        }
+
+        header {
+            background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0);
+            background-size: 400% 400%;
+            animation: rainbow 15s ease infinite;
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border-bottom: 3px solid rgba(255,255,255,0.2);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00ffcc, #cc00ff, #ffcc00);
+            animation: rainbow 8s linear infinite;
+        }
+
+        header:hover {
+            animation: rainbow 5s ease infinite;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3rem;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        h1:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 15px rgba(255,255,255,0.7);
+        }
+
+        h1::after {
+            content: '📖';
+            position: absolute;
+            right: -25px;
+            top: -15px;
+            font-size: 2rem;
+            animation: float 4s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav ul li {
+            margin: 0 5px;
+            position: relative;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s;
+        }
+
+        nav a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+
+        nav a i {
+            margin-right: 8px;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .section-container {
+            position: relative;
+            min-height: 500px;
+        }
+
+        section {
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: none;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform: translateY(30px) scale(0.95);
+            background: rgba(20, 20, 40, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            position: relative;
+        }
+
+        h2 {
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            padding-bottom: 10px;
+        }
+
+        h2:hover {
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff00cc, #3333ff);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        h2:hover::after {
+            transform: scaleX(1);
+        }
+
+        .featured {
+            background: linear-gradient(135deg, rgba(255, 0, 204, 0.7), rgba(51, 51, 255, 0.7));
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+            animation: pulse 4s infinite;
+            box-shadow: 0 5px 25px rgba(255, 0, 204, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .featured::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 45%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0) 55%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        .featured:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 204, 0.6);
+        }
+
+        .story-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            background: rgba(40, 40, 80, 0.6);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .story-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff00cc, #3333ff);
+            transition: all 0.3s ease;
+        }
+
+        .story-item:hover {
+            background: rgba(80, 80, 160, 0.7);
+            transform: translateX(10px);
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .story-item:hover::before {
+            width: 10px;
+        }
+
+        .story-item h3 {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .story-item h3::before {
+            content: '✍️';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .story-item:hover h3::before {
+            opacity: 1;
+            left: -25px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(90deg, rgba(51, 51, 255, 0.8), rgba(255, 0, 204, 0.8));
+            color: #ffffff;
+            position: relative;
+            margin-top: 80px;
+            backdrop-filter: blur(5px);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ffcc, #cc00ff);
+            animation: rainbow 8s linear infinite;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        footer p::after {
+            content: '✨';
+            position: absolute;
+            animation: sparkle 2s infinite;
+        }
+
+        footer p::after:first-child {
+            left: 10%;
+            top: -15px;
+            animation-delay: 0.5s;
+        }
+
+        footer p::after:last-child {
+            right: 10%;
+            bottom: -15px;
+            animation-delay: 1s;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            border: 1px solid transparent;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.7);
+            border: 1px solid rgba(0, 255, 204, 0.7);
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            background: linear-gradient(90deg, #00ffcc, #0099ff);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 255, 204, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            transform: translateX(-100%);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #0099ff, #00ffcc);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 204, 0.6);
+        }
+
+        button:hover::after {
+            transform: translateX(100%);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .genre {
+            margin: 25px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+            animation: slideIn 0.5s ease forwards;
+            backdrop-filter: blur(5px);
+        }
+
+        .genre:nth-child(1) { animation-delay: 0.1s; }
+        .genre:nth-child(2) { animation-delay: 0.2s; }
+        .genre:nth-child(3) { animation-delay: 0.3s; }
+        .genre:nth-child(4) { animation-delay: 0.4s; }
+
+        .genre:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 5px solid #00ffcc;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .description {
+            margin: 20px 0;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Section-specific colors */
+        .popular {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(255, 215, 0, 0.3));
+            border: 1px solid rgba(255, 105, 180, 0.4);
+        }
+
+        .new-releases {
+            background: linear-gradient(135deg, rgba(100, 149, 237, 0.3), rgba(0, 191, 255, 0.3));
+            border: 1px solid rgba(100, 149, 237, 0.4);
+        }
+
+        .authors {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.3), rgba(255, 69, 0, 0.3));
+            border: 1px solid rgba(255, 165, 0, 0.4);
+        }
+
+        .blog {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.3));
+            border: 1px solid rgba(138, 43, 226, 0.4);
+        }
+
+        /* Floating elements */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Rainbow text */
+        .rainbow-text {
+            background: linear-gradient(90deg, #ff0000, #ff9900, #33cc33, #3399ff, #cc33ff, #ff0066);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbow 8s ease infinite;
+        }
+
+        /* Glowing effect */
+        .glow {
+            text-shadow: 0 0 10px currentColor;
+            animation: glow 2s infinite alternate;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #00ffcc;
+            animation: rotate 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+
+        /* Card styles */
+        .card {
+            background: rgba(50, 50, 90, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.1), transparent 200px);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Hide all sections initially */
+        section:not(.active) {
+            display: none !important;
+            opacity: 0 !important;
+        }
+
+        /* Home section specific */
+        #home {
+            text-align: center;
+            background: rgba(20, 20, 40, 0.9);
+        }
+
+        .home-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .welcome-message {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease forwards;
+            position: relative;
+        }
+
+        .welcome-message::before,
+        .welcome-message::after {
+            content: '"';
+            font-size: 3rem;
+            color: rgba(255,255,255,0.2);
+            position: absolute;
+        }
+
+        .welcome-message::before {
+            top: -20px;
+            left: -30px;
+        }
+
+        .welcome-message::after {
+            bottom: -40px;
+            right: -30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin: 15px;
+            padding: 15px 35px;
+            background: linear-gradient(90deg, #ff00cc, #3333ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            transform: translateX(-100%);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff00cc, #3333ff);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+            font-size: 1.5rem;
+            color: white;
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 150px;
+            background-color: rgba(0,0,0,0.9);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, rgba(0, 204, 102, 0.9), rgba(0, 153, 77, 0.9));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 300px;
+            display: flex;
+            align-items: center;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification::before {
+            content: '✓';
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        /* Book animation */
+        .book {
+            width: 120px;
+            height: 160px;
+            background: linear-gradient(135deg, #ff9966, #ff5e62);
+            border-radius: 5px 15px 15px 5px;
+            position: relative;
+            margin: 40px auto;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.5s ease;
+        }
+
+        .book:hover {
+            transform: perspective(1000px) rotateY(30deg);
+        }
+
+        .book::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(135deg, #cc7a52, #cc4b4e);
+            transform: rotateY(90deg);
+            transform-origin: right;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .book::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
+            border-radius: 5px 15px 15px 5px;
+        }
+
+        .book-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* Genre icons */
+        .genre-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Story cover images */
+        .story-cover {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .story-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+        }
+
+        /* Rating stars */
+        .rating {
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .rating span {
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .rating span:hover {
+            transform: scale(1.2);
+        }
+
+        /* Author avatar */
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto 15px;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .author-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        /* Story progress bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffcc, #0099ff);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Floating decorations */
+        .floating-decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Typing animation */
+        .typing-text {
+            overflow: hidden;
+            border-right: 3px solid white;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 1px;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        /* Confetti effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            opacity: 0;
+        }
+
+        /* Wave animation */
+        .wave {
+            animation-name: wave;
+            animation-duration: 2.5s;
+            animation-iteration-count: infinite;
+            transform-origin: 70% 70%;
+            display: inline-block;
+        }
+
+        /* Story read button */
+        .read-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .read-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: all 0.5s;
+        }
+
+        .read-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Story search */
+        .search-container {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .search-container input {
+            padding-left: 45px;
+        }
+
+        .search-container::before {
+            content: '🔍';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        /* Story tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Story stats */
+        .story-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .story-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .page-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .page-number:hover, .page-number.active {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Story preview */
+        .story-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .story-preview.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .preview-content {
+            background: rgba(30, 30, 60, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .story-preview.active .preview-content {
+            transform: scale(1);
+        }
+
+        .close-preview {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.1);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-preview:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        /* Story chapters */
+        .chapters {
+            margin-top: 30px;
+        }
+
+        .chapter {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .chapter:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        /* Social share */
+        .social-share {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Story bookmark */
+        .bookmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bookmark.active {
+            background: #ffcc00;
+        }
+
+        /* Story progress indicator */
+        .progress-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ffcc, #0099ff);
+            transition: width 0.3s ease;
+        }
+
+        /* Story recommendations */
+        .recommendations {
+            margin-top: 40px;
+        }
+
+        /* Story comments */
+        .comments {
+            margin-top: 40px;
+        }
+
+        .comment {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Story metadata */
+        .metadata {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .metadata-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Story actions */
+        .story-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* Story rating */
+        .story-rating {
+            margin-top: 20px;
+        }
+
+        /* Story navigation */
+        .story-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        /* Story footer */
+        .story-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Story related */
+        .related-stories {
+            margin-top: 40px;
+        }
+
+        /* Story author */
+        .story-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-follow {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .author-follow:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Story series */
+        .story-series {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        /* Story collections */
+        .story-collections {
+            margin-top: 30px;
+        }
+
+        /* Story awards */
+        .story-awards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .award {
+            padding: 5px 10px;
+            background: rgba(255,215,0,0.2);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Story reading time */
+        .reading-time {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story content */
+        .story-content {
+            margin-top: 30px;
+            line-height: 1.8;
+        }
+
+        /* Story formatting */
+        .story-content p {
+            margin-bottom: 20px;
+        }
+
+        /* Story images */
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Story quotes */
+        .story-quote {
+            padding: 20px;
+            margin: 20px 0;
+            background: rgba(255,255,255,0.05);
+            border-left: 3px solid #00ffcc;
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+        }
+
+        /* Story divider */
+        .story-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .story-divider::after {
+            content: '❖';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 30, 60, 0.95);
+            padding: 0 15px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Story footnotes */
+        .story-footnotes {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story end */
+        .story-end {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            font-style: italic;
+        }
+
+        /* Story reactions */
+        .story-reactions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .reaction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reaction:hover {
+            transform: translateY(-5px);
+        }
+
+        .reaction-count {
+            margin-top: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* Story tools */
+        .story-tools {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .tool-button {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tool-button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Story recommendations */
+        .recommendation-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* Story similar */
+        .similar-stories {
+            margin-top: 40px;
+        }
+
+        /* Story popularity */
+        .story-popularity {
+            margin-top: 20px;
+        }
+
+        .popularity-meter {
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .popularity-level {
+            height: 100%;
+            background: linear-gradient(90deg, #ff9966, #ff5e62);
+            border-radius: 5px;
+        }
+
+        /* Story status */
+        .story-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .status-complete {
+            background: rgba(0, 204, 102, 0.2);
+            color: #00cc66;
+        }
+
+        .status-ongoing {
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+        }
+
+        .status-hiatus {
+            background: rgba(255, 102, 102, 0.2);
+            color: #ff6666;
+        }
+
+        /* Story word count */
+        .word-count {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story language */
+        .story-language {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story age rating */
+        .age-rating {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .rating-g {
+            background: rgba(0, 204, 102, 0.2);
+            color: #00cc66;
+        }
+
+        .rating-pg {
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+        }
+
+        .rating-r {
+            background: rgba(255, 102, 102, 0.2);
+            color: #ff6666;
+        }
+
+        /* Story content warning */
+        .content-warning {
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(255, 102, 102, 0.2);
+            border-left: 3px solid #ff6666;
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* Story license */
+        .story-license {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story publication date */
+        .publication-date {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story last updated */
+        .last-updated {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story views */
+        .story-views {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story likes */
+        .story-likes {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story comments count */
+        .comments-count {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story shares */
+        .story-shares {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story bookmarks */
+        .story-bookmarks {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Story reading progress */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffcc, #0099ff);
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-progress">
+        <div class="reading-progress-bar" id="reading-progress"></div>
+    </div>
+
+    <header>
+        <h1 class="rainbow-text glow" onclick="toggleSection('home')">Fictional Stories</h1>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active" onclick="toggleSection('home', this)"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#stories" onclick="toggleSection('stories', this)"><i class="fas fa-book-open"></i> Stories</a></li>
+                <li><a href="#authors" onclick="toggleSection('authors', this)"><i class="fas fa-pen-nib"></i> Authors</a></li>
+                <li><a href="#genres" onclick="toggleSection('genres', this)"><i class="fas fa-tags"></i> Genres</a></li>
+                <li><a href="#popular" onclick="toggleSection('popular', this)"><i class="fas fa-fire"></i> Popular</a></li>
+                <li><a href="#new-releases" onclick="toggleSection('new-releases', this)"><i class="fas fa-star"></i> New Releases</a></li>
+                <li><a href="#submit" onclick="toggleSection('submit', this)"><i class="fas fa-edit"></i> Write & Submit</a></li>
+                <li><a href="#forum" onclick="toggleSection('forum', this)"><i class="fas fa-comments"></i> Community Forum</a></li>
+                <li><a href="#reviews" onclick="toggleSection('reviews', this)"><i class="fas fa-star-half-alt"></i> Reviews</a></li>
+                <li><a href="#blog" onclick="toggleSection('blog', this)"><i class="fas fa-blog"></i> Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="section-container">
+            <section id="home" class="active">
+                <div class="home-content">
+                    <h2>Welcome to <span class="rainbow-text">Fictional Stories</span></h2>
+                    <div class="welcome-message">
+                        <p>Discover a world of imagination where stories come to life. Explore our collection of captivating tales from talented authors around the globe. Whether you're looking for fantasy epics, thrilling mysteries, heartwarming romances, or mind-bending sci-fi adventures, you'll find it all here.</p>
+                        <p>Our community of writers and readers is growing every day, and we invite you to be part of this creative journey. Read, write, share, and connect with fellow story enthusiasts.</p>
+                    </div>
+                    
+                    <div class="featured floating">
+                        <h3>✨ Featured Story: The Whispering Woods ✨</h3>
+                        <p>In a small village surrounded by dense woods, a legend speaks of whispers that guide lost souls to safety. Follow the journey of a young girl who discovers the truth behind the whispers and the magic of the woods. This enchanting tale blends mystery, fantasy, and coming-of-age themes into a story that will stay with you long after the last page.</p>
+                        <button onclick="showStoryPreview('The Whispering Woods', 'In a small village surrounded by dense woods, a legend speaks of whispers that guide lost souls to safety...')">Read Now</button>
+                    </div>
+                    
+                    <div>
+                        <a href="#stories" class="cta-button" onclick="toggleSection('stories')"><i class="fas fa-book-reader"></i> Explore Stories</a>
+                        <a href="#submit" class="cta-button" onclick="toggleSection('submit')"><i class="fas fa-pen-fancy"></i> Start Writing</a>
+                    </div>
+                    
+                    <div class="book" onclick="animateBook()">
+                        <div class="book-title">Read Me</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="stories">
+                <h2 class="rainbow-text">Stories</h2>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="Search stories by title, author, or genre...">
+                </div>
+                
+                <div class="genre">
+                    <div class="genre-icon">🏰</div>
+                    <h3 style="color: #ff9900;">Fantasy</h3>
+                    <p class="description">Dive into magical realms filled with mythical creatures and epic quests. Our fantasy section is perfect for those who love to escape reality and explore worlds where magic is real and anything is possible.</p>
+                    <div id="story-list">
+                        <div class="story-item">
+                            <div class="bookmark" onclick="toggleBookmark(this)"></div>
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1544931170-3ca1334cce88?q=80&w=1935&auto=format&fit=crop')"></div>
+                            <h3 style="color: #ffcc00;">The Lost Treasure</h3>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Sarah J.</span>
+                                <span><i class="fas fa-clock"></i> 15 min read</span>
+                                <span><i class="fas fa-eye"></i> 1.2k views</span>
+                            </div>
+                            <p>In a small village, a group of friends discovered an ancient map leading to a hidden treasure buried deep in the forest. Their adventure takes them through forgotten ruins and tests their friendship at every turn.</p>
+                            <div class="tags">
+                                <span class="tag">Adventure</span>
+                                <span class="tag">Mystery</span>
+                                <span class="tag">Friendship</span>
+                            </div>
+                            <button class="read-btn" onclick="showStoryPreview('The Lost Treasure', 'In a small village, a group of friends discovered an ancient map leading to a hidden treasure buried deep in the forest...')">Read Story</button>
+                        </div>
+                        
+                        <div class="story-item">
+                            <div class="bookmark" onclick="toggleBookmark(this)"></div>
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=2076&auto=format&fit=crop')"></div>
+                            <h3 style="color: #ffcc00;">The Enchanted Forest</h3>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Mike T.</span>
+                                <span><i class="fas fa-clock"></i> 25 min read</span>
+                                <span><i class="fas fa-eye"></i> 2.5k views</span>
+                            </div>
+                            <p>Once upon a time, a brave knight ventured into an enchanted forest where magical creatures roamed and secrets awaited. What he discovers there will change his understanding of the world forever.</p>
+                            <div class="tags">
+                                <span class="tag">Fantasy</span>
+                                <span class="tag">Magic</span>
+                                <span class="tag">Adventure</span>
+                            </div>
+                            <button class="read-btn" onclick="showStoryPreview('The Enchanted Forest', 'Once upon a time, a brave knight ventured into an enchanted forest where magical creatures roamed and secrets awaited...')">Read Story</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="genre">
+                    <div class="genre-icon">👻</div>
+                    <h3 style="color: #ff3300;">Horror</h3>
+                    <p class="description">For those who enjoy a good scare, our horror section features chilling tales that will keep you on the edge of your seat. From psychological thrillers to supernatural encounters, these stories will haunt your dreams.</p>
+                    <div id="story-list">
+                        <div class="story-item">
+                            <div class="bookmark" onclick="toggleBookmark(this)"></div>
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1518709766631-a6a7f45921c6?q=80&w=1935&auto=format&fit=crop')"></div>
+                            <h3 style="color: #ff6666;">The Haunted House</h3>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Emily R.</span>
+                                <span><i class="fas fa-clock"></i> 20 min read</span>
+                                <span><i class="fas fa-eye"></i> 3.1k views</span>
+                            </div>
+                            <p>When a family moves into an old mansion, they uncover its dark history and the spirits that still linger within. As the hauntings intensify, they must decide whether to flee or confront the terrifying truth.</p>
+                            <div class="tags">
+                                <span class="tag">Supernatural</span>
+                                <span class="tag">Thriller</span>
+                                <span class="tag">Mystery</span>
+                            </div>
+                            <button class="read-btn" onclick="showStoryPreview('The Haunted House', 'When a family moves into an old mansion, they uncover its dark history and the spirits that still linger within...')">Read Story</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="genre">
+                    <div class="genre-icon">🚀</div>
+                    <h3 style="color: #3399ff;">Sci-Fi</h3>
+                    <p class="description">Explore futuristic worlds and advanced technologies in our sci-fi section, where imagination knows no bounds. From space exploration to dystopian futures, these stories will challenge your perception of what's possible.</p>
+                    <div id="story-list">
+                        <div class="story-item">
+                            <div class="bookmark" onclick="toggleBookmark(this)"></div>
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')"></div>
+                            <h3 style="color: #66ccff;">The Time Traveler</h3>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Alex K.</span>
+                                <span><i class="fas fa-clock"></i> 30 min read</span>
+                                <span><i class="fas fa-eye"></i> 1.8k views</span>
+                            </div>
+                            <p>A scientist invents a time machine and embarks on a journey through different eras, witnessing history unfold. But when he accidentally alters a key event, he must race against time to restore the timeline before reality collapses.</p>
+                            <div class="tags">
+                                <span class="tag">Time Travel</span>
+                                <span class="tag">Adventure</span>
+                                <span class="tag">Science</span>
+                            </div>
+                            <button class="read-btn" onclick="showStoryPreview('The Time Traveler', 'A scientist invents a time machine and embarks on a journey through different eras, witnessing history unfold...')">Read Story</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="genre">
+                    <div class="genre-icon">💖</div>
+                    <h3 style="color: #ff66b3;">Romance</h3>
+                    <p class="description">Experience love stories that tug at your heartstrings in our romance section, filled with passion and emotion. From sweet contemporary tales to historical love stories, these narratives celebrate the many facets of love.</p>
+                    <div id="story-list">
+                        <div class="story-item">
+                            <div class="bookmark" onclick="toggleBookmark(this)"></div>
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1974&auto=format&fit=crop')"></div>
+                            <h3 style="color: #ff99cc;">The Secret Garden</h3>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Lisa M.</span>
+                                <span><i class="fas fa-clock"></i> 18 min read</span>
+                                <span><i class="fas fa-eye"></i> 2.3k views</span>
+                            </div>
+                            <p>A young girl discovers a hidden garden that blooms with extraordinary flowers and holds the key to her family's past. As she tends to the garden, she finds herself drawn to the mysterious gardener who knows more than he's telling.</p>
+                            <div class="tags">
+                                <span class="tag">Historical</span>
+                                <span class="tag">Drama</span>
+                                <span class="tag">Mystery</span>
+                            </div>
+                            <button class="read-btn" onclick="showStoryPreview('The Secret Garden', 'A young girl discovers a hidden garden that blooms with extraordinary flowers and holds the key to her family\'s past...')">Read Story</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pagination">
+                    <div class="page-number">1</div>
+                    <div class="page-number">2</div>
+                    <div class="page-number">3</div>
+                    <div class="page-number">4</div>
+                    <div class="page-number">5</div>
+                </div>
+            </section>
+
+            <section id="authors">
+                <h2 style="color: #ff9966;">Authors</h2>
+                <div class="authors">
+                    <p>Explore profiles of our talented writers contributing to the site. Each author brings a unique voice and perspective, enriching our community with their creativity and imagination.</p>
+                    
+                    <div class="search-container">
+                        <input type="text" placeholder="Search authors by name or genre...">
+                    </div>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-around; margin-top: 30px; gap: 20px;">
+                        <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.1s;">
+                            <div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1888&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff9966;">Sarah J.</h4>
+                            <p class="genre-tag">Fantasy Specialist</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                            <p class="description">With over 20 published fantasy novels, Sarah brings magical worlds to life with her vivid imagination. Her stories often feature strong female protagonists and intricate world-building.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-book"></i> 24 Stories</div>
+                                <div class="story-stat"><i class="fas fa-star"></i> 4.8</div>
+                            </div>
+                            <button onclick="showNotification('Sarah J. profile opened')">View Profile</button>
+                        </div>
+                        
+                        <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.2s;">
+                            <div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1887&auto=format&fit=crop')"></div>
+                            <h4 style="color: #66ccff;">Mike T.</h4>
+                            <p class="genre-tag">Sci-Fi Expert</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                            <p class="description">A former scientist turned writer, Mike's stories blend hard science with compelling narratives. His work explores the ethical implications of future technologies and space exploration.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-book"></i> 18 Stories</div>
+                                <div class="story-stat"><i class="fas fa-star"></i> 4.6</div>
+                            </div>
+                            <button onclick="showNotification('Mike T. profile opened')">View Profile</button>
+                        </div>
+                        
+                        <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.3s;">
+                            <div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b2;">Emily R.</h4>
+                            <p class="genre-tag">Romance Writer</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 95%"></div>
+                            </div>
+                            <p class="description">Emily's heartfelt stories have touched millions of readers worldwide with their emotional depth. She specializes in historical romance and contemporary love stories with complex characters.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-book"></i> 32 Stories</div>
+                                <div class="story-stat"><i class="fas fa-star"></i> 4.9</div>
+                            </div>
+                            <button onclick="showNotification('Emily R. profile opened')">View Profile</button>
+                        </div>
+                        
+                        <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.4s;">
+                            <div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop')"></div>
+                            <h4 style="color: #cc66ff;">Alex K.</h4>
+                            <p class="genre-tag">Horror & Thriller</p>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 80%"></div>
+                            </div>
+                            <p class="description">Master of suspense and psychological horror, Alex crafts stories that keep readers up at night. His work often explores the darker aspects of human nature and supernatural phenomena.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-book"></i> 15 Stories</div>
+                                <div class="story-stat"><i class="fas fa-star"></i> 4.7</div>
+                            </div>
+                            <button onclick="showNotification('Alex K. profile opened')">View Profile</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <div class="page-number">1</div>
+                        <div class="page-number">2</div>
+                        <div class="page-number">3</div>
+                        <div class="page-number">4</div>
+                        <div class="page-number">5</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="genres">
+                <h2 class="rainbow-text">Genres</h2>
+                <p>Browse through organized sections for different genres. Whether you prefer thrillers, comedies, or dramas, we have something for everyone. Click on any genre to explore its stories.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; margin-top: 30px;">
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.1s;">
+                        <div class="genre-icon">🏰</div>
+                        <h4 style="color: #ff9900;">Fantasy</h4>
+                        <p>Magic, mythical creatures, and epic adventures in imagined worlds.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 90%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">120+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.2s;">
+                        <div class="genre-icon">👻</div>
+                        <h4 style="color: #ff0066;">Horror</h4>
+                        <p>Chilling tales to keep you up at night with fear and suspense.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 75%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">85+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.3s;">
+                        <div class="genre-icon">🚀</div>
+                        <h4 style="color: #0099ff;">Sci-Fi</h4>
+                        <p>Futuristic worlds, advanced technologies, and space exploration.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 80%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">110+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.4s;">
+                        <div class="genre-icon">💖</div>
+                        <h4 style="color: #ff66cc;">Romance</h4>
+                        <p>Heartwarming love stories that celebrate human connections.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 95%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">200+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.5s;">
+                        <div class="genre-icon">🕵️</div>
+                        <h4 style="color: #33cc33;">Mystery</h4>
+                        <p>Puzzling crimes and enigmatic situations that demand solving.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">65+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.6s;">
+                        <div class="genre-icon">🎭</div>
+                        <h4 style="color: #9966ff;">Drama</h4>
+                        <p>Emotional narratives exploring human relationships and conflicts.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 65%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">50+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.7s;">
+                        <div class="genre-icon">😂</div>
+                        <h4 style="color: #ffcc00;">Comedy</h4>
+                        <p>Light-hearted stories designed to entertain and make you laugh.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 60%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">45+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="animation: slideIn 0.5s ease forwards; animation-delay: 0.8s;">
+                        <div class="genre-icon">🌍</div>
+                        <h4 style="color: #00cc99;">Historical</h4>
+                        <p>Stories set in the past, blending facts with fictional narratives.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 55%"></div>
+                        </div>
+                        <div class="tooltip">
+                            <span class="tooltiptext">40+ stories available</span>
+                            <button onclick="toggleSection('stories')">Explore</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="popular">
+                <h2 style="color: #ff66b3;">Popular Stories</h2>
+                <div class="popular">
+                    <h3 class="glow" style="color: #ff3399;">🔥 Trending Stories This Week</h3>
+                    <p>Highlighting the most-read stories of the week! Discover what others are enjoying and find your next favorite read. These stories have captured readers' imaginations and are generating buzz in our community.</p>
+                    
+                    <div style="display: flex; overflow-x: auto; gap: 25px; padding: 20px 10px; scroll-snap-type: x mandatory;">
+                        <div class="card" style="min-width: 300px; scroll-snap-align: start;">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1794&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b3;">The Moon's Secret</h4>
+                            <div class="rating">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Sarah J.</span>
+                                <span><i class="fas fa-eye"></i> 5.2k views</span>
+                            </div>
+                            <p class="description">A young astronomer discovers the moon holds a secret civilization that only appears once every century. As she uncovers their advanced technology, she must decide whether to share this knowledge with the world.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-bookmark"></i> 1.3k</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 428</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('The Moon\'s Secret opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card" style="min-width: 300px; scroll-snap-align: start;">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=1974&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b3;">Dragon's Heart</h4>
+                            <div class="rating">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                            </div>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Mike T.</span>
+                                <span><i class="fas fa-eye"></i> 4.7k views</span>
+                            </div>
+                            <p class="description">In a world where dragons bond with humans, one girl discovers her dragon has a secret past connected to the royal family. Their bond will be tested as political intrigue threatens to tear the kingdom apart.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-bookmark"></i> 1.1k</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 356</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('Dragon\'s Heart opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card" style="min-width: 300px; scroll-snap-align: start;">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b3;">Ghost Town</h4>
+                            <div class="rating">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Alex K.</span>
+                                <span><i class="fas fa-eye"></i> 6.1k views</span>
+                            </div>
+                            <p class="description">A road trip goes wrong when a group of friends stumble upon a town that doesn't appear on any maps. As night falls, they realize the town's inhabitants haven't been alive for decades.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-bookmark"></i> 1.8k</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 512</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('Ghost Town opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card" style="min-width: 300px; scroll-snap-align: start;">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b3;">The Last Spell</h4>
+                            <div class="rating">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                            </div>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Emily R.</span>
+                                <span><i class="fas fa-eye"></i> 3.9k views</span>
+                            </div>
+                            <p class="description">In a world where magic is dying, one young witch holds the last spell capable of restoring the balance. But using it will cost her everything she loves.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-bookmark"></i> 987</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 289</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('The Last Spell opened')">Read Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px;">
+                    <h3 style="color: #ff3399;">⭐️ All-Time Favorites</h3>
+                    <p>These timeless classics have been beloved by our community for years. They represent the best of what our platform has to offer.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 20px;">
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b3;">The Clockmaker's Daughter</h4>
+                            <div class="rating">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Sarah J.</span>
+                                <span><i class="fas fa-eye"></i> 25.4k views</span>
+                            </div>
+                            <p class="description">A master clockmaker builds an automaton so lifelike it's mistaken for his daughter. When she disappears, he discovers she was more than just gears and springs.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-bookmark"></i> 8.7k</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 2.1k</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('The Clockmaker\'s Daughter opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1503435980610-a51f3ddfee50?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b3;">Between Two Worlds</h4>
+                            <div class="rating">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Mike T.</span>
+                                <span><i class="fas fa-eye"></i> 22.1k views</span>
+                            </div>
+                            <p class="description">A scientist discovers a portal to a parallel universe where his counterpart made different life choices. As he explores this alternate reality, he must decide which world he truly belongs in.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-bookmark"></i> 7.9k</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 1.8k</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('Between Two Worlds opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff66b3;">The Silent Song</h4>
+                            <div class="rating">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                            </div>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> Emily R.</span>
+                                <span><i class="fas fa-eye"></i> 19.6k views</span>
+                            </div>
+                            <p class="description">A mute princess communicates through a magical music box that plays the emotions she cannot express. When the box is stolen, a young musician helps her find her literal voice.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-bookmark"></i> 6.5k</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 1.5k</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('The Silent Song opened')">Read Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="new-releases">
+                <h2 style="color: #33ccff;">New Releases</h2>
+                <div class="new-releases">
+                    <h3 style="color: #00ccff;">✨ Fresh From Our Authors</h3>
+                    <p>Check out the recently added content to our library. We strive to keep our collection fresh and exciting for our readers with new stories added daily.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 30px;">
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1911&auto=format&fit=crop')"></div>
+                            <h4 style="color: #00ccff;">The Last Star</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-calendar"></i> Released: Today</span>
+                                <span><i class="fas fa-user"></i> Alex K.</span>
+                            </div>
+                            <p class="description">In a dying universe, the last star holds the key to rebirth or eternal darkness. A team of scientists races against time to unlock its secrets before all light fades forever.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 342 views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 24</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('The Last Star opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #00ccff;">Ocean's Whisper</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-calendar"></i> Released: Yesterday</span>
+                                <span><i class="fas fa-user"></i> Sarah J.</span>
+                            </div>
+                            <p class="description">A marine biologist discovers the ocean is trying to communicate with humanity through complex patterns in whale songs. But the message contains a dire warning.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 587 views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 42</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('Ocean\'s Whisper opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1517976547714-720226b864c1?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #00ccff;">Clockwork Dreams</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-calendar"></i> Released: 2 days ago</span>
+                                <span><i class="fas fa-user"></i> Mike T.</span>
+                            </div>
+                            <p class="description">In a steampunk world, dreams can be manufactured and sold - but at what cost? A street urchin discovers the dark truth behind the dream trade.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 723 views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 68</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('Clockwork Dreams opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=1974&auto=format&fit=crop')"></div>
+                            <h4 style="color: #00ccff;">The Forgotten Kingdom</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-calendar"></i> Released: 3 days ago</span>
+                                <span><i class="fas fa-user"></i> Emily R.</span>
+                            </div>
+                            <p class="description">An archaeologist uncovers evidence of a civilization that history forgot. As she delves deeper, she realizes why the world was made to forget.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 892 views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 97</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('The Forgotten Kingdom opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1794&auto=format&fit=crop')"></div>
+                            <h4 style="color: #00ccff;">Neon Shadows</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-calendar"></i> Released: 4 days ago</span>
+                                <span><i class="fas fa-user"></i> Alex K.</span>
+                            </div>
+                            <p class="description">In a cyberpunk metropolis, a hacker discovers her consciousness can jump between bodies. The corporation that created this ability wants it back - at any cost.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 1.2k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 134</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('Neon Shadows opened')">Read Now</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #00ccff;">The Librarian's Code</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-calendar"></i> Released: 5 days ago</span>
+                                <span><i class="fas fa-user"></i> Sarah J.</span>
+                            </div>
+                            <p class="description">A librarian discovers that certain book arrangements create magical effects. When a dangerous text goes missing, she must use her knowledge to prevent catastrophe.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 1.5k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 187</div>
+                            </div>
+                            <button class="read-btn" onclick="showNotification('The Librarian\'s Code opened')">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <div class="page-number">1</div>
+                        <div class="page-number">2</div>
+                        <div class="page-number">3</div>
+                        <div class="page-number">4</div>
+                        <div class="page-number">5</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="submit">
+                <h2 style="color: #00ffcc;">Write & Submit</h2>
+                <form id="story-form">
+                    <input type="text" id="title" placeholder="Story Title" required>
+                    
+                    <select id="genre" required>
+                        <option value="" disabled selected>Select Genre</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="horror">Horror</option>
+                        <option value="scifi">Science Fiction</option>
+                        <option value="romance">Romance</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="drama">Drama</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="historical">Historical</option>
+                    </select>
+                    
+                    <textarea id="content" placeholder="Write your story here..." rows="15" required></textarea>
+                    
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <button type="submit">
+                            <i class="fas fa-paper-plane"></i> Submit Your Story
+                        </button>
+                        <button type="button" style="background: linear-gradient(90deg, #ff6666, #cc0000);" onclick="document.getElementById('story-form').reset()">
+                            <i class="fas fa-trash"></i> Clear Form
+                        </button>
+                        <button type="button" style="background: linear-gradient(90deg, #6666ff, #0066cc);" onclick="saveDraft()">
+                            <i class="fas fa-save"></i> Save Draft
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="writing-tips" style="margin-top: 40px;">
+                    <h3 style="color: #00ffcc;">✍️ Writing Tips & Resources</h3>
+                    
+                    <div class="card">
+                        <h4>Show, Don't Tell</h4>
+                        <p>Instead of saying "John was angry," describe his clenched fists, the heat rising to his face, and the way he gritted his teeth. This technique immerses readers in your story and allows them to experience emotions alongside your characters.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4>Create Vivid Characters</h4>
+                        <p>Give your characters unique quirks, backgrounds, and motivations to make them memorable. Consider their fears, desires, and how they change throughout your story. Well-developed characters drive compelling narratives.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4>Build Immersive Worlds</h4>
+                        <p>Whether you're writing about a fantasy kingdom or a modern city, rich world-building enhances believability. Think about culture, history, geography, and how these elements affect your characters' lives.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4>Craft Engaging Dialogue</h4>
+                        <p>Dialogue should sound natural while advancing the plot or revealing character. Pay attention to how people really speak, but remove the unnecessary filler. Each conversation should have purpose.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4>Maintain Consistent Pacing</h4>
+                        <p>Balance action scenes with moments of reflection. Vary sentence structure and chapter length to control the story's rhythm. Pacing keeps readers engaged from start to finish.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="forum">
+                <h2 style="color: #9966ff;">Community Forum</h2>
+                <p>A space for discussions, feedback, and writing prompts. Connect with fellow writers and readers to share ideas and inspiration. Our community is supportive and welcoming to all levels of writers.</p>
+                
+                <div style="margin-top: 30px;">
+                    <div class="card">
+                        <h4 style="color: #9966ff;">🔥 Hot Topic: World Building Tips</h4>
+                        <div class="metadata">
+                            <span><i class="fas fa-user"></i> Started by Sarah J.</span>
+                            <span><i class="fas fa-comment"></i> 142 replies</span>
+                            <span><i class="fas fa-eye"></i> 2.3k views</span>
+                        </div>
+                        <p>Join our conversation about creating immersive fictional worlds that feel real and lived-in. Share your techniques for developing cultures, histories, and settings that captivate readers.</p>
+                        <div style="display: flex; gap: 15px; margin-top: 20px;">
+                            <button style="background: linear-gradient(90deg, #9966ff, #6600cc);">
+                                <i class="fas fa-comment-dots"></i> Join Discussion
+                            </button>
+                            <button style="background: linear-gradient(90deg, #6666ff, #0066cc);">
+                                <i class="fas fa-list"></i> View All Threads
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="margin-top: 25px;">
+                        <h4 style="color: #9966ff;">📝 Weekly Writing Prompt</h4>
+                        <div class="metadata">
+                            <span><i class="fas fa-user"></i> Posted by Moderator</span>
+                            <span><i class="fas fa-clock"></i> New prompt every Monday</span>
+                        </div>
+                        <p>"Write a story that begins with the sentence: 'The door creaked open, revealing a room that shouldn't exist.'"</p>
+                        <p>Share your response in the comments or use it as inspiration for a new story! The best responses get featured in our newsletter.</p>
+                        <button onclick="toggleSection('submit')">
+                            <i class="fas fa-edit"></i> Respond to Prompt
+                        </button>
+                    </div>
+                    
+                    <div class="card" style="margin-top: 25px;">
+                        <h4 style="color: #9966ff;">💬 Critique Corner</h4>
+                        <div class="metadata">
+                            <span><i class="fas fa-user"></i> Moderated by Mike T.</span>
+                            <span><i class="fas fa-comment"></i> 87 active exchanges</span>
+                        </div>
+                        <p>Get constructive feedback on your writing or help others improve theirs. Our critique guidelines ensure all feedback is helpful, specific, and respectful.</p>
+                        <div style="display: flex; gap: 15px; margin-top: 20px;">
+                            <button style="background: linear-gradient(90deg, #9966ff, #6600cc);">
+                                <i class="fas fa-search"></i> Request Feedback
+                            </button>
+                            <button style="background: linear-gradient(90deg, #6666ff, #0066cc);">
+                                <i class="fas fa-hands-helping"></i> Give Feedback
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reviews">
+                <h2 style="color: #ffcc00;">Reviews & Ratings</h2>
+                <p>Readers can rate and review stories to help others discover great reads. Your feedback is valuable to our community and helps authors improve their craft.</p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px;">
+                    <div class="card" style="flex: 1; min-width: 300px;">
+                        <h4 style="color: #ffcc00;">"Best fantasy story I've read this year!"</h4>
+                        <div class="rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <div class="metadata">
+                            <span><i class="fas fa-user"></i> BookLover42</span>
+                            <span><i class="fas fa-calendar"></i> 2 days ago</span>
+                        </div>
+                        <p class="description">"The world-building in this story is incredible. I felt like I was actually there with the characters on their journey. The magic system is unique and well-explained, and the characters feel like real people with complex motivations."</p>
+                        <div class="story-stats">
+                            <div class="story-stat"><i class="fas fa-thumbs-up"></i> 42</div>
+                            <div class="story-stat"><i class="fas fa-comment"></i> 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="flex: 1; min-width: 300px;">
+                        <h4 style="color: #ffcc00;">"Couldn't put it down!"</h4>
+                        <div class="rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                        </div>
+                        <div class="metadata">
+                            <span><i class="fas fa-user"></i> ReadingRainbow</span>
+                            <span><i class="fas fa-calendar"></i> 1 week ago</span>
+                        </div>
+                        <p class="description">"I stayed up all night reading this. The plot twists kept me guessing until the very end. The only reason I didn't give it 5 stars is because I wanted more - the ending felt slightly rushed."</p>
+                        <div class="story-stats">
+                            <div class="story-stat"><i class="fas fa-thumbs-up"></i> 28</div>
+                            <div class="story-stat"><i class="fas fa-comment"></i> 1</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="flex: 1; min-width: 300px;">
+                        <h4 style="color: #ffcc00;">"Hauntingly beautiful"</h4>
+                        <div class="rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <div class="metadata">
+                            <span><i class="fas fa-user"></i> LiteraryExplorer</span>
+                            <span><i class="fas fa-calendar"></i> 3 weeks ago</span>
+                        </div>
+                        <p class="description">"The prose is so lyrical and the story so poignant. It stayed with me long after I finished reading. This is the kind of story that changes how you see the world. I'll be recommending it to everyone I know."</p>
+                        <div class="story-stats">
+                            <div class="story-stat"><i class="fas fa-thumbs-up"></i> 56</div>
+                            <div class="story-stat"><i class="fas fa-comment"></i> 7</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px;">
+                    <h3 style="color: #ffcc00;">Write a Review</h3>
+                    <div class="card">
+                        <form>
+                            <input type="text" placeholder="Story Title" required>
+                            
+                            <div style="margin: 20px 0;">
+                                <label style="display: block; margin-bottom: 10px; font-weight: bold;">Rating:</label>
+                                <div class="rating">
+                                    <span onclick="setRating(1)">☆</span>
+                                    <span onclick="setRating(2)">☆</span>
+                                    <span onclick="setRating(3)">☆</span>
+                                    <span onclick="setRating(4)">☆</span>
+                                    <span onclick="setRating(5)">☆</span>
+                                </div>
+                            </div>
+                            
+                            <textarea placeholder="Your review..." rows="8" required></textarea>
+                            
+                            <div style="margin-top: 20px;">
+                                <button type="submit">
+                                    <i class="fas fa-paper-plane"></i> Submit Review
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section id="blog">
+                <h2 style="color: #ff6666;">Blog</h2>
+                <div class="blog">
+                    <p>Writing tips, author interviews, and industry news to inspire and inform. Stay updated with the latest trends in storytelling and enhance your writing skills through our insightful articles.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 30px;">
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff6666;">Featured Post: Character Development 101</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> By Sarah J.</span>
+                                <span><i class="fas fa-calendar"></i> May 15, 2023</span>
+                            </div>
+                            <p class="description">Learn how to create memorable characters that readers will love and remember long after they finish your story. This comprehensive guide covers backstory, motivation, arcs, and more.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 3.2k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 87</div>
+                            </div>
+                            <button style="background: linear-gradient(90deg, #ff6666, #cc0000);">
+                                <i class="fas fa-book-open"></i> Read Article
+                            </button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=2076&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff6666;">Interview with Best-Selling Author</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> By Mike T.</span>
+                                <span><i class="fas fa-calendar"></i> May 8, 2023</span>
+                            </div>
+                            <p class="description">We sit down with award-winning author J.K. Rowling to discuss her writing process, challenges she's faced, and her upcoming projects. Get insights from one of the most successful writers of our time.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 5.7k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 142</div>
+                            </div>
+                            <button style="background: linear-gradient(90deg, #ff6666, #cc0000);">
+                                <i class="fas fa-book-open"></i> Read Interview
+                            </button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff6666;">The Future of Digital Publishing</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> By Emily R.</span>
+                                <span><i class="fas fa-calendar"></i> May 1, 2023</span>
+                            </div>
+                            <p class="description">Exploring how technology is changing the way we write, publish, and consume stories. From AI-assisted writing to immersive reading experiences, discover what's coming next in the publishing world.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 2.8k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 63</div>
+                            </div>
+                            <button style="background: linear-gradient(90deg, #ff6666, #cc0000);">
+                                <i class="fas fa-book-open"></i> Read Analysis
+                            </button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff6666;">World Building Workshop</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> By Sarah J.</span>
+                                <span><i class="fas fa-calendar"></i> April 24, 2023</span>
+                            </div>
+                            <p class="description">A step-by-step guide to creating immersive fictional worlds. This workshop includes exercises, templates, and examples to help you build believable settings for your stories.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 4.1k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 98</div>
+                            </div>
+                            <button style="background: linear-gradient(90deg, #ff6666, #cc0000);">
+                                <i class="fas fa-book-open"></i> Read Workshop
+                            </button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff6666;">Overcoming Writer's Block</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> By Alex K.</span>
+                                <span><i class="fas fa-calendar"></i> April 17, 2023</span>
+                            </div>
+                            <p class="description">Practical strategies to break through creative barriers and get your writing flowing again. These techniques have helped professional authors overcome blocks and finish their projects.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 3.5k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 76</div>
+                            </div>
+                            <button style="background: linear-gradient(90deg, #ff6666, #cc0000);">
+                                <i class="fas fa-book-open"></i> Read Guide
+                            </button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="story-cover" style="background-image: url('https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=2070&auto=format&fit=crop')"></div>
+                            <h4 style="color: #ff6666;">Self-Publishing Success Stories</h4>
+                            <div class="metadata">
+                                <span><i class="fas fa-user"></i> By Emily R.</span>
+                                <span><i class="fas fa-calendar"></i> April 10, 2023</span>
+                            </div>
+                            <p class="description">Inspiring interviews with authors who found success through self-publishing. Learn their strategies for marketing, building an audience, and turning writing into a sustainable career.</p>
+                            <div class="story-stats">
+                                <div class="story-stat"><i class="fas fa-eye"></i> 2.9k views</div>
+                                <div class="story-stat"><i class="fas fa-comment"></i> 54</div>
+                            </div>
+                            <button style="background: linear-gradient(90deg, #ff6666, #cc0000);">
+                                <i class="fas fa-book-open"></i> Read Stories
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <div class="page-number">1</div>
+                        <div class="page-number">2</div>
+                        <div class="page-number">3</div>
+                        <div class="page-number">4</div>
+                        <div class="page-number">5</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <div class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="notification" id="notification">
+        Notification message here
+    </div>
+
+    <div class="story-preview" id="story-preview">
+        <div class="preview-content">
+            <div class="close-preview" onclick="closeStoryPreview()">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 id="preview-title">Story Title</h2>
+            <div class="metadata">
+                <span><i class="fas fa-user"></i> Author Name</span>
+                <span><i class="fas fa-clock"></i> 15 min read</span>
+                <span><i class="fas fa-eye"></i> 1.2k views</span>
+            </div>
+            <div class="content-warning">
+                <strong>Content Warning:</strong> This story contains themes that some readers may find disturbing.
+            </div>
+            <div class="story-content">
+                <p id="preview-content">Story content will appear here...</p>
+                
+                <div class="story-divider"></div>
+                
+                <div class="chapters">
+                    <h3>Chapters</h3>
+                    <div class="chapter">
+                        <h4>Chapter 1: The Beginning</h4>
+                        <p>The story begins with our protagonist discovering something extraordinary...</p>
+                    </div>
+                    <div class="chapter">
+                        <h4>Chapter 2: The Journey</h4>
+                        <p>The adventure continues as our hero sets out on a perilous quest...</p>
+                    </div>
+                </div>
+                
+                <div class="story-actions">
+                    <button style="background: linear-gradient(90deg, #00ffcc, #0099ff);">
+                        <i class="fas fa-book-open"></i> Continue Reading
+                    </button>
+                    <button style="background: linear-gradient(90deg, #9966ff, #6600cc);">
+                        <i class="fas fa-bookmark"></i> Bookmark
+                    </button>
+                </div>
+                
+                <div class="story-reactions">
+                    <div class="reaction">
+                        <i class="fas fa-heart" style="color: #ff6666; font-size: 1.5rem;"></i>
+                        <div class="reaction-count">124</div>
+                    </div>
+                    <div class="reaction">
+                        <i class="fas fa-thumbs-up" style="color: #66ccff; font-size: 1.5rem;"></i>
+                        <div class="reaction-count">87</div>
+                    </div>
+                    <div class="reaction">
+                        <i class="fas fa-star" style="color: #ffcc00; font-size: 1.5rem;"></i>
+                        <div class="reaction-count">56</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Thank you for visiting our website. We hope you enjoy your reading experience!</p>
+        <div style="margin-top: 20px;">
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;"><i class="fas fa-file-alt"></i> Terms of Service</a>
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;"><i class="fas fa-lock"></i> Privacy Policy</a>
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;"><i class="fas fa-question-circle"></i> FAQ</a>
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none;"><i class="fas fa-info-circle"></i> About</a>
+        </div>
+        <div style="margin-top: 20px;">
+            <a href="#" style="color: white; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+            <a href="#" style="color: white; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
+            <a href="#" style="color: white; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+            <a href="#" style="color: white; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-pinterest"></i></a>
+            <a href="#" style="color: white; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-goodreads"></i></a>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <script>
+        // Enhanced toggleSection with smooth scrolling and nav highlighting
+        function toggleSection(sectionId, clickedLink = null) {
+            const sections = document.querySelectorAll('main section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Smooth scroll to the section
+                setTimeout(() => {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+            
+            // Add active class to clicked nav link
+            if (clickedLink) {
+                clickedLink.classList.add('active');
+            } else {
+                // Find the nav link that matches the sectionId and make it active
+                const matchingLink = document.querySelector(`nav a[href="#${sectionId}"]`);
+                if (matchingLink) {
+                    matchingLink.classList.add('active');
+                }
+            }
+            
+            // Change URL hash without scrolling
+            history.pushState(null, null, '#' + sectionId);
+        }
+
+        // Handle form submission with animation
+        document.getElementById('story-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const genre = document.getElementById('genre').value;
+            const content = document.getElementById('content').value;
+
+            // Create a "sending" animation
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<div class="spinner"></div>';
+            button.disabled = true;
+            
+            // Simulate sending with timeout
+            setTimeout(() => {
+                const stories = JSON.parse(localStorage.getItem('stories')) || [];
+                stories.push({ title, genre, content });
+                localStorage.setItem('stories', JSON.stringify(stories));
+
+                // Create confetti effect
+                createConfetti();
+                
+                // Show success notification
+                showNotification('Your story has been submitted successfully!');
+                
+                // Reset form
+                setTimeout(() => {
+                    document.getElementById('story-form').reset();
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 1000);
+            }, 2000);
+        });
+
+        // Save draft function
+        function saveDraft() {
+            const title = document.getElementById('title').value;
+            const genre = document.getElementById('genre').value;
+            const content = document.getElementById('content').value;
+            
+            if (!title && !content) {
+                showNotification('No content to save as draft');
+                return;
+            }
+            
+            localStorage.setItem('draft', JSON.stringify({ title, genre, content }));
+            showNotification('Draft saved successfully!');
+        }
+
+        // Load draft if exists
+        window.addEventListener('load', function() {
+            const draft = JSON.parse(localStorage.getItem('draft'));
+            if (draft) {
+                if (confirm('You have a saved draft. Would you like to load it?')) {
+                    document.getElementById('title').value = draft.title || '';
+                    document.getElementById('genre').value = draft.genre || '';
+                    document.getElementById('content').value = draft.content || '';
+                }
+            }
+        });
+
+        // Show notification function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Back to top button visibility
+        window.addEventListener('scroll', function() {
+            const backToTopButton = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+            
+            // Update reading progress
+            updateReadingProgress();
+        });
+
+        // Update reading progress bar
+        function updateReadingProgress() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("reading-progress").style.width = scrolled + "%";
+        }
+
+        // Load stories on page load with animation
+        window.onload = function() {
+            // Show home section by default
+            toggleSection('home');
+            
+            // Load stories from localStorage
+            const stories = JSON.parse(localStorage.getItem('stories')) || [];
+            stories.forEach((story, index) => {
+                setTimeout(() => {
+                    const storyItem = document.createElement('div');
+                    storyItem.classList.add('story-item');
+                    storyItem.style.opacity = '0';
+                    storyItem.style.transform = 'translateY(20px)';
+                    storyItem.innerHTML = `
+                        <h3 style="color: #00ffcc;">${story.title}</h3>
+                        <p><strong>Genre:</strong> ${story.genre}</p>
+                        <p>${story.content}</p>
+                        <button onclick="showNotification('${story.title} opened')">Read Story</button>
+                    `;
+                    document.getElementById('story-list').appendChild(storyItem);
+                    
+                    // Animate the new story item
+                    setTimeout(() => {
+                        storyItem.style.opacity = '1';
+                        storyItem.style.transform = 'translateY(0)';
+                        storyItem.style.transition = 'all 0.5s ease';
+                    }, 50);
+                }, index * 200);
+            });
+            
+            // Handle hash on page load
+            if (window.location.hash) {
+                const sectionId = window.location.hash.substring(1);
+                toggleSection(sectionId);
+            }
+            
+            // Add click animation to all buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // Add star rating functionality
+            const stars = document.querySelectorAll('.rating span');
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    const ratingContainer = this.parentElement;
+                    const stars = ratingContainer.querySelectorAll('span');
+                    
+                    // Reset all stars
+                    stars.forEach(s => s.textContent = '☆');
+                    
+                    // Fill stars up to clicked one
+                    for (let i = 0; i <= index; i++) {
+                        stars[i].textContent = '★';
+                    }
+                });
+            });
+            
+            // Add mouse move effect to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const x = e.pageX - card.offsetLeft;
+                    const y = e.pageY - card.offsetTop;
+                    
+                    card.style.setProperty('--x', x + 'px');
+                    card.style.setProperty('--y', y + 'px');
+                });
+            });
+        };
+
+        // Add rainbow color animation to some headings
+        const rainbowHeadings = document.querySelectorAll('.rainbow-text');
+        rainbowHeadings.forEach(heading => {
+            heading.style.animationDelay = `${Math.random() * 2}s`;
+        });
+
+        // Book animation
+        function animateBook() {
+            const book = document.querySelector('.book');
+            book.style.animation = 'bookFlip 2s ease-in-out';
+            setTimeout(() => {
+                book.style.animation = '';
+            }, 2000);
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff0000', '#ff9900', '#33cc33', '#3399ff', '#cc33ff', '#ff0066'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Toggle bookmark
+        function toggleBookmark(element) {
+            element.classList.toggle('active');
+            if (element.classList.contains('active')) {
+                showNotification('Story bookmarked');
+            } else {
+                showNotification('Bookmark removed');
+            }
+        }
+
+        // Show story preview
+        function showStoryPreview(title, content) {
+            document.getElementById('preview-title').textContent = title;
+            document.getElementById('preview-content').textContent = content;
+            document.getElementById('story-preview').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close story preview
+        function closeStoryPreview() {
+            document.getElementById('story-preview').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Set rating
+        function setRating(rating) {
+            const stars = event.target.parentElement.querySelectorAll('span');
+            
+            // Reset all stars
+            stars.forEach(s => s.textContent = '☆');
+            
+            // Fill stars up to clicked one
+            for (let i = 0; i < rating; i++) {
+                stars[i].textContent = '★';
+            }
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.dark-mode-toggle i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                showNotification('Dark mode activated');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                showNotification('Light mode activated');
+            }
+        }
+
+        // Wave animation on click
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.parentElement.tagName === 'BUTTON') {
+                const button = e.target.tagName === 'BUTTON' ? e.target : 
+                              e.target.tagName === 'A' ? e.target :
+                              e.target.parentElement;
+                
+                const wave = document.createElement('span');
+                wave.classList.add('wave');
+                button.appendChild(wave);
+                
+                setTimeout(() => {
+                    wave.remove();
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

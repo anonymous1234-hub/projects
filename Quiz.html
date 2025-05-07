@@ -1,0 +1,2676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Quiz App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --accent: #4776e6;
+            --text: #2c3e50;
+            --light: #f8f9fa;
+            --correct: #2ecc71;
+            --wrong: #e74c3c;
+            --neutral: #3498db;
+            --premium: #f39c12;
+            --dark: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            animation: bgShift 15s infinite alternate;
+            overflow-x: hidden;
+        }
+
+        @keyframes bgShift {
+            0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            25% { background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); }
+            50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+            75% { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+            100% { background: linear-gradient(135deg, #a6c1ee 0%, #fbc2eb 100%); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            perspective: 1000px;
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(20vw) rotate(360deg); opacity: 0; }
+        }
+
+        /* Navigation Styles */
+        .nav-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-container:hover {
+            transform: translateZ(20px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            transform: translateY(-2px) translateZ(10px);
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            border-radius: 50px;
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 5px 15px rgba(110, 72, 170, 0.4);
+        }
+
+        .nav-link.premium {
+            background: linear-gradient(90deg, var(--premium), #e67e22);
+            color: white;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            animation: premiumGlow 2s infinite alternate;
+        }
+
+        @keyframes premiumGlow {
+            0% { box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4); }
+            100% { box-shadow: 0 4px 20px rgba(243, 156, 18, 0.7); }
+        }
+
+        .nav-link.premium:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 7px 20px rgba(243, 156, 18, 0.7);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotateGradient 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotateGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Home Page Styles */
+        .home-container {
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .hero {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: textFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-title {
+            color: var(--primary);
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-desc {
+            color: var(--text);
+        }
+
+        /* Subject Selection Styles */
+        .subject-selection {
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .subject-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .subject-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+
+        .subject-selection:hover .subject-title::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .subjects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .subject-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(110, 72, 170, 0.1), rgba(71, 118, 230, 0.1));
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .subject-card:hover::before {
+            transform: scale(1);
+        }
+
+        .subject-card.premium {
+            animation: premiumCardPulse 2s infinite alternate;
+        }
+
+        @keyframes premiumCardPulse {
+            0% { box-shadow: 0 5px 15px rgba(243, 156, 18, 0.2); }
+            100% { box-shadow: 0 5px 25px rgba(243, 156, 18, 0.4); }
+        }
+
+        .subject-card.premium::after {
+            content: 'PREMIUM';
+            position: absolute;
+            top: 10px;
+            right: -25px;
+            background: linear-gradient(45deg, var(--premium), #e67e22);
+            color: white;
+            padding: 3px 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: premiumBadgePulse 1.5s infinite alternate;
+        }
+
+        @keyframes premiumBadgePulse {
+            0% { transform: rotate(45deg) scale(1); }
+            100% { transform: rotate(45deg) scale(1.1); }
+        }
+
+        .subject-card.premium:hover {
+            animation: none;
+            box-shadow: 0 20px 40px rgba(243, 156, 18, 0.3);
+        }
+
+        .subject-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover .subject-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .subject-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover .subject-name {
+            color: var(--primary);
+        }
+
+        .subject-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover .subject-description {
+            color: var(--text);
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            position: relative;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quiz-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+
+        .quiz-container:hover .quiz-header::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .quiz-title {
+            font-size: 1.8rem;
+            color: var(--text);
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-progress {
+            font-size: 1rem;
+            color: var(--text);
+            opacity: 0.8;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 5px 15px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-score {
+            font-size: 1rem;
+            color: var(--text);
+            opacity: 0.8;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 5px 15px;
+            border-radius: 50px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes scorePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .score-update {
+            animation: scorePulse 0.3s ease;
+            color: var(--correct);
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text);
+            line-height: 1.5;
+            font-weight: 600;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+
+        .question-text::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .option {
+            background-color: var(--light);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-size: 1rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            animation: optionEnter 0.5s ease;
+            animation-fill-mode: both;
+            transform-style: preserve-3d;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(110, 72, 170, 0.1), rgba(71, 118, 230, 0.1));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .option:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        @keyframes optionEnter {
+            0% { opacity: 0; transform: translateX(-30px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .option:nth-child(1) { animation-delay: 0.1s; }
+        .option:nth-child(2) { animation-delay: 0.2s; }
+        .option:nth-child(3) { animation-delay: 0.3s; }
+        .option:nth-child(4) { animation-delay: 0.4s; }
+
+        .option:hover {
+            transform: translateY(-5px) translateZ(10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .option.selected {
+            background-color: var(--neutral);
+            color: white;
+            border-color: var(--neutral);
+            transform: scale(1.02) translateZ(10px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .option.correct {
+            background-color: var(--correct);
+            color: white;
+            border-color: var(--correct);
+            animation: pulse 0.5s, correctGlow 1.5s infinite alternate;
+        }
+
+        @keyframes correctGlow {
+            0% { box-shadow: 0 0 10px rgba(46, 204, 113, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(46, 204, 113, 0.8); }
+        }
+
+        .option.wrong {
+            background-color: var(--wrong);
+            color: white;
+            border-color: var(--wrong);
+            animation: shake 0.5s, wrongGlow 1.5s infinite alternate;
+        }
+
+        @keyframes wrongGlow {
+            0% { box-shadow: 0 0 10px rgba(231, 76, 60, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(231, 76, 60, 0.8); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            z-index: -1;
+            transition: all 0.3s ease;
+            opacity: 1;
+            border-radius: 50px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) translateZ(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-next {
+            color: white;
+        }
+
+        .btn-next:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-next:disabled::before {
+            opacity: 0.7;
+        }
+
+        .btn-restart, .btn-back {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-premium {
+            background: linear-gradient(45deg, var(--premium), #e67e22);
+            color: white;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            animation: premiumBtnGlow 2s infinite alternate;
+        }
+
+        @keyframes premiumBtnGlow {
+            0% { box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4); }
+            100% { box-shadow: 0 4px 20px rgba(243, 156, 18, 0.7); }
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px) scale(1.05) translateZ(10px);
+            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.6);
+            animation: none;
+        }
+
+        /* Results Styles */
+        .score-container {
+            text-align: center;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+
+        .score-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(110, 72, 170, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: pulseBackground 3s infinite alternate;
+        }
+
+        @keyframes pulseBackground {
+            0% { transform: scale(1); opacity: 0.1; }
+            100% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        .score-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: textFloat 4s ease-in-out infinite;
+        }
+
+        .score-value {
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            animation: bounce 1s, scoreGlow 2s infinite alternate;
+        }
+
+        @keyframes scoreGlow {
+            0% { text-shadow: 0 3px 15px rgba(110, 72, 170, 0.3); }
+            100% { text-shadow: 0 3px 25px rgba(110, 72, 170, 0.5); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        .score-details {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease;
+        }
+
+        .score-correct, .score-wrong {
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+            transition: all 0.3s ease;
+        }
+
+        .score-correct:hover, .score-wrong:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .score-correct {
+            background-color: var(--correct);
+            color: white;
+            animation: correctPulse 2s infinite alternate;
+        }
+
+        @keyframes correctPulse {
+            0% { box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
+            100% { box-shadow: 0 5px 25px rgba(46, 204, 113, 0.5); }
+        }
+
+        .score-wrong {
+            background-color: var(--wrong);
+            color: white;
+            animation: wrongPulse 2s infinite alternate;
+        }
+
+        @keyframes wrongPulse {
+            0% { box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3); }
+            100% { box-shadow: 0 5px 25px rgba(231, 76, 60, 0.5); }
+        }
+
+        .score-percentage {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text);
+            font-weight: 600;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text);
+            opacity: 0.8;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-badge {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite, badgeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Register & Premium Styles */
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .auth-form {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .auth-form:hover {
+            transform: translateZ(10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+        }
+
+        .auth-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(110, 72, 170, 0.2);
+            background-color: white;
+        }
+
+        .form-input:focus + .form-label {
+            color: var(--primary);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            transform-style: preserve-3d;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px) translateZ(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-method i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover i {
+            transform: scale(1.2);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background-color: rgba(110, 72, 170, 0.05);
+            transform: translateY(-5px) translateZ(10px);
+            box-shadow: 0 5px 15px rgba(110, 72, 170, 0.1);
+        }
+
+        /* Premium Styles */
+        .premium-container {
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .premium-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .premium-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--premium), #e67e22);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .premium-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .premium-card.popular {
+            border-color: var(--premium);
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 20px 50px rgba(243, 156, 18, 0.2);
+            animation: popularPulse 2s infinite alternate;
+        }
+
+        @keyframes popularPulse {
+            0% { transform: translateY(-10px) translateZ(20px) scale(1); }
+            100% { transform: translateY(-10px) translateZ(20px) scale(1.02); }
+        }
+
+        .premium-card.popular::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background: linear-gradient(45deg, var(--premium), #e67e22);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: premiumBadgePulse 1.5s infinite alternate;
+        }
+
+        .premium-card:hover.popular {
+            animation: none;
+        }
+
+        .premium-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover .premium-title {
+            color: var(--premium);
+        }
+
+        .premium-icon {
+            color: var(--premium);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover .premium-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .premium-price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover .premium-price {
+            color: var(--premium);
+        }
+
+        .premium-price span {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .premium-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .premium-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover .premium-features li {
+            border-bottom-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .premium-features li i {
+            color: var(--correct);
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover .premium-features li i {
+            transform: scale(1.2);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #f00;
+            border-radius: 50%;
+            animation: confettiFall 5s linear forwards;
+            z-index: 1000;
+            opacity: 0;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg) scale(1); opacity: 0; }
+        }
+
+        /* Points Animation */
+        .points-animation {
+            position: absolute;
+            font-weight: bold;
+            color: var(--correct);
+            font-size: 1.2rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: pointsFloat 1.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+        }
+
+        @keyframes pointsFloat {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { transform: translateY(-80px) scale(1.5); opacity: 0; }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Page Transitions */
+        .page-transition {
+            animation: pageFadeIn 0.8s ease forwards;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav-link {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .subjects-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-footer {
+                flex-direction: column-reverse;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .score-details {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .payment-methods {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .subjects-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+            }
+
+            .option {
+                padding: 12px 15px;
+            }
+
+            .premium-plans {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .quiz-progress, .quiz-score {
+                margin-left: 0;
+            }
+
+            .score-value {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i> QuizMaster
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a>
+                <a href="#" class="nav-link" data-page="subjects"><i class="fas fa-book-open"></i> Subjects</a>
+                <a href="#" class="nav-link premium" data-page="premium"><i class="fas fa-crown"></i> Premium</a>
+                <a href="#" class="nav-link" data-page="register"><i class="fas fa-user-plus"></i> Register</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Home Page -->
+            <div class="home-container page-transition" id="home-page">
+                <div class="hero">
+                    <h1>Test Your Knowledge With Our Ultimate Quiz App</h1>
+                    <p>Challenge yourself with hundreds of questions across multiple subjects. Improve your knowledge and have fun!</p>
+                    <button class="btn btn-premium" id="start-quiz-btn">Start Quizzing Now!</button>
+                </div>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="feature-title">Multiple Subjects</h3>
+                        <p class="feature-desc">Choose from a wide range of subjects including Science, History, Technology and more.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Track Progress</h3>
+                        <p class="feature-desc">Monitor your performance with detailed statistics and progress tracking.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="feature-title">Earn Badges</h3>
+                        <p class="feature-desc">Unlock achievements and badges as you master different subjects.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Selection -->
+            <div class="subject-selection hidden" id="subjects-page">
+                <h1 class="subject-title">Choose a Subject</h1>
+                <p>Select a subject to start your quiz journey</p>
+                <div class="subjects-container">
+                    <div class="subject-card" data-subject="general">
+                        <div class="subject-icon">🌎</div>
+                        <h3 class="subject-name">General Knowledge</h3>
+                        <p class="subject-description">Test your knowledge about the world</p>
+                    </div>
+                    <div class="subject-card" data-subject="science">
+                        <div class="subject-icon">🔬</div>
+                        <h3 class="subject-name">Science</h3>
+                        <p class="subject-description">Explore the world of science</p>
+                    </div>
+                    <div class="subject-card" data-subject="history">
+                        <div class="subject-icon">🏛️</div>
+                        <h3 class="subject-name">History</h3>
+                        <p class="subject-description">Journey through time</p>
+                    </div>
+                    <div class="subject-card" data-subject="tech">
+                        <div class="subject-icon">💻</div>
+                        <h3 class="subject-name">Technology</h3>
+                        <p class="subject-description">Test your tech knowledge</p>
+                    </div>
+                    <div class="subject-card" data-subject="geography">
+                        <div class="subject-icon">🗺️</div>
+                        <h3 class="subject-name">Geography</h3>
+                        <p class="subject-description">Explore the world's geography</p>
+                    </div>
+                    <div class="subject-card" data-subject="movies">
+                        <div class="subject-icon">🎬</div>
+                        <h3 class="subject-name">Movies</h3>
+                        <p class="subject-description">Test your film knowledge</p>
+                    </div>
+                    <div class="subject-card premium" data-subject="os">
+                        <div class="subject-icon">🖥️</div>
+                        <h3 class="subject-name">Operating Systems</h3>
+                        <p class="subject-description">Master OS concepts</p>
+                    </div>
+                    <div class="subject-card premium" data-subject="programming">
+                        <div class="subject-icon">👨‍💻</div>
+                        <h3 class="subject-name">Programming</h3>
+                        <p class="subject-description">Challenge your coding knowledge</p>
+                    </div>
+                    <div class="subject-card premium" data-subject="math">
+                        <div class="subject-icon">🧮</div>
+                        <h3 class="subject-name">Mathematics</h3>
+                        <p class="subject-description">Test your math skills</p>
+                    </div>
+                    <div class="subject-card premium" data-subject="literature">
+                        <div class="subject-icon">📚</div>
+                        <h3 class="subject-name">Literature</h3>
+                        <p class="subject-description">Explore famous books and authors</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div class="quiz-container hidden" id="quiz-page">
+                <div class="quiz-header">
+                    <h1 class="quiz-title" id="quiz-subject-title">Quiz</h1>
+                    <div class="quiz-progress" id="progress">Question 1 of 10</div>
+                    <div class="quiz-score" id="current-score">Score: 0</div>
+                </div>
+
+                <div class="quiz-body" id="question-container">
+                    <h2 class="question-text" id="question">Question text goes here</h2>
+                    <div class="options-container" id="options-container">
+                        <!-- Options will be inserted here by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="quiz-footer">
+                    <button class="btn btn-back" id="back-btn">Back to Subjects</button>
+                    <button class="btn btn-next" id="next-btn" disabled>Next Question</button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="quiz-container hidden" id="result-page">
+                <div class="score-container">
+                    <h1 class="score-title">Your Score</h1>
+                    <div class="score-value" id="score">0</div>
+                    <div class="score-percentage" id="score-percentage">0%</div>
+                    
+                    <div class="score-details">
+                        <div class="score-correct" id="correct-answers">Correct: 0</div>
+                        <div class="score-wrong" id="wrong-answers">Wrong: 0</div>
+                    </div>
+                    
+                    <div class="score-badge" id="score-badge">Beginner</div>
+                    <p class="score-message" id="score-message">Keep practicing!</p>
+                    <button class="btn btn-restart" id="restart-btn">Restart Quiz</button>
+                    <button class="btn btn-back" id="back-to-subjects-btn" style="margin-top: 15px;">Back to Subjects</button>
+                </div>
+            </div>
+
+            <!-- Register Screen -->
+            <div class="auth-container hidden" id="register-page">
+                <div class="auth-form">
+                    <h1 class="auth-title">Create Your Account</h1>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" id="username" class="form-input" placeholder="Enter your username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-input" placeholder="Create a password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password" class="form-label">Confirm Password</label>
+                            <input type="password" id="confirm-password" class="form-input" placeholder="Confirm your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-premium" style="width: 100%; margin-top: 10px;">Register</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 20px;">Already have an account? <a href="#" class="nav-link" data-page="login" style="display: inline; color: var(--primary);">Login</a></p>
+                </div>
+            </div>
+
+            <!-- Premium Screen -->
+            <div class="premium-container hidden" id="premium-page">
+                <h1 class="auth-title">Upgrade to Premium</h1>
+                <p style="margin-bottom: 30px; color: var(--text);">Unlock all subjects and premium features with our affordable plans</p>
+                
+                <div class="premium-plans">
+                    <div class="premium-card">
+                        <div class="premium-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3 class="premium-title">Monthly</h3>
+                        <div class="premium-price">$4.99<span>/month</span></div>
+                        <ul class="premium-features">
+                            <li><i class="fas fa-check"></i> Access to all premium subjects</li>
+                            <li><i class="fas fa-check"></i> Ad-free experience</li>
+                            <li><i class="fas fa-check"></i> Detailed progress tracking</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                        </ul>
+                        <button class="btn" style="width: 100%;">Choose Plan</button>
+                    </div>
+                    
+                    <div class="premium-card popular">
+                        <div class="premium-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="premium-title">Yearly</h3>
+                        <div class="premium-price">$49.99<span>/year</span></div>
+                        <ul class="premium-features">
+                            <li><i class="fas fa-check"></i> Access to all premium subjects</li>
+                            <li><i class="fas fa-check"></i> Ad-free experience</li>
+                            <li><i class="fas fa-check"></i> Detailed progress tracking</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> 2 months free</li>
+                        </ul>
+                        <button class="btn btn-premium" style="width: 100%;">Choose Plan</button>
+                    </div>
+                    
+                    <div class="premium-card">
+                        <div class="premium-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h3 class="premium-title">Lifetime</h3>
+                        <div class="premium-price">$99.99<span>/one-time</span></div>
+                        <ul class="premium-features">
+                            <li><i class="fas fa-check"></i> Access to all premium subjects</li>
+                            <li><i class="fas fa-check"></i> Ad-free experience</li>
+                            <li><i class="fas fa-check"></i> Detailed progress tracking</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> All future updates</li>
+                            <li><i class="fas fa-check"></i> Exclusive content</li>
+                        </ul>
+                        <button class="btn" style="width: 100%;">Choose Plan</button>
+                    </div>
+                </div>
+                
+                <div class="auth-form" style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 20px; color: var(--text);">Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method selected">
+                            <i class="fab fa-cc-visa"></i>
+                            <p>Credit Card</p>
+                        </div>
+                        <div class="payment-method">
+                            <i class="fab fa-paypal"></i>
+                            <p>PayPal</p>
+                        </div>
+                        <div class="payment-method">
+                            <i class="fab fa-google-pay"></i>
+                            <p>Google Pay</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-premium" style="width: 100%; margin-top: 20px;">Complete Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const pages = {
+            home: document.getElementById('home-page'),
+            subjects: document.getElementById('subjects-page'),
+            quiz: document.getElementById('quiz-page'),
+            result: document.getElementById('result-page'),
+            register: document.getElementById('register-page'),
+            premium: document.getElementById('premium-page')
+        };
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const subjectCards = document.querySelectorAll('.subject-card');
+        const backBtn = document.getElementById('back-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const backToSubjectsBtn = document.getElementById('back-to-subjects-btn');
+        const questionElement = document.getElementById('question');
+        const optionsContainer = document.getElementById('options-container');
+        const progressElement = document.getElementById('progress');
+        const currentScoreElement = document.getElementById('current-score');
+        const quizSubjectTitle = document.getElementById('quiz-subject-title');
+        const scoreElement = document.getElementById('score');
+        const scorePercentageElement = document.getElementById('score-percentage');
+        const correctAnswersElement = document.getElementById('correct-answers');
+        const wrongAnswersElement = document.getElementById('wrong-answers');
+        const scoreBadgeElement = document.getElementById('score-badge');
+        const scoreMessageElement = document.getElementById('score-message');
+        const particlesContainer = document.getElementById('particles');
+
+        // Quiz Variables
+        let currentSubject = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let questions = [];
+        let selectedOption = null;
+
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 20 + 10;
+                const color = `hsl(${Math.random() * 360}, 70%, 70%)`;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}vw`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.backgroundColor = color;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Comprehensive Question Bank
+        const questionBank = {
+            general: [
+                {
+                    question: "What is the capital of France?",
+                    options: ["Berlin", "Madrid", "Paris", "Rome"],
+                    answer: 2
+                },
+                {
+                    question: "Which planet is known as the Red Planet?",
+                    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                    answer: 1
+                },
+                {
+                    question: "Who painted the Mona Lisa?",
+                    options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+                    answer: 2
+                },
+                {
+                    question: "What is the largest ocean on Earth?",
+                    options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                    answer: 3
+                },
+                {
+                    question: "Which country is home to the kangaroo?",
+                    options: ["New Zealand", "South Africa", "Australia", "Brazil"],
+                    answer: 2
+                },
+                {
+                    question: "What is the currency of Japan?",
+                    options: ["Yuan", "Won", "Yen", "Ringgit"],
+                    answer: 2
+                },
+                {
+                    question: "Which famous landmark is located in India?",
+                    options: ["Eiffel Tower", "Taj Mahal", "Great Wall of China", "Statue of Liberty"],
+                    answer: 1
+                },
+                {
+                    question: "What is the largest continent by area?",
+                    options: ["Africa", "North America", "Asia", "Europe"],
+                    answer: 2
+                },
+                {
+                    question: "Which of these is not one of the Seven Wonders of the Ancient World?",
+                    options: ["Colossus of Rhodes", "Great Pyramid of Giza", "Hanging Gardens of Babylon", "Eiffel Tower"],
+                    answer: 3
+                },
+                {
+                    question: "What is the national flower of Japan?",
+                    options: ["Rose", "Cherry Blossom", "Lotus", "Tulip"],
+                    answer: 1
+                },
+                {
+                    question: "Which country has the most natural lakes?",
+                    options: ["Canada", "Russia", "USA", "China"],
+                    answer: 0
+                },
+                {
+                    question: "What is the smallest country in the world?",
+                    options: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
+                    answer: 1
+                },
+                {
+                    question: "Which river is the longest in the world?",
+                    options: ["Amazon", "Nile", "Yangtze", "Mississippi"],
+                    answer: 1
+                },
+                {
+                    question: "What is the official language of Brazil?",
+                    options: ["Spanish", "Portuguese", "French", "English"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these countries is not in Europe?",
+                    options: ["Hungary", "Finland", "Morocco", "Greece"],
+                    answer: 2
+                }
+            ],
+            science: [
+                {
+                    question: "What is the chemical symbol for water?",
+                    options: ["H2O", "CO2", "NaCl", "O2"],
+                    answer: 0
+                },
+                {
+                    question: "What is the hardest natural substance on Earth?",
+                    options: ["Gold", "Iron", "Diamond", "Quartz"],
+                    answer: 2
+                },
+                {
+                    question: "Which gas do plants absorb from the atmosphere?",
+                    options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
+                    answer: 2
+                },
+                {
+                    question: "What is the human body's largest organ?",
+                    options: ["Liver", "Brain", "Skin", "Heart"],
+                    answer: 2
+                },
+                {
+                    question: "Which planet is closest to the Sun?",
+                    options: ["Venus", "Earth", "Mars", "Mercury"],
+                    answer: 3
+                },
+                {
+                    question: "What is the main component of the Sun?",
+                    options: ["Liquid Lava", "Hydrogen", "Oxygen", "Carbon"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these is not a type of blood cell?",
+                    options: ["Red blood cell", "White blood cell", "Platelet", "Nerve cell"],
+                    answer: 3
+                },
+                {
+                    question: "What is the speed of light?",
+                    options: ["300,000 km/s", "150,000 km/s", "500,000 km/s", "1,000,000 km/s"],
+                    answer: 0
+                },
+                {
+                    question: "Which element has the chemical symbol 'O'?",
+                    options: ["Gold", "Oxygen", "Osmium", "Oganesson"],
+                    answer: 1
+                },
+                {
+                    question: "What force keeps planets in orbit around the Sun?",
+                    options: ["Electromagnetism", "Gravity", "Nuclear Force", "Centrifugal Force"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these is not a state of matter?",
+                    options: ["Solid", "Liquid", "Gas", "Energy"],
+                    answer: 3
+                },
+                {
+                    question: "What is the pH value of pure water?",
+                    options: ["5", "7", "9", "12"],
+                    answer: 1
+                },
+                {
+                    question: "Which scientist developed the theory of relativity?",
+                    options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Stephen Hawking"],
+                    answer: 1
+                },
+                {
+                    question: "What is the largest planet in our solar system?",
+                    options: ["Earth", "Saturn", "Jupiter", "Neptune"],
+                    answer: 2
+                },
+                {
+                    question: "Which of these is not a noble gas?",
+                    options: ["Helium", "Neon", "Argon", "Chlorine"],
+                    answer: 3
+                }
+            ],
+            tech: [
+                {
+                    question: "What does 'HTML' stand for?",
+                    options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyperlinks and Text Markup Language", "Home Tool Markup Language"],
+                    answer: 0
+                },
+                {
+                    question: "Which company created the iPhone?",
+                    options: ["Microsoft", "Apple", "Samsung", "Google"],
+                    answer: 1
+                },
+                {
+                    question: "What does 'CPU' stand for?",
+                    options: ["Central Processing Unit", "Computer Processing Unit", "Central Power Unit", "Computer Power Unit"],
+                    answer: 0
+                },
+                {
+                    question: "Which programming language is known as the 'language of the web'?",
+                    options: ["Python", "Java", "JavaScript", "C++"],
+                    answer: 2
+                },
+                {
+                    question: "What does 'URL' stand for?",
+                    options: ["Uniform Resource Locator", "Universal Reference Link", "Uniform Reference Locator", "Universal Resource Link"],
+                    answer: 0
+                },
+                {
+                    question: "Which of these is not a web browser?",
+                    options: ["Chrome", "Firefox", "Safari", "Photoshop"],
+                    answer: 3
+                },
+                {
+                    question: "What does 'VPN' stand for?",
+                    options: ["Virtual Private Network", "Verified Personal Network", "Virtual Public Network", "Verified Private Network"],
+                    answer: 0
+                },
+                {
+                    question: "Which company developed the Android operating system?",
+                    options: ["Apple", "Microsoft", "Google", "Amazon"],
+                    answer: 2
+                },
+                {
+                    question: "What is the name of Microsoft's cloud computing service?",
+                    options: ["Google Cloud", "AWS", "Azure", "IBM Cloud"],
+                    answer: 2
+                },
+                {
+                    question: "Which of these is not a social media platform?",
+                    options: ["Facebook", "Instagram", "Twitter", "Photoshop"],
+                    answer: 3
+                },
+                {
+                    question: "What does 'AI' stand for in technology?",
+                    options: ["Automated Intelligence", "Artificial Intelligence", "Advanced Internet", "Automated Internet"],
+                    answer: 1
+                },
+                {
+                    question: "Which protocol is used to send email?",
+                    options: ["HTTP", "FTP", "SMTP", "TCP"],
+                    answer: 2
+                },
+                {
+                    question: "What does 'IoT' stand for?",
+                    options: ["Internet of Things", "Internet of Technology", "Integrated Online Technology", "International Online Transfer"],
+                    answer: 0
+                },
+                {
+                    question: "Which of these is not a programming language?",
+                    options: ["Python", "Java", "HTML", "Ruby"],
+                    answer: 2
+                },
+                {
+                    question: "What does 'RAM' stand for?",
+                    options: ["Random Access Memory", "Read-Only Memory", "Rapid Access Memory", "Random Available Memory"],
+                    answer: 0
+                }
+            ],
+            history: [
+                {
+                    question: "In which year did World War II end?",
+                    options: ["1943", "1945", "1947", "1950"],
+                    answer: 1
+                },
+                {
+                    question: "Who was the first president of the United States?",
+                    options: ["Thomas Jefferson", "John Adams", "George Washington", "Abraham Lincoln"],
+                    answer: 2
+                },
+                {
+                    question: "Which ancient civilization built the pyramids?",
+                    options: ["Greeks", "Romans", "Egyptians", "Mayans"],
+                    answer: 2
+                },
+                {
+                    question: "When was the Declaration of Independence signed?",
+                    options: ["1776", "1789", "1801", "1812"],
+                    answer: 0
+                },
+                {
+                    question: "Who invented the telephone?",
+                    options: ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla", "Guglielmo Marconi"],
+                    answer: 1
+                },
+                {
+                    question: "Which empire was ruled by Julius Caesar?",
+                    options: ["Greek", "Roman", "Egyptian", "Persian"],
+                    answer: 1
+                },
+                {
+                    question: "What was the name of the ship that brought the Pilgrims to America?",
+                    options: ["Santa Maria", "Mayflower", "Nina", "Pinta"],
+                    answer: 1
+                },
+                {
+                    question: "Who was the first woman to win a Nobel Prize?",
+                    options: ["Marie Curie", "Mother Teresa", "Rosalind Franklin", "Jane Addams"],
+                    answer: 0
+                },
+                {
+                    question: "Which war was fought between the North and South regions of the United States?",
+                    options: ["Revolutionary War", "Civil War", "World War I", "War of 1812"],
+                    answer: 1
+                },
+                {
+                    question: "Who discovered penicillin?",
+                    options: ["Marie Curie", "Alexander Fleming", "Louis Pasteur", "Robert Koch"],
+                    answer: 1
+                },
+                {
+                    question: "Which ancient wonder was located in Babylon?",
+                    options: ["Great Pyramid", "Hanging Gardens", "Colossus of Rhodes", "Lighthouse of Alexandria"],
+                    answer: 1
+                },
+                {
+                    question: "Who painted the ceiling of the Sistine Chapel?",
+                    options: ["Leonardo da Vinci", "Michelangelo", "Raphael", "Donatello"],
+                    answer: 1
+                },
+                {
+                    question: "Which country was the first to give women the right to vote?",
+                    options: ["United States", "United Kingdom", "New Zealand", "France"],
+                    answer: 2
+                },
+                {
+                    question: "Who was the last Tsar of Russia?",
+                    options: ["Peter the Great", "Nicholas II", "Ivan the Terrible", "Alexander II"],
+                    answer: 1
+                },
+                {
+                    question: "Which ancient city was destroyed by the eruption of Mount Vesuvius?",
+                    options: ["Athens", "Rome", "Pompeii", "Sparta"],
+                    answer: 2
+                }
+            ],
+            geography: [
+                {
+                    question: "Which is the longest river in the world?",
+                    options: ["Amazon", "Nile", "Yangtze", "Mississippi"],
+                    answer: 1
+                },
+                {
+                    question: "What is the capital of Canada?",
+                    options: ["Toronto", "Vancouver", "Ottawa", "Montreal"],
+                    answer: 2
+                },
+                {
+                    question: "Which desert is the largest in the world?",
+                    options: ["Sahara", "Arabian", "Gobi", "Kalahari"],
+                    answer: 0
+                },
+                {
+                    question: "Which country has the most islands?",
+                    options: ["Indonesia", "Philippines", "Sweden", "Canada"],
+                    answer: 2
+                },
+                {
+                    question: "What is the tallest mountain in the world?",
+                    options: ["K2", "Mount Everest", "Kangchenjunga", "Lhotse"],
+                    answer: 1
+                },
+                {
+                    question: "Which continent is the most populous?",
+                    options: ["Africa", "Europe", "Asia", "North America"],
+                    answer: 2
+                },
+                {
+                    question: "What is the capital of Australia?",
+                    options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+                    answer: 2
+                },
+                {
+                    question: "Which country is known as the Land of the Rising Sun?",
+                    options: ["China", "Japan", "South Korea", "Thailand"],
+                    answer: 1
+                },
+                {
+                    question: "Which ocean is the largest?",
+                    options: ["Atlantic", "Indian", "Arctic", "Pacific"],
+                    answer: 3
+                },
+                {
+                    question: "What is the smallest continent by land area?",
+                    options: ["Europe", "Australia", "Antarctica", "South America"],
+                    answer: 1
+                },
+                {
+                    question: "Which country is both an island and a continent?",
+                    options: ["New Zealand", "Madagascar", "Australia", "Greenland"],
+                    answer: 2
+                },
+                {
+                    question: "Which African country was formerly known as Abyssinia?",
+                    options: ["Ethiopia", "Kenya", "Nigeria", "Egypt"],
+                    answer: 0
+                },
+                {
+                    question: "What is the capital of Brazil?",
+                    options: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+                    answer: 2
+                },
+                {
+                    question: "Which U.S. state is the largest by area?",
+                    options: ["Texas", "California", "Alaska", "Montana"],
+                    answer: 2
+                },
+                {
+                    question: "Which country has the longest coastline?",
+                    options: ["Russia", "Canada", "Australia", "United States"],
+                    answer: 1
+                }
+            ],
+            movies: [
+                {
+                    question: "Who directed the movie 'Titanic'?",
+                    options: ["Steven Spielberg", "James Cameron", "Christopher Nolan", "Martin Scorsese"],
+                    answer: 1
+                },
+                {
+                    question: "Which movie features the character Tony Stark?",
+                    options: ["Batman", "Superman", "Iron Man", "Spider-Man"],
+                    answer: 2
+                },
+                {
+                    question: "What is the highest-grossing film of all time?",
+                    options: ["Avatar", "Avengers: Endgame", "Titanic", "Star Wars: The Force Awakens"],
+                    answer: 1
+                },
+                {
+                    question: "Which actor played Jack in 'Titanic'?",
+                    options: ["Brad Pitt", "Leonardo DiCaprio", "Tom Cruise", "Johnny Depp"],
+                    answer: 1
+                },
+                {
+                    question: "What is the name of the hobbit played by Elijah Wood in 'Lord of the Rings'?",
+                    options: ["Samwise", "Merry", "Pippin", "Frodo"],
+                    answer: 3
+                },
+                {
+                    question: "Which movie features the quote 'May the Force be with you'?",
+                    options: ["Star Trek", "Star Wars", "Guardians of the Galaxy", "The Matrix"],
+                    answer: 1
+                },
+                {
+                    question: "Who played the Joker in 'The Dark Knight'?",
+                    options: ["Jack Nicholson", "Heath Ledger", "Jared Leto", "Joaquin Phoenix"],
+                    answer: 1
+                },
+                {
+                    question: "Which movie won the first Academy Award for Best Picture?",
+                    options: ["Gone with the Wind", "Sunrise", "Wings", "The Jazz Singer"],
+                    answer: 2
+                },
+                {
+                    question: "What is the name of the fictional African country in 'Black Panther'?",
+                    options: ["Zamunda", "Wakanda", "Genovia", "Latveria"],
+                    answer: 1
+                },
+                {
+                    question: "Which actress has won the most Oscars?",
+                    options: ["Meryl Streep", "Katharine Hepburn", "Ingrid Bergman", "Bette Davis"],
+                    answer: 1
+                },
+                {
+                    question: "What was the first full-length animated feature film?",
+                    options: ["Snow White and the Seven Dwarfs", "Pinocchio", "Bambi", "Fantasia"],
+                    answer: 0
+                },
+                {
+                    question: "Which movie features a young lion named Simba?",
+                    options: ["Jungle Book", "Tarzan", "The Lion King", "Madagascar"],
+                    answer: 2
+                },
+                {
+                    question: "Who directed 'Pulp Fiction'?",
+                    options: ["Martin Scorsese", "Quentin Tarantino", "Steven Spielberg", "David Fincher"],
+                    answer: 1
+                },
+                {
+                    question: "Which movie features the character Harry Potter?",
+                    options: ["The Hobbit", "The Chronicles of Narnia", "Harry Potter", "Percy Jackson"],
+                    answer: 2
+                },
+                {
+                    question: "What is the name of the ship in 'Pirates of the Caribbean'?",
+                    options: ["Black Pearl", "Flying Dutchman", "Queen Anne's Revenge", "HMS Interceptor"],
+                    answer: 0
+                }
+            ],
+            os: [
+                {
+                    question: "Which operating system is developed by Apple?",
+                    options: ["Windows", "macOS", "Linux", "Chrome OS"],
+                    answer: 1
+                },
+                {
+                    question: "What is the kernel of Linux called?",
+                    options: ["NT Kernel", "XNU", "Linux Kernel", "Darwin"],
+                    answer: 2
+                },
+                {
+                    question: "Which version of Windows introduced the Start Menu?",
+                    options: ["Windows 95", "Windows XP", "Windows 7", "Windows 10"],
+                    answer: 0
+                },
+                {
+                    question: "What does 'OS' stand for?",
+                    options: ["Operating System", "Open Source", "Output Signal", "Optical Storage"],
+                    answer: 0
+                },
+                {
+                    question: "Which operating system is open-source?",
+                    options: ["Windows", "macOS", "Linux", "iOS"],
+                    answer: 2
+                },
+                {
+                    question: "What is the default shell for most Linux distributions?",
+                    options: ["Bash", "PowerShell", "CMD", "Zsh"],
+                    answer: 0
+                },
+                {
+                    question: "Which operating system uses the NT kernel?",
+                    options: ["macOS", "Windows", "Linux", "Android"],
+                    answer: 1
+                },
+                {
+                    question: "What is the package manager for Ubuntu?",
+                    options: ["YUM", "APT", "Pacman", "DNF"],
+                    answer: 1
+                },
+                {
+                    question: "Which operating system is used on iPhones?",
+                    options: ["Android", "iOS", "Windows Mobile", "BlackBerry OS"],
+                    answer: 1
+                },
+                {
+                    question: "What is the latest version of Windows as of 2023?",
+                    options: ["Windows 10", "Windows 11", "Windows 12", "Windows XP"],
+                    answer: 1
+                },
+                {
+                    question: "Which operating system is based on the Linux kernel?",
+                    options: ["Android", "iOS", "Windows", "macOS"],
+                    answer: 0
+                },
+                {
+                    question: "What is the name of Apple's desktop operating system?",
+                    options: ["iOS", "iPadOS", "macOS", "watchOS"],
+                    answer: 2
+                },
+                {
+                    question: "Which Windows version introduced the Metro UI?",
+                    options: ["Windows 7", "Windows 8", "Windows 10", "Windows Vista"],
+                    answer: 1
+                },
+                {
+                    question: "What is the default file system for modern Windows versions?",
+                    options: ["FAT32", "NTFS", "ext4", "HFS+"],
+                    answer: 1
+                },
+                {
+                    question: "Which operating system is developed by Google?",
+                    options: ["Android", "iOS", "Windows", "macOS"],
+                    answer: 0
+                }
+            ],
+            programming: [
+                {
+                    question: "Which language is known as the 'language of the web'?",
+                    options: ["Python", "Java", "JavaScript", "C++"],
+                    answer: 2
+                },
+                {
+                    question: "What does 'CSS' stand for?",
+                    options: ["Computer Style Sheets", "Creative Style Sheets", "Cascading Style Sheets", "Colorful Style Sheets"],
+                    answer: 2
+                },
+                {
+                    question: "Which symbol is used for single-line comments in JavaScript?",
+                    options: ["//", "#", "/*", "--"],
+                    answer: 0
+                },
+                {
+                    question: "What is the output of 'console.log(typeof 42)' in JavaScript?",
+                    options: ["'number'", "'string'", "'object'", "'undefined'"],
+                    answer: 0
+                },
+                {
+                    question: "Which language uses 'print' for output?",
+                    options: ["JavaScript", "Python", "Java", "C#"],
+                    answer: 1
+                },
+                {
+                    question: "What is the correct way to create a function in Python?",
+                    options: ["function myFunc():", "def myFunc():", "create myFunc():", "func myFunc():"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these is not a JavaScript framework?",
+                    options: ["React", "Angular", "Vue", "Django"],
+                    answer: 3
+                },
+                {
+                    question: "What does 'API' stand for?",
+                    options: ["Application Programming Interface", "Automated Programming Interface", "Advanced Programming Interface", "Application Process Integration"],
+                    answer: 0
+                },
+                {
+                    question: "Which language is statically typed?",
+                    options: ["Python", "JavaScript", "TypeScript", "Ruby"],
+                    answer: 2
+                },
+                {
+                    question: "What is the extension for a Python file?",
+                    options: [".js", ".py", ".java", ".html"],
+                    answer: 1
+                },
+                {
+                    question: "Which operator is used for exponentiation in Python?",
+                    options: ["^", "**", "^^", "*"],
+                    answer: 1
+                },
+                {
+                    question: "What does 'DOM' stand for in web development?",
+                    options: ["Data Object Model", "Document Object Model", "Digital Output Model", "Display Object Management"],
+                    answer: 1
+                },
+                {
+                    question: "Which method adds an element to the end of an array in JavaScript?",
+                    options: [".push()", ".pop()", ".shift()", ".unshift()"],
+                    answer: 0
+                },
+                {
+                    question: "What is the correct syntax for an if statement in Python?",
+                    options: ["if x > y then", "if (x > y)", "if x > y:", "if x > y {}"],
+                    answer: 2
+                },
+                {
+                    question: "Which symbol is used to access object properties in JavaScript?",
+                    options: [".", ":", ";", ","],
+                    answer: 0
+                }
+            ],
+            math: [
+                {
+                    question: "What is the value of π (pi) to two decimal places?",
+                    options: ["3.14", "3.16", "3.12", "3.18"],
+                    answer: 0
+                },
+                {
+                    question: "What is the square root of 64?",
+                    options: ["6", "7", "8", "9"],
+                    answer: 2
+                },
+                {
+                    question: "What is 5 factorial (5!)?",
+                    options: ["20", "60", "120", "720"],
+                    answer: 2
+                },
+                {
+                    question: "What is the next number in the sequence: 2, 4, 8, 16, ...?",
+                    options: ["20", "24", "32", "64"],
+                    answer: 2
+                },
+                {
+                    question: "What is the area of a rectangle with length 5 and width 4?",
+                    options: ["9", "18", "20", "25"],
+                    answer: 2
+                },
+                {
+                    question: "What is the sum of angles in a triangle?",
+                    options: ["90°", "180°", "270°", "360°"],
+                    answer: 1
+                },
+                {
+                    question: "What is 3 to the power of 3?",
+                    options: ["9", "18", "27", "81"],
+                    answer: 2
+                },
+                {
+                    question: "What is the name of a polygon with 5 sides?",
+                    options: ["Hexagon", "Pentagon", "Octagon", "Decagon"],
+                    answer: 1
+                },
+                {
+                    question: "What is the result of 7 × 8?",
+                    options: ["48", "54", "56", "64"],
+                    answer: 2
+                },
+                {
+                    question: "What is the formula for the area of a circle?",
+                    options: ["πd", "2πr", "πr²", "πr³"],
+                    answer: 2
+                },
+                {
+                    question: "What is the reciprocal of 5?",
+                    options: ["0.2", "0.5", "1.5", "5.0"],
+                    answer: 0
+                },
+                {
+                    question: "What is the name of the theorem that states a² + b² = c² in a right triangle?",
+                    options: ["Pythagorean Theorem", "Fermat's Theorem", "Euler's Theorem", "Gauss's Theorem"],
+                    answer: 0
+                },
+                {
+                    question: "What is the value of 0! (zero factorial)?",
+                    options: ["0", "1", "Undefined", "Infinity"],
+                    answer: 1
+                },
+                {
+                    question: "What is the derivative of x²?",
+                    options: ["x", "2x", "x³", "2x²"],
+                    answer: 1
+                },
+                {
+                    question: "What is the sum of the first 10 natural numbers?",
+                    options: ["45", "50", "55", "60"],
+                    answer: 2
+                }
+            ],
+            literature: [
+                {
+                    question: "Who wrote 'Romeo and Juliet'?",
+                    options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
+                    answer: 1
+                },
+                {
+                    question: "Which novel begins with 'It was the best of times, it was the worst of times'?",
+                    options: ["Moby Dick", "A Tale of Two Cities", "Pride and Prejudice", "War and Peace"],
+                    answer: 1
+                },
+                {
+                    question: "Who wrote '1984'?",
+                    options: ["Aldous Huxley", "George Orwell", "Ray Bradbury", "H.G. Wells"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these is not a Shakespeare play?",
+                    options: ["Macbeth", "Hamlet", "Oliver Twist", "Othello"],
+                    answer: 2
+                },
+                {
+                    question: "Who wrote 'Pride and Prejudice'?",
+                    options: ["Emily Brontë", "Charlotte Brontë", "Jane Austen", "Virginia Woolf"],
+                    answer: 2
+                },
+                {
+                    question: "Which author created the character Sherlock Holmes?",
+                    options: ["Agatha Christie", "Arthur Conan Doyle", "Edgar Allan Poe", "Charles Dickens"],
+                    answer: 1
+                },
+                {
+                    question: "What is the name of the fictional town where 'To Kill a Mockingbird' is set?",
+                    options: ["Maycomb", "Gotham", "Springfield", "Salem"],
+                    answer: 0
+                },
+                {
+                    question: "Who wrote 'The Great Gatsby'?",
+                    options: ["Ernest Hemingway", "F. Scott Fitzgerald", "John Steinbeck", "William Faulkner"],
+                    answer: 1
+                },
+                {
+                    question: "Which of these is a play by Tennessee Williams?",
+                    options: ["Death of a Salesman", "A Streetcar Named Desire", "Long Day's Journey Into Night", "The Crucible"],
+                    answer: 1
+                },
+                {
+                    question: "Who is the author of 'The Hobbit'?",
+                    options: ["C.S. Lewis", "J.R.R. Tolkien", "George R.R. Martin", "J.K. Rowling"],
+                    answer: 1
+                },
+                {
+                    question: "Which novel features the character Holden Caulfield?",
+                    options: ["The Catcher in the Rye", "On the Road", "To Kill a Mockingbird", "The Great Gatsby"],
+                    answer: 0
+                },
+                {
+                    question: "Who wrote 'Moby Dick'?",
+                    options: ["Herman Melville", "Nathaniel Hawthorne", "Mark Twain", "Edgar Allan Poe"],
+                    answer: 0
+                },
+                {
+                    question: "Which of these is a poem by Edgar Allan Poe?",
+                    options: ["The Raven", "Ode to a Nightingale", "The Road Not Taken", "Daffodils"],
+                    answer: 0
+                },
+                {
+                    question: "Who wrote 'War and Peace'?",
+                    options: ["Fyodor Dostoevsky", "Leo Tolstoy", "Anton Chekhov", "Ivan Turgenev"],
+                    answer: 1
+                },
+                {
+                    question: "Which author wrote 'The Chronicles of Narnia'?",
+                    options: ["J.R.R. Tolkien", "C.S. Lewis", "Philip Pullman", "Roald Dahl"],
+                    answer: 1
+                }
+            ]
+        };
+
+        // Navigation Functions
+        function showPage(pageId) {
+            // Hide all pages with fade out animation
+            Object.values(pages).forEach(page => {
+                if (!page.classList.contains('hidden')) {
+                    page.style.animation = 'fadeIn 0.5s ease reverse forwards';
+                    setTimeout(() => {
+                        page.classList.add('hidden');
+                        page.style.animation = '';
+                    }, 500);
+                }
+            });
+            
+            // Show the selected page with fade in animation
+            setTimeout(() => {
+                pages[pageId].classList.remove('hidden');
+                pages[pageId].style.animation = 'fadeIn 0.5s ease forwards';
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.page === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+            }, 500);
+        }
+
+        // Quiz Functions
+        function startQuiz(subject) {
+            currentSubject = subject;
+            currentQuestionIndex = 0;
+            score = 0;
+            questions = questionBank[subject] || [];
+            
+            if (questions.length === 0) {
+                alert('No questions available for this subject yet!');
+                return;
+            }
+            
+            quizSubjectTitle.textContent = subject.charAt(0).toUpperCase() + subject.slice(1) + ' Quiz';
+            showPage('quiz');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                showResults();
+                return;
+            }
+            
+            const question = questions[currentQuestionIndex];
+            questionElement.textContent = question.question;
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                optionElement.dataset.index = index;
+                optionElement.addEventListener('click', selectOption);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            progressElement.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            currentScoreElement.textContent = `Score: ${score}`;
+            nextBtn.disabled = true;
+            selectedOption = null;
+        }
+
+        function selectOption(e) {
+            const selectedElement = e.target;
+            const optionIndex = parseInt(selectedElement.dataset.index);
+            
+            // Remove selected class from all options
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            selectedElement.classList.add('selected');
+            selectedOption = optionIndex;
+            nextBtn.disabled = false;
+        }
+
+        function checkAnswer() {
+            if (selectedOption === null) return false;
+            
+            const question = questions[currentQuestionIndex];
+            const isCorrect = selectedOption === question.answer;
+            
+            if (isCorrect) {
+                score += 10;
+                currentScoreElement.textContent = `Score: ${score}`;
+                currentScoreElement.classList.add('score-update');
+                setTimeout(() => {
+                    currentScoreElement.classList.remove('score-update');
+                }, 300);
+                
+                // Show points animation
+                const points = document.createElement('div');
+                points.classList.add('points-animation');
+                points.textContent = '+10';
+                points.style.left = `${currentScoreElement.offsetLeft + currentScoreElement.offsetWidth + 10}px`;
+                points.style.top = `${currentScoreElement.offsetTop}px`;
+                document.body.appendChild(points);
+                
+                setTimeout(() => {
+                    points.remove();
+                }, 1500);
+            }
+            
+            // Highlight correct and wrong answers
+            document.querySelectorAll('.option').forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === question.answer) {
+                    option.classList.add('correct');
+                } else if (index === selectedOption && !isCorrect) {
+                    option.classList.add('wrong');
+                }
+            });
+            
+            return isCorrect;
+        }
+
+        function nextQuestion() {
+            checkAnswer();
+            currentQuestionIndex++;
+            setTimeout(() => {
+                showQuestion();
+            }, 1000);
+        }
+
+        function showResults() {
+            showPage('result');
+            
+            const percentage = Math.round((score / (questions.length * 10)) * 100);
+            scoreElement.textContent = score;
+            scorePercentageElement.textContent = `${percentage}%`;
+            correctAnswersElement.textContent = `Correct: ${Math.floor(score / 10)}`;
+            wrongAnswersElement.textContent = `Wrong: ${questions.length - Math.floor(score / 10)}`;
+            
+            // Determine badge
+            let badge = '';
+            let message = '';
+            
+            if (percentage >= 90) {
+                badge = 'Expert';
+                message = 'Outstanding performance! You really know your stuff!';
+            } else if (percentage >= 70) {
+                badge = 'Advanced';
+                message = 'Great job! You have a solid understanding.';
+            } else if (percentage >= 50) {
+                badge = 'Intermediate';
+                message = 'Good effort! Keep learning to improve.';
+            } else {
+                badge = 'Beginner';
+                message = 'Keep practicing! You\'ll get better with time.';
+            }
+            
+            scoreBadgeElement.textContent = badge;
+            scoreMessageElement.textContent = message;
+            
+            // Create confetti for good scores
+            if (percentage >= 70) {
+                createConfetti();
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random properties
+                const size = Math.random() * 15 + 5;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 2;
+                const duration = Math.random() * 3 + 2;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.left = `${posX}vw`;
+                confetti.style.bottom = `-${size}px`;
+                confetti.style.animationDelay = `${delay}s`;
+                confetti.style.animationDuration = `${duration}s`;
+                confetti.style.backgroundColor = color;
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Event Listeners
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(link.dataset.page);
+            });
+        });
+
+        startQuizBtn.addEventListener('click', () => {
+            showPage('subjects');
+        });
+
+        subjectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                if (card.classList.contains('premium')) {
+                    showPage('premium');
+                } else {
+                    startQuiz(card.dataset.subject);
+                }
+            });
+        });
+
+        backBtn.addEventListener('click', () => {
+            showPage('subjects');
+        });
+
+        nextBtn.addEventListener('click', nextQuestion);
+
+        restartBtn.addEventListener('click', () => {
+            startQuiz(currentSubject);
+        });
+
+        backToSubjectsBtn.addEventListener('click', () => {
+            showPage('subjects');
+        });
+
+        // Payment method selection
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', () => {
+                document.querySelectorAll('.payment-method').forEach(m => {
+                    m.classList.remove('selected');
+                });
+                method.classList.add('selected');
+            });
+        });
+
+        // Form submission
+        document.getElementById('register-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // In a real app, you would handle registration here
+            alert('Registration would be processed here in a real app!');
+        });
+
+        // Initialize the app
+        createParticles();
+        showPage('home');
+    </script>
+</body>
+</html>

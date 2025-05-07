@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster Pro - Interactive Quiz Platform</title>
+    <style>
+        :root {
+            --primary: #3498db;  /* Blue */
+            --secondary: #e74c3c;  /* Red */
+            --accent: #2ecc71;  /* Green */
+            --text: #2c3e50;
+            --bg: #ecf0f1;
+            --card: #ffffff;
+            --highlight: #f1c40f;
+        }
+
+        .high-contrast {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --bg: #000000;
+            --text: #ffffff;
+            --card: #222222;
+            --accent: #00ff00;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .category {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            text-align: center;
+        }
+
+        .category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .category i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .category:hover i {
+            transform: scale(1.2);
+            color: var(--accent);
+        }
+
+        .category h3 {
+            margin: 10px 0;
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        .category p {
+            color: #7f8c8d;
+            margin: 0;
+        }
+
+        .quiz-container {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            display: none;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+
+        .quiz-container.active {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quiz-progress {
+            width: 100%;
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+
+        #timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        #timer i {
+            margin-right: 5px;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text);
+            font-weight: 600;
+            line-height: 1.4;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .question::before {
+            content: 'Q';
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.2;
+            font-weight: bold;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option {
+            background: var(--card);
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+            transition: all 0.3s;
+            opacity: 0;
+        }
+
+        .option:hover::before {
+            opacity: 1;
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .option.selected::before {
+            opacity: 1;
+        }
+
+        .option.correct {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            animation: pulse 0.5s;
+        }
+
+        .option.wrong {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: #bdc3c7;
+            transform: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        #learn-btn {
+            background: var(--highlight);
+        }
+
+        #next {
+            background: var(--accent);
+        }
+
+        .explanation-box {
+            background: #f8f9fa;
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            animation: fadeIn 0.5s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .explanation-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .explanation-box h3 i {
+            margin-right: 10px;
+        }
+
+        .explanation-box button {
+            background: var(--primary);
+            margin-top: 15px;
+        }
+
+        .score-container {
+            display: none;
+            background: var(--card);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            text-align: center;
+            animation: bounceIn 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+
+        .score-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--text);
+            position: relative;
+            display: inline-block;
+        }
+
+        .score-display::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            width: 80px;
+            height: 80px;
+            background: #ecf0f1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            opacity: 0.3;
+            transition: all 0.5s;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .badge.unlocked {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
+        }
+
+        .badge.unlocked::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .badge-info {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .badge:hover .badge-info {
+            opacity: 1;
+        }
+
+        #restart {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            border: none;
+        }
+
+        #restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .score-tracker {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            transform: translateX(150%);
+            transition: transform 0.5s;
+        }
+
+        .score-tracker.active {
+            transform: translateX(0);
+        }
+
+        .score-tracker i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .score-tracker span {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .score-tracker .current {
+            color: var(--primary);
+        }
+
+        .score-tracker .total {
+            color: #7f8c8d;
+        }
+
+        #a11y-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        #a11y-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .a11y-menu {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background: var(--card);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        .a11y-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .a11y-menu button {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: var(--secondary);
+            top: -10px;
+            animation: confetti 3s linear forwards;
+            z-index: 1000;
+            border-radius: 50%;
+        }
+
+        .category-animation {
+            animation: categoryEntry 0.5s ease-out forwards;
+        }
+
+        @keyframes categoryEntry {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .leaderboard {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        .leaderboard th, .leaderboard td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .leaderboard th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .leaderboard tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .leaderboard tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .rank {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .score-value {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .difficulty-selector {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .difficulty-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .difficulty-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .difficulty-btn.easy.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .difficulty-btn.hard.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .streak-counter {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--card);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            transform: translateX(-150%);
+            transition: transform 0.5s;
+            z-index: 100;
+        }
+
+        .streak-counter.active {
+            transform: translateX(0);
+        }
+
+        .streak-counter i {
+            color: var(--highlight);
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        .streak-count {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin: 0 5px;
+        }
+
+        .category-image {
+            width: 100%;
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+        }
+
+        .category-image h3 {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            color: white;
+            z-index: 1;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="floating-particles" id="particles"></div>
+    
+    <div class="streak-counter" id="streak-counter">
+        <i class="fas fa-fire"></i> Streak: <span class="streak-count">0</span>
+    </div>
+    
+    <div class="score-tracker" id="score-tracker">
+        <i class="fas fa-star"></i>
+        <span class="current">0</span>/<span class="total">0</span>
+    </div>
+    
+    <button id="a11y-btn" aria-label="Accessibility options">
+        <i class="fas fa-universal-access"></i>
+    </button>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-trophy" style="color: var(--highlight); margin-right: 10px;"></i>QuizMaster Pro</h1>
+            <div id="user-profile" style="display: none;">
+                <div style="display: flex; align-items: center;">
+                    <div class="avatar">JP</div>
+                    <span>John Player</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Category Selection -->
+        <div id="category-selection">
+            <h2 style="text-align: center; margin-bottom: 30px;">Choose Your Quiz Challenge</h2>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn easy" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn medium active" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn hard" data-difficulty="hard">Hard</button>
+            </div>
+            
+            <div class="categories">
+                <div class="category" data-category="international">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                        <h3>International Affairs</h3>
+                    </div>
+                    <p>Test your knowledge of global politics and international relations</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-question"></i> 25 questions</span>
+                        <span><i class="fas fa-users"></i> 1.2M players</span>
+                    </div>
+                </div>
+                
+                <div class="category" data-category="science">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                        <h3>Science</h3>
+                    </div>
+                    <p>Explore the wonders of physics, chemistry, and biology</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-question"></i> 30 questions</span>
+                        <span><i class="fas fa-users"></i> 890K players</span>
+                    </div>
+                </div>
+                
+                <div class="category" data-category="general">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                        <h3>General Knowledge</h3>
+                    </div>
+                    <p>A mix of everything from history to pop culture</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-question"></i> 40 questions</span>
+                        <span><i class="fas fa-users"></i> 2.5M players</span>
+                    </div>
+                </div>
+                
+                <div class="category" data-category="geography">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                        <h3>Geography</h3>
+                    </div>
+                    <p>Journey through countries, capitals, and natural wonders</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-question"></i> 20 questions</span>
+                        <span><i class="fas fa-users"></i> 750K players</span>
+                    </div>
+                </div>
+                
+                <div class="category" data-category="politics">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1575320181282-9afab399332c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                        <h3>Indian Polity</h3>
+                    </div>
+                    <p>Understand the constitution and political system of India</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-question"></i> 15 questions</span>
+                        <span><i class="fas fa-users"></i> 500K players</span>
+                    </div>
+                </div>
+                
+                <div class="category" data-category="math">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                        <h3>Mathematics</h3>
+                    </div>
+                    <p>Challenge your numerical and problem-solving skills</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-question"></i> 25 questions</span>
+                        <span><i class="fas fa-users"></i> 680K players</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <h3>Top Players This Week</h3>
+                <table class="leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Score</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="rank">1</td>
+                            <td>
+                                <div class="user-row">
+                                    <div class="avatar" style="background-color: var(--highlight);">AM</div>
+                                    <span>Alex Master</span>
+                                </div>
+                            </td>
+                            <td class="score-value">980</td>
+                            <td>General</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">2</td>
+                            <td>
+                                <div class="user-row">
+                                    <div class="avatar" style="background-color: var(--primary);">QP</div>
+                                    <span>Quiz Pro</span>
+                                </div>
+                            </td>
+                            <td class="score-value">950</td>
+                            <td>Science</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">3</td>
+                            <td>
+                                <div class="user-row">
+                                    <div class="avatar" style="background-color: var(--accent);">GK</div>
+                                    <span>Genius Kid</span>
+                                </div>
+                            </td>
+                            <td class="score-value">920</td>
+                            <td>Math</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container" id="quiz">
+            <div class="quiz-header">
+                <div id="category-name" style="font-weight: bold; color: var(--primary);"></div>
+                <div id="timer"><i class="fas fa-clock"></i> 30s</div>
+            </div>
+            
+            <div class="quiz-progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="question" id="question">Loading question...</div>
+            <div class="options" id="options"></div>
+            <div class="controls">
+                <button id="prev" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+                <button id="next"><i class="fas fa-arrow-right"></i> Next</button>
+            </div>
+        </div>
+
+        <!-- Score Container -->
+        <div class="score-container" id="score-container">
+            <h2>Quiz Completed! <i class="fas fa-trophy" style="color: var(--highlight);"></i></h2>
+            <div class="score-display">
+                <span id="score">0</span>/<span id="total-questions">0</span>
+            </div>
+            <div id="score-message" style="font-size: 1.2rem; margin-bottom: 20px;"></div>
+            
+            <div class="badges" id="badges">
+                <div class="badge" id="badge1">
+                    <i class="fas fa-medal"></i>
+                    <div class="badge-info">Score 50%</div>
+                </div>
+                <div class="badge" id="badge2">
+                    <i class="fas fa-trophy"></i>
+                    <div class="badge-info">Score 75%</div>
+                </div>
+                <div class="badge" id="badge3">
+                    <i class="fas fa-crown"></i>
+                    <div class="badge-info">Perfect Score!</div>
+                </div>
+            </div>
+            
+            <div id="share-buttons" style="margin: 20px 0;">
+                <button style="background: #3b5998; margin-right: 10px;"><i class="fab fa-facebook-f"></i> Share</button>
+                <button style="background: #1da1f2;"><i class="fab fa-twitter"></i> Tweet</button>
+            </div>
+            
+            <button id="restart"><i class="fas fa-redo"></i> Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced quiz questions with difficulty levels
+        const allQuestions = {
+            international: {
+                easy: [
+                    {
+                        question: "Which country hosted the 2020 Summer Olympics?",
+                        options: ["China", "Japan", "Brazil", "UK"],
+                        answer: 1,
+                        explanation: "Japan won the bid to host the 2020 Olympics in 2013. The games were postponed to 2021 due to COVID-19 but kept the 2020 name."
+                    },
+                    {
+                        question: "The UN headquarters is located in which city?",
+                        options: ["Geneva", "Paris", "New York", "Vienna"],
+                        answer: 2,
+                        explanation: "The United Nations headquarters was established in New York City in 1952 after World War II, on land donated by John D. Rockefeller Jr."
+                    },
+                    {
+                        question: "Which country is not a permanent member of the UN Security Council?",
+                        options: ["France", "Germany", "China", "Russia"],
+                        answer: 1,
+                        explanation: "The five permanent members are China, France, Russia, UK, and USA. Germany is a non-permanent member that serves 2-year terms."
+                    },
+                    {
+                        question: "The Kyoto Protocol is related to:",
+                        options: ["Nuclear disarmament", "Climate change", "Internet governance", "Maritime laws"],
+                        answer: 1,
+                        explanation: "Adopted in 1997, the Kyoto Protocol was an international treaty that committed countries to reduce greenhouse gas emissions."
+                    },
+                    {
+                        question: "Which organization is known as 'WTO'?",
+                        options: ["World Tourism Organization", "World Trade Organization", "World Transport Organization", "World Technology Organization"],
+                        answer: 1,
+                        explanation: "The World Trade Organization (established 1995) deals with global trade rules between nations and replaced the GATT."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "Which country recently left the European Union?",
+                        options: ["Greece", "France", "United Kingdom", "Italy"],
+                        answer: 2,
+                        explanation: "The UK left the EU on January 31, 2020, after a 2016 referendum, a process commonly known as Brexit."
+                    },
+                    {
+                        question: "The G7 summit is a meeting of:",
+                        options: ["The 7 largest economies", "The 7 most populous countries", "The 7 largest countries", "The 7 oldest democracies"],
+                        answer: 0,
+                        explanation: "The G7 (Group of Seven) is an organization of the world's seven largest advanced economies: Canada, France, Germany, Italy, Japan, UK, and US."
+                    },
+                    {
+                        question: "Which country is not part of NATO?",
+                        options: ["Turkey", "Sweden", "Canada", "Poland"],
+                        answer: 1,
+                        explanation: "Sweden is not a NATO member, though it has cooperated with NATO since 1994. Turkey, Canada and Poland are founding or early members."
+                    },
+                    {
+                        question: "The International Criminal Court is located in:",
+                        options: ["New York", "Geneva", "The Hague", "Brussels"],
+                        answer: 2,
+                        explanation: "The ICC, established in 2002, is located in The Hague, Netherlands. It prosecutes individuals for genocide, crimes against humanity, and war crimes."
+                    },
+                    {
+                        question: "Which country recently changed its name to North Macedonia?",
+                        options: ["Montenegro", "Macedonia", "Serbia", "Bosnia"],
+                        answer: 1,
+                        explanation: "In 2019, Macedonia officially changed its name to North Macedonia to resolve a dispute with Greece and pave way for NATO membership."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "Which country was the first to legalize same-sex marriage?",
+                        options: ["Netherlands", "Canada", "South Africa", "Spain"],
+                        answer: 0,
+                        explanation: "The Netherlands became the first country to legalize same-sex marriage in 2001. Canada followed in 2005, Spain later in 2005, and South Africa in 2006."
+                    },
+                    {
+                        question: "The 'Five Eyes' intelligence alliance does not include:",
+                        options: ["Australia", "New Zealand", "Germany", "United Kingdom"],
+                        answer: 2,
+                        explanation: "The Five Eyes is an intelligence alliance comprising Australia, Canada, New Zealand, the UK, and the US. Germany is not part of this alliance."
+                    },
+                    {
+                        question: "Which country has the most diplomatic missions worldwide?",
+                        options: ["United States", "China", "France", "United Kingdom"],
+                        answer: 2,
+                        explanation: "France maintains the largest network of diplomatic missions with 267 posts, followed by the US (265), China (258), and UK (225)."
+                    },
+                    {
+                        question: "The Camp David Accords were signed between which two countries?",
+                        options: ["India-Pakistan", "Israel-Egypt", "North-South Korea", "Russia-Ukraine"],
+                        answer: 1,
+                        explanation: "The 1978 Camp David Accords, mediated by US President Carter, led to the 1979 peace treaty between Israel and Egypt."
+                    },
+                    {
+                        question: "Which country is not a member of the G20?",
+                        options: ["Argentina", "Saudi Arabia", "Switzerland", "South Africa"],
+                        answer: 2,
+                        explanation: "Switzerland is not a G20 member, though it often participates in meetings. The G20 includes 19 countries plus the EU, representing 80% of world GDP."
+                    }
+                ]
+            },
+            science: {
+                easy: [
+                    {
+                        question: "What is the chemical symbol for gold?",
+                        options: ["Go", "Gd", "Au", "Ag"],
+                        answer: 2,
+                        explanation: "Gold's symbol 'Au' comes from Latin 'Aurum'. Silver is 'Ag' (Argentum), while Gd is Gadolinium."
+                    },
+                    {
+                        question: "Which planet has the most moons in our solar system?",
+                        options: ["Jupiter", "Saturn", "Neptune", "Mars"],
+                        answer: 1,
+                        explanation: "As of 2023, Jupiter has 92 confirmed moons, while Saturn has 83. New moons are still being discovered."
+                    },
+                    {
+                        question: "What is the hardest natural substance on Earth?",
+                        options: ["Gold", "Iron", "Diamond", "Quartz"],
+                        answer: 2,
+                        explanation: "Diamond scores 10 on the Mohs hardness scale. It's a form of carbon where atoms are arranged in a crystal structure."
+                    },
+                    {
+                        question: "Photosynthesis produces which gas?",
+                        options: ["Carbon dioxide", "Nitrogen", "Oxygen", "Hydrogen"],
+                        answer: 2,
+                        explanation: "Plants convert CO₂ + water into glucose and oxygen using sunlight. This process created Earth's oxygen-rich atmosphere."
+                    },
+                    {
+                        question: "What is the pH value of pure water?",
+                        options: ["5", "7", "9", "12"],
+                        answer: 1,
+                        explanation: "pH 7 is neutral. Values below 7 are acidic, above 7 are alkaline. Pure water should be exactly 7 at 25°C."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "Which element has the highest melting point?",
+                        options: ["Tungsten", "Iron", "Gold", "Platinum"],
+                        answer: 0,
+                        explanation: "Tungsten melts at 3,422°C (6,192°F), the highest of all metals. It's used in light bulb filaments and rocket engine nozzles."
+                    },
+                    {
+                        question: "What is the largest organ in the human body?",
+                        options: ["Liver", "Brain", "Skin", "Lungs"],
+                        answer: 2,
+                        explanation: "The skin is the body's largest organ, with a surface area of about 20 square feet in adults. It protects against pathogens and regulates temperature."
+                    },
+                    {
+                        question: "Which gas is most abundant in Earth's atmosphere?",
+                        options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Argon"],
+                        answer: 2,
+                        explanation: "Nitrogen makes up about 78% of Earth's atmosphere, oxygen about 21%, argon 0.9%, and CO₂ only 0.04%."
+                    },
+                    {
+                        question: "What is the speed of light in a vacuum?",
+                        options: ["300,000 km/s", "150,000 km/s", "1 million km/s", "30 km/s"],
+                        answer: 0,
+                        explanation: "The speed of light in a vacuum is exactly 299,792.458 km/s (about 300,000 km/s). It's the universal speed limit according to Einstein's theory."
+                    },
+                    {
+                        question: "Which blood type is the universal donor?",
+                        options: ["A", "B", "AB", "O"],
+                        answer: 3,
+                        explanation: "Type O-negative blood can be donated to anyone (universal donor), while AB-positive is the universal recipient."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "Which subatomic particle was discovered most recently?",
+                        options: ["Electron", "Proton", "Neutron", "Higgs boson"],
+                        answer: 3,
+                        explanation: "The Higgs boson was confirmed in 2012 at CERN. Electrons were discovered in 1897, protons in 1917, and neutrons in 1932."
+                    },
+                    {
+                        question: "What is the only mammal capable of true flight?",
+                        options: ["Flying squirrel", "Bat", "Colugo", "Sugar glider"],
+                        answer: 1,
+                        explanation: "Bats are the only mammals that can truly fly (not just glide). Their wings are modified forelimbs with membranes stretched between elongated fingers."
+                    },
+                    {
+                        question: "Which planet has the shortest day?",
+                        options: ["Mercury", "Venus", "Jupiter", "Mars"],
+                        answer: 2,
+                        explanation: "Jupiter has the shortest day at about 9.9 hours. Despite being the largest planet, it spins fastest. Venus has the longest day (243 Earth days)."
+                    },
+                    {
+                        question: "What is the most abundant element in the universe?",
+                        options: ["Oxygen", "Carbon", "Hydrogen", "Helium"],
+                        answer: 2,
+                        explanation: "Hydrogen makes up about 75% of all normal matter in the universe. Helium is second at about 24%, with all other elements making up just 1%."
+                    },
+                    {
+                        question: "Which scientist proposed the uncertainty principle?",
+                        options: ["Albert Einstein", "Niels Bohr", "Werner Heisenberg", "Erwin Schrödinger"],
+                        answer: 2,
+                        explanation: "Heisenberg's uncertainty principle (1927) states that the more precisely a particle's position is known, the less precisely its momentum can be known."
+                    }
+                ]
+            },
+            general: {
+                easy: [
+                    {
+                        question: "Which is the longest river in the world?",
+                        options: ["Amazon", "Nile", "Yangtze", "Mississippi"],
+                        answer: 1,
+                        explanation: "The Nile is 6,650 km long. The Amazon is second at 6,400 km but has much greater water volume."
+                    },
+                    {
+                        question: "Who painted the Mona Lisa?",
+                        options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+                        answer: 2,
+                        explanation: "Leonardo da Vinci painted it between 1503-1519. It's now in the Louvre Museum in Paris, protected behind bulletproof glass."
+                    },
+                    {
+                        question: "Which language has the most native speakers?",
+                        options: ["English", "Hindi", "Spanish", "Mandarin Chinese"],
+                        answer: 3,
+                        explanation: "Mandarin has about 1.1 billion native speakers. English leads as the most widely spoken second language."
+                    },
+                    {
+                        question: "What is the capital of Australia?",
+                        options: ["Sydney", "Melbourne", "Canberra", "Perth"],
+                        answer: 2,
+                        explanation: "Canberra was purpose-built as the capital in 1913 to resolve the Sydney-Melbourne rivalry. It means 'meeting place' in Aboriginal language."
+                    },
+                    {
+                        question: "Which year did World War II end?",
+                        options: ["1943", "1945", "1947", "1950"],
+                        answer: 1,
+                        explanation: "Germany surrendered May 1945, Japan surrendered Sept 1945 after atomic bombs were dropped on Hiroshima and Nagasaki."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "Which country invented tea?",
+                        options: ["India", "Japan", "China", "England"],
+                        answer: 2,
+                        explanation: "Tea originated in southwest China as a medicinal drink. The earliest records date to the 3rd century AD during the Shang dynasty."
+                    },
+                    {
+                        question: "What is the largest ocean on Earth?",
+                        options: ["Atlantic", "Indian", "Arctic", "Pacific"],
+                        answer: 3,
+                        explanation: "The Pacific Ocean covers about 63 million square miles, more than all land area combined. It's also the deepest ocean."
+                    },
+                    {
+                        question: "Which animal is the fastest land mammal?",
+                        options: ["Lion", "Cheetah", "Pronghorn antelope", "Quarter horse"],
+                        answer: 1,
+                        explanation: "Cheetahs can reach speeds of 60-70 mph (97-113 km/h) in short bursts covering distances up to 500 m (1,600 ft)."
+                    },
+                    {
+                        question: "What is the most widely eaten fruit in the world?",
+                        options: ["Apple", "Banana", "Tomato", "Orange"],
+                        answer: 1,
+                        explanation: "Bananas are the most popular fruit worldwide, with over 100 billion consumed annually. Tomatoes are botanically fruits but culinarily vegetables."
+                    },
+                    {
+                        question: "Which country has the most pyramids?",
+                        options: ["Egypt", "Sudan", "Mexico", "Peru"],
+                        answer: 1,
+                        explanation: "Sudan has about 255 pyramids, more than Egypt's 138. The Nubian pyramids were built by the rulers of the ancient Kushite kingdoms."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "Which country has the most time zones?",
+                        options: ["USA", "Russia", "China", "France"],
+                        answer: 3,
+                        explanation: "France has 12 time zones due to its overseas territories. Russia has 11, USA has 9 (including territories), while China uses just one time zone."
+                    },
+                    {
+                        question: "What is the only continent without deserts?",
+                        options: ["Australia", "Africa", "Europe", "South America"],
+                        answer: 2,
+                        explanation: "Europe is the only continent without deserts. Even Antarctica is considered a desert due to low precipitation."
+                    },
+                    {
+                        question: "Which country has the most islands?",
+                        options: ["Indonesia", "Philippines", "Sweden", "Canada"],
+                        answer: 3,
+                        explanation: "Canada has about 52,455 islands, though Sweden (267,570) has more if you count very small islets. Indonesia has 17,508, Philippines 7,641."
+                    },
+                    {
+                        question: "What is the most common blood type in humans?",
+                        options: ["A", "B", "AB", "O"],
+                        answer: 3,
+                        explanation: "O+ is the most common blood type (37% of population). O- is universal donor (6.6%), while AB- is rarest (0.6%). Distribution varies by ethnicity."
+                    },
+                    {
+                        question: "Which planet in our solar system rotates clockwise?",
+                        options: ["Mars", "Saturn", "Venus", "Uranus"],
+                        answer: 2,
+                        explanation: "Venus rotates clockwise (retrograde rotation), taking 243 Earth days for one rotation. Uranus also has an extreme axial tilt of 98°."
+                    }
+                ]
+            },
+            geography: {
+                easy: [
+                    {
+                        question: "Which is the largest desert in the world?",
+                        options: ["Sahara", "Arabian", "Gobi", "Antarctic"],
+                        answer: 3,
+                        explanation: "Antarctica is the world's largest desert (14 million km²). Deserts are defined by low precipitation, not just sand."
+                    },
+                    {
+                        question: "Mount Everest is located in which mountain range?",
+                        options: ["Andes", "Alps", "Himalayas", "Rockies"],
+                        answer: 2,
+                        explanation: "Everest (8,848m) is in the Mahalangur Himal sub-range of the Himalayas, on the China-Nepal border."
+                    },
+                    {
+                        question: "Which country has the most time zones?",
+                        options: ["USA", "Russia", "China", "France"],
+                        answer: 3,
+                        explanation: "France has 12 time zones due to its overseas territories. Russia has 11, while USA has 9 (including territories)."
+                    },
+                    {
+                        question: "The Grand Canyon is located in which US state?",
+                        options: ["California", "Arizona", "Nevada", "Utah"],
+                        answer: 1,
+                        explanation: "Carved by the Colorado River, it's 446 km long, up to 29 km wide and over 1.8 km deep in Arizona."
+                    },
+                    {
+                        question: "Which river flows through Paris?",
+                        options: ["Thames", "Seine", "Danube", "Rhine"],
+                        answer: 1,
+                        explanation: "The Seine is 777 km long. Major landmarks like Notre-Dame and the Louvre are along its banks in Paris."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "Which country is both in Europe and Asia?",
+                        options: ["Turkey", "Greece", "Egypt", "Russia"],
+                        answer: 3,
+                        explanation: "Russia spans both continents, with about 75% of its land in Asia but 75% of population in Europe. Turkey is also transcontinental."
+                    },
+                    {
+                        question: "What is the deepest point in the ocean?",
+                        options: ["Puerto Rico Trench", "Java Trench", "Mariana Trench", "Tonga Trench"],
+                        answer: 2,
+                        explanation: "The Challenger Deep in the Mariana Trench reaches about 10,984 m (36,037 ft) deep, deeper than Mount Everest is tall."
+                    },
+                    {
+                        question: "Which African country was never colonized?",
+                        options: ["Ethiopia", "South Africa", "Nigeria", "Kenya"],
+                        answer: 0,
+                        explanation: "Ethiopia avoided colonial rule except for a brief Italian occupation (1936-1941). Liberia was also never formally colonized."
+                    },
+                    {
+                        question: "What is the smallest country in the world?",
+                        options: ["Monaco", "Nauru", "Vatican City", "San Marino"],
+                        answer: 2,
+                        explanation: "Vatican City is just 0.49 km² (0.19 mi²), smaller than a golf course. It's the headquarters of the Roman Catholic Church."
+                    },
+                    {
+                        question: "Which US state is the largest by area?",
+                        options: ["Texas", "California", "Alaska", "Montana"],
+                        answer: 2,
+                        explanation: "Alaska is 1.7 million km² (663,300 mi²), more than twice the size of Texas. If independent, it would be the 17th largest country."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "Which country has the longest coastline?",
+                        options: ["Canada", "Norway", "Indonesia", "Russia"],
+                        answer: 0,
+                        explanation: "Canada has 202,080 km of coastline, longest in the world. Norway is second (83,281 km), Indonesia third (54,716 km)."
+                    },
+                    {
+                        question: "What is the flattest continent?",
+                        options: ["Africa", "Australia", "Antarctica", "South America"],
+                        answer: 1,
+                        explanation: "Australia is the flattest continent with average elevation of just 330 m. Its highest peak (Mt. Kosciuszko) is only 2,228 m."
+                    },
+                    {
+                        question: "Which capital city is at the highest altitude?",
+                        options: ["La Paz, Bolivia", "Quito, Ecuador", "Bogotá, Colombia", "Thimphu, Bhutan"],
+                        answer: 0,
+                        explanation: "La Paz sits at 3,650 m (11,975 ft) above sea level. While Sucre is Bolivia's official capital, La Paz is the administrative capital."
+                    },
+                    {
+                        question: "What percentage of Earth's surface is covered by water?",
+                        options: ["50%", "61%", "71%", "80%"],
+                        answer: 2,
+                        explanation: "About 71% of Earth's surface is water-covered, with oceans holding about 96.5% of all Earth's water. Only 2.5% is freshwater."
+                    },
+                    {
+                        question: "Which country has the most active volcanoes?",
+                        options: ["Indonesia", "Japan", "United States", "Chile"],
+                        answer: 0,
+                        explanation: "Indonesia has about 130 active volcanoes, most in the world. It's part of the Pacific 'Ring of Fire' with about 17% of world's volcanoes."
+                    }
+                ]
+            },
+            politics: {
+                easy: [
+                    {
+                        question: "How many schedules are in the Indian Constitution?",
+                        options: ["8", "10", "12", "14"],
+                        answer: 2,
+                        explanation: "Originally 8 schedules, now 12 after amendments. They cover official languages, forms of oaths, anti-defection law, etc."
+                    },
+                    {
+                        question: "Which article deals with the Right to Equality?",
+                        options: ["Article 14", "Article 19", "Article 21", "Article 32"],
+                        answer: 0,
+                        explanation: "Article 14: Equality before law. Article 15 prohibits discrimination, Article 16 guarantees equal opportunity in public employment."
+                    },
+                    {
+                        question: "The idea of Fundamental Duties was borrowed from which country?",
+                        options: ["USA", "UK", "USSR", "Canada"],
+                        answer: 2,
+                        explanation: "Added by 42nd Amendment (1976), inspired by USSR constitution. Originally 10 duties, now 11 after 86th Amendment (2002)."
+                    },
+                    {
+                        question: "Who was the first Chief Justice of India?",
+                        options: ["H. J. Kania", "M. Patanjali Sastri", "Mehr Chand Mahajan", "B. K. Mukherjea"],
+                        answer: 0,
+                        explanation: "Harilal Jekisundas Kania served from 1950-1951. The current CJI is Dhananjaya Y. Chandrachud (as of 2023)."
+                    },
+                    {
+                        question: "Which amendment added the word 'Secular' to the Preamble?",
+                        options: ["42nd", "44th", "52nd", "61st"],
+                        answer: 0,
+                        explanation: "42nd Amendment (1976) during Emergency added 'Socialist', 'Secular' and 'Integrity' to the Preamble."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "Which article deals with the Right to Education?",
+                        options: ["Article 21A", "Article 45", "Article 51A", "Article 243G"],
+                        answer: 0,
+                        explanation: "Article 21A (added by 86th Amendment, 2002) makes education fundamental right for children aged 6-14. Article 45 originally covered education."
+                    },
+                    {
+                        question: "The 'Basic Structure' doctrine was established in which case?",
+                        options: ["Golaknath", "Kesavananda Bharati", "Minerva Mills", "Indira Gandhi v. Raj Narain"],
+                        answer: 1,
+                        explanation: "Kesavananda Bharati case (1973) established that Parliament can't amend Constitution's basic structure. This limited amending power under Article 368."
+                    },
+                    {
+                        question: "Which schedule contains the Anti-Defection Law?",
+                        options: ["7th", "9th", "10th", "11th"],
+                        answer: 2,
+                        explanation: "10th Schedule (added by 52nd Amendment, 1985) deals with disqualification of members for defection. It aims to curb political instability."
+                    },
+                    {
+                        question: "Who appoints the Prime Minister of India?",
+                        options: ["President", "Lok Sabha Speaker", "Chief Justice", "People's vote"],
+                        answer: 0,
+                        explanation: "The President appoints the PM (Article 75), who is usually the leader of majority party in Lok Sabha. There's no separate election for PM."
+                    },
+                    {
+                        question: "Which state has the largest representation in Lok Sabha?",
+                        options: ["Maharashtra", "West Bengal", "Uttar Pradesh", "Bihar"],
+                        answer: 2,
+                        explanation: "UP has 80 Lok Sabha seats (maximum). Maharashtra has 48, West Bengal 42, Bihar 40. Total Lok Sabha strength is 543 (530 states + 13 UTs)."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "Which article was used to revoke Article 370?",
+                        options: ["Article 367", "Article 368", "Article 370(3)", "Article 370(1)(d)"],
+                        answer: 3,
+                        explanation: "The government used Article 370(1)(d) to apply all provisions of Indian Constitution to J&K, effectively making Article 370 inoperative in 2019."
+                    },
+                    {
+                        question: "The 'Doctrine of Eclipse' applies to:",
+                        options: ["Fundamental Rights", "Directive Principles", "Fundamental Duties", "Preamble"],
+                        answer: 0,
+                        explanation: "This doctrine states that laws inconsistent with Fundamental Rights aren't void ab initio but remain dormant, eclipsed by the rights."
+                    },
+                    {
+                        question: "Which constitutional amendment reduced voting age from 21 to 18?",
+                        options: ["52nd", "61st", "73rd", "86th"],
+                        answer: 1,
+                        explanation: "61st Amendment (1989) changed voting age under Article 326. This allowed youth greater participation in democracy."
+                    },
+                    {
+                        question: "The 'National Judicial Appointments Commission' was declared unconstitutional in which case?",
+                        options: ["SP Gupta case", "Second Judges case", "Fourth Judges case", "NJAC case"],
+                        answer: 3,
+                        explanation: "In Supreme Court Advocates-on-Record Association v. Union of India (2015), the Court struck down NJAC and upheld collegium system for judicial appointments."
+                    },
+                    {
+                        question: "Which article provides for the creation of All India Services?",
+                        options: ["Article 309", "Article 310", "Article 311", "Article 312"],
+                        answer: 3,
+                        explanation: "Article 312 allows Parliament to create new All India Services if Rajya Sabha passes resolution with 2/3 majority. Existing AIS are IAS, IPS, and IFS."
+                    }
+                ]
+            },
+            math: {
+                easy: [
+                    {
+                        question: "What is the value of π (pi) to two decimal places?",
+                        options: ["3.14", "3.16", "3.18", "3.12"],
+                        answer: 0,
+                        explanation: "π ≈ 3.14159... The first 100 digits were calculated by Archimedes in 250 BCE using polygons."
+                    },
+                    {
+                        question: "What is the square root of 144?",
+                        options: ["11", "12", "13", "14"],
+                        answer: 1,
+                        explanation: "12 × 12 = 144. Square roots were first documented by the Babylonians (1800 BCE) on clay tablets."
+                    },
+                    {
+                        question: "If x + 5 = 12, what is the value of x?",
+                        options: ["5", "6", "7", "8"],
+                        answer: 2,
+                        explanation: "Subtract 5 from both sides: x = 12 - 5 = 7. This is a linear equation, the simplest type of algebraic equation."
+                    },
+                    {
+                        question: "What is the area of a circle with radius 7? (πr²)",
+                        options: ["49π", "14π", "28π", "21π"],
+                        answer: 0,
+                        explanation: "π × 7² = 49π. The πr² formula was first proved by Archimedes using the 'method of exhaustion'."
+                    },
+                    {
+                        question: "What is 2³ (2 cubed)?",
+                        options: ["4", "6", "8", "10"],
+                        answer: 2,
+                        explanation: "2³ = 2 × 2 × 2 = 8. Cubes were studied by ancient Greeks; the Rubik's Cube was invented in 1974 by Ernő Rubik."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "What is the next number in the sequence: 1, 1, 2, 3, 5, 8, ...?",
+                        options: ["10", "11", "12", "13"],
+                        answer: 3,
+                        explanation: "This is the Fibonacci sequence where each number is the sum of the two preceding ones: 5 + 8 = 13."
+                    },
+                    {
+                        question: "What is the sum of angles in a triangle?",
+                        options: ["90°", "180°", "270°", "360°"],
+                        answer: 1,
+                        explanation: "The sum of interior angles in any triangle is always 180°. This was proven by Euclid in his Elements (300 BCE)."
+                    },
+                    {
+                        question: "What is 25% of 200?",
+                        options: ["25", "50", "75", "100"],
+                        answer: 1,
+                        explanation: "25% means one quarter. 200 ÷ 4 = 50. Percentages were used by ancient Romans for calculations with fractions of 100."
+                    },
+                    {
+                        question: "What is the value of 5! (5 factorial)?",
+                        options: ["5", "25", "120", "720"],
+                        answer: 2,
+                        explanation: "5! = 5 × 4 × 3 × 2 × 1 = 120. Factorials grow very quickly - 10! is already 3,628,800."
+                    },
+                    {
+                        question: "What is the Pythagorean theorem formula?",
+                        options: ["a² + b² = c²", "a + b = c", "a × b = c²", "a/b = c/d"],
+                        answer: 0,
+                        explanation: "In a right triangle, the square of the hypotenuse (c) equals the sum of squares of the other two sides (a and b). Known to Babylonians before Pythagoras."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "What is the derivative of x³?",
+                        options: ["x²", "2x²", "3x²", "4x²"],
+                        answer: 2,
+                        explanation: "The power rule states that the derivative of xⁿ is n·xⁿ⁻¹. So for x³, it's 3x². Calculus was independently developed by Newton and Leibniz."
+                    },
+                    {
+                        question: "What is the solution to the equation eˣ = 10?",
+                        options: ["ln(5)", "ln(10)", "log₁₀(e)", "e¹⁰"],
+                        answer: 1,
+                        explanation: "Taking natural logarithm (ln) of both sides gives x = ln(10). e is Euler's number (~2.71828), the base of natural logarithms."
+                    },
+                    {
+                        question: "What is the imaginary unit i equal to?",
+                        options: ["-1", "√-1", "1/√2", "π"],
+                        answer: 1,
+                        explanation: "i is defined as √-1, allowing solutions to equations like x² = -1. Complex numbers combine real and imaginary numbers (a + bi)."
+                    },
+                    {
+                        question: "What is the integral of 1/x dx?",
+                        options: ["x²/2", "ln|x|", "1/x²", "eˣ"],
+                        answer: 1,
+                        explanation: "The antiderivative of 1/x is ln|x| + C. This is because the derivative of ln(x) is 1/x. The absolute value accounts for x < 0."
+                    },
+                    {
+                        question: "What is the value of sin(π/2)?",
+                        options: ["0", "0.5", "1", "√2/2"],
+                        answer: 2,
+                        explanation: "π/2 radians is 90°. The sine of 90° is 1. The unit circle relates angles to coordinates: at 90°, the y-coordinate is 1."
+                    }
+                ]
+            }
+        };
+
+        // DOM elements
+        const categorySelection = document.getElementById('category-selection');
+        const quizContainer = document.getElementById('quiz');
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const scoreContainer = document.getElementById('score-container');
+        const scoreEl = document.getElementById('score');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const badgesEl = document.getElementById('badges');
+        const restartBtn = document.getElementById('restart');
+        const categoryElements = document.querySelectorAll('.category');
+        const a11yBtn = document.getElementById('a11y-btn');
+        const scoreTracker = document.getElementById('score-tracker');
+        const currentScoreEl = scoreTracker.querySelector('.current');
+        const totalScoreEl = scoreTracker.querySelector('.total');
+        const streakCounter = document.getElementById('streak-counter');
+        const streakCountEl = streakCounter.querySelector('.streak-count');
+        const progressBar = document.getElementById('progress-bar');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const categoryNameEl = document.getElementById('category-name');
+        const scoreMessageEl = document.getElementById('score-message');
+        const particlesEl = document.getElementById('particles');
+
+        // Quiz state
+        let currentCategory = '';
+        let currentDifficulty = 'medium';
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOption = null;
+        let questions = [];
+        let timerInterval;
+        let streak = 0;
+        let correctAnswersInARow = 0;
+
+        // Create floating particles
+        function createParticles() {
+            const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f'];
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.width = Math.random() * 15 + 5 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particle.style.animationDuration = Math.random() * 30 + 20 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesEl.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Difficulty selection
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+
+        // Timer functions
+        function startTimer() {
+            clearInterval(timerInterval);
+            const timerEl = document.getElementById('timer') || createTimerElement();
+            let timeLeft = 30;
+            
+            timerEl.innerHTML = `<i class="fas fa-clock"></i> ${timeLeft}s`;
+            timerEl.style.color = "#3498db";
+            timerEl.style.animation = "none";
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.innerHTML = `<i class="fas fa-clock"></i> ${timeLeft}s`;
+                
+                if (timeLeft <= 10) {
+                    timerEl.style.color = "#e74c3c";
+                    timerEl.style.fontWeight = "bold";
+                }
+                if (timeLeft <= 5) {
+                    timerEl.style.animation = "pulse 0.5s infinite";
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerEl.innerHTML = `<i class="fas fa-clock"></i> Time's up!`;
+                    if (selectedOption === null) {
+                        document.querySelectorAll('.option')[questions[currentQuestion].answer]
+                            .classList.add('correct-blink');
+                        streak = 0;
+                        streakCountEl.textContent = streak;
+                        streakCounter.classList.remove('active');
+                    }
+                    setTimeout(nextQuestion, 1500);
+                }
+            }, 1000);
+        }
+
+        function createTimerElement() {
+            const timerEl = document.createElement('div');
+            timerEl.id = 'timer';
+            timerEl.style.cssText = `
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin-bottom: 15px;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+            `;
+            document.querySelector('.quiz-header').appendChild(timerEl);
+            return timerEl;
+        }
+
+        // Study mode functions
+        function showExplanation() {
+            const explanation = questions[currentQuestion].explanation;
+            const existingExplanation = document.querySelector('.explanation-box');
+            if (existingExplanation) return;
+            
+            const explanationEl = document.createElement('div');
+            explanationEl.className = 'explanation';
+            explanationEl.innerHTML = `
+                <div class="explanation-box">
+                    <h3><i class="fas fa-lightbulb"></i> Did You Know?</h3>
+                    <p>${explanation}</p>
+                    <button onclick="this.parentElement.remove()"><i class="fas fa-check"></i> Got it!</button>
+                </div>
+            `;
+            
+            optionsEl.after(explanationEl);
+        }
+
+        // Accessibility functions
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            localStorage.setItem('highContrast', 
+                document.body.classList.contains('high-contrast'));
+        }
+
+        // Initialize accessibility
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextBtn.click();
+            if (e.key === 'ArrowLeft') prevBtn.click();
+            if (e.key >= 1 && e.key <= 4) {
+                document.querySelectorAll('.option')[parseInt(e.key)-1]?.click();
+            }
+        });
+
+        // Accessibility menu
+        a11yBtn.addEventListener('click', () => {
+            const a11yMenu = document.querySelector('.a11y-menu');
+            if (a11yMenu) {
+                a11yMenu.classList.toggle('active');
+                return;
+            }
+            
+            const menu = document.createElement('div');
+            menu.className = 'a11y-menu';
+            menu.innerHTML = `
+                <button onclick="toggleHighContrast()"><i class="fas fa-adjust"></i> Toggle High Contrast</button>
+                <button onclick="alert('Screen reader support activated')">
+                    <i class="fas fa-assistive-listening-systems"></i> Screen Reader Mode
+                </button>
+                <button onclick="document.querySelector('html').style.fontSize='20px'">
+                    <i class="fas fa-text-height"></i> Increase Text Size
+                </button>
+                <button onclick="document.querySelector('html').style.fontSize='16px'">
+                    <i class="fas fa-text-width"></i> Reset Text Size
+                </button>
+            `;
+                        document.body.appendChild(menu);
+            setTimeout(() => menu.classList.add('active'), 10);
+        });
+
+        // Category selection
+        categoryElements.forEach(category => {
+            category.addEventListener('click', () => {
+                currentCategory = category.dataset.category;
+                questions = allQuestions[currentCategory][currentDifficulty];
+                
+                // Animate category selection
+                category.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    category.style.transform = 'scale(1)';
+                }, 200);
+                
+                // Show quiz container
+                categorySelection.style.display = 'none';
+                quizContainer.classList.add('active');
+                scoreTracker.classList.add('active');
+                streakCounter.classList.add('active');
+                
+                // Set category name
+                categoryNameEl.textContent = category.querySelector('h3').textContent;
+                
+                // Initialize quiz
+                currentQuestion = 0;
+                score = 0;
+                selectedOption = null;
+                updateScoreTracker();
+                loadQuestion();
+                startTimer();
+            });
+        });
+
+        // Load question
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            questionEl.textContent = question.question;
+            optionsEl.innerHTML = '';
+            
+            // Update progress
+            progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+            
+            // Create options
+            question.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option';
+                optionEl.innerHTML = `
+                    <span class="option-number">${index + 1}</span>
+                    <span class="option-text">${option}</span>
+                `;
+                optionEl.addEventListener('click', () => selectOption(index));
+                optionsEl.appendChild(optionEl);
+            });
+            
+            // Update controls
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 
+                'Finish' : 'Next';
+            nextBtn.innerHTML = currentQuestion === questions.length - 1 ? 
+                '<i class="fas fa-flag-checkered"></i> Finish' : 
+                '<i class="fas fa-arrow-right"></i> Next';
+        }
+
+        // Select option
+        function selectOption(index) {
+            clearInterval(timerInterval);
+            const options = document.querySelectorAll('.option');
+            const correctIndex = questions[currentQuestion].answer;
+            
+            // Remove previous selection
+            if (selectedOption !== null) {
+                options[selectedOption].classList.remove('selected');
+            }
+            
+            // Mark selected option
+            selectedOption = index;
+            options[index].classList.add('selected');
+            
+            // Disable all options after selection
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // Show correct answer
+            options[correctIndex].classList.add('correct');
+            
+            // If wrong, show incorrect
+            if (index !== correctIndex) {
+                options[index].classList.add('wrong');
+                streak = 0;
+                streakCountEl.textContent = streak;
+                streakCounter.classList.remove('active');
+            } else {
+                score++;
+                correctAnswersInARow++;
+                
+                // Update streak
+                if (correctAnswersInARow > 1) {
+                    streak++;
+                    streakCountEl.textContent = streak;
+                    streakCounter.classList.add('active');
+                    
+                    // Add confetti for streaks
+                    if (streak % 3 === 0) {
+                        createConfetti();
+                    }
+                }
+                
+                updateScoreTracker();
+            }
+            
+            // Show explanation
+            setTimeout(showExplanation, 1000);
+        }
+
+        // Update score tracker
+        function updateScoreTracker() {
+            currentScoreEl.textContent = score;
+            totalScoreEl.textContent = questions.length;
+        }
+
+        // Next question
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                selectedOption = null;
+                loadQuestion();
+                startTimer();
+                
+                // Enable options
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.style.pointerEvents = 'auto';
+                });
+            } else {
+                finishQuiz();
+            }
+        }
+
+        // Previous question
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                selectedOption = null;
+                loadQuestion();
+                startTimer();
+                
+                // Enable options
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.style.pointerEvents = 'auto';
+                });
+            }
+        });
+
+        // Next button
+        nextBtn.addEventListener('click', nextQuestion);
+
+        // Finish quiz
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            quizContainer.classList.remove('active');
+            scoreContainer.style.display = 'block';
+            
+            // Update score
+            scoreEl.textContent = score;
+            totalQuestionsEl.textContent = questions.length;
+            
+            // Calculate percentage
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            // Set score message
+            let message = '';
+            if (percentage === 100) {
+                message = 'Perfect! You\'re a QuizMaster! <i class="fas fa-crown"></i>';
+            } else if (percentage >= 80) {
+                message = 'Excellent! You know your stuff! <i class="fas fa-star"></i>';
+            } else if (percentage >= 60) {
+                message = 'Good job! Keep learning! <i class="fas fa-thumbs-up"></i>';
+            } else if (percentage >= 40) {
+                message = 'Not bad! Try again to improve! <i class="fas fa-redo"></i>';
+            } else {
+                message = 'Keep practicing! You\'ll get better! <i class="fas fa-book"></i>';
+            }
+            scoreMessageEl.innerHTML = message;
+            
+            // Unlock badges
+            if (percentage >= 50) {
+                document.getElementById('badge1').classList.add('unlocked');
+            }
+            if (percentage >= 75) {
+                document.getElementById('badge2').classList.add('unlocked');
+            }
+            if (percentage === 100) {
+                document.getElementById('badge3').classList.add('unlocked');
+                createConfetti();
+            }
+            
+            // Show celebration for high scores
+            if (percentage >= 80) {
+                setTimeout(createConfetti, 500);
+            }
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            scoreContainer.style.display = 'none';
+            categorySelection.style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            selectedOption = null;
+            correctAnswersInARow = 0;
+            streak = 0;
+            streakCountEl.textContent = streak;
+            streakCounter.classList.remove('active');
+            
+            // Reset badges
+            document.getElementById('badge1').classList.remove('unlocked');
+            document.getElementById('badge2').classList.remove('unlocked');
+            document.getElementById('badge3').classList.remove('unlocked');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        });
+
+        // Add animation to categories on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const categories = document.querySelectorAll('.category');
+            categories.forEach((category, index) => {
+                setTimeout(() => {
+                    category.classList.add('category-animation');
+                }, index * 100);
+            });
+        });
+
+        // Add more questions to existing categories
+        allQuestions.international.easy.push(
+            {
+                question: "Which country is known as the 'Land of the Rising Sun'?",
+                options: ["China", "Japan", "South Korea", "Thailand"],
+                answer: 1,
+                explanation: "Japan is called the 'Land of the Rising Sun' because from China's perspective, the sun rises from the direction of Japan."
+            },
+            {
+                question: "The European Union's currency is:",
+                options: ["Euro", "Pound", "Franc", "Mark"],
+                answer: 0,
+                explanation: "The Euro (€) is used by 19 of the 27 EU member states, collectively known as the Eurozone."
+            }
+        );
+
+        allQuestions.science.medium.push(
+            {
+                question: "What is the main gas that makes up the Sun?",
+                options: ["Oxygen", "Hydrogen", "Helium", "Nitrogen"],
+                answer: 1,
+                explanation: "The Sun is about 70% hydrogen and 28% helium by mass, with heavier elements making up the remaining 2%."
+            },
+            {
+                question: "Which planet is known as the 'Red Planet'?",
+                options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                answer: 1,
+                explanation: "Mars appears red due to iron oxide (rust) on its surface. It's the fourth planet from the Sun."
+            }
+        );
+
+        allQuestions.general.hard.push(
+            {
+                question: "Which country consumes the most chocolate per capita?",
+                options: ["United States", "Germany", "Switzerland", "Belgium"],
+                answer: 2,
+                explanation: "Switzerland leads with about 8.8 kg per person annually. Chocolate was first consumed as a bitter drink by the Maya and Aztecs."
+            },
+            {
+                question: "What is the world's most spoken language by native speakers?",
+                options: ["English", "Hindi", "Spanish", "Mandarin Chinese"],
+                answer: 3,
+                explanation: "Mandarin Chinese has about 1.1 billion native speakers. English is the most widely spoken second language."
+            }
+        );
+
+        // Add new categories
+        allQuestions.history = {
+            easy: [
+                {
+                    question: "In which year did World War II end?",
+                    options: ["1943", "1945", "1947", "1950"],
+                    answer: 1,
+                    explanation: "World War II ended in 1945 with the surrender of Germany in May and Japan in September."
+                },
+                {
+                    question: "Who was the first President of the United States?",
+                    options: ["Thomas Jefferson", "John Adams", "George Washington", "Abraham Lincoln"],
+                    answer: 2,
+                    explanation: "George Washington served as the first U.S. President from 1789 to 1797."
+                }
+            ],
+            medium: [
+                {
+                    question: "The Industrial Revolution began in which country?",
+                    options: ["France", "Germany", "United States", "Great Britain"],
+                    answer: 3,
+                    explanation: "The Industrial Revolution began in Britain in the late 18th century before spreading worldwide."
+                },
+                {
+                    question: "Which ancient civilization built the pyramids?",
+                    options: ["Greeks", "Romans", "Egyptians", "Mayans"],
+                    answer: 2,
+                    explanation: "The ancient Egyptians built the pyramids as tombs for pharaohs, with the Great Pyramid built around 2560 BCE."
+                }
+            ],
+            hard: [
+                {
+                    question: "Which year did the Berlin Wall fall?",
+                    options: ["1987", "1989", "1991", "1993"],
+                    answer: 1,
+                    explanation: "The Berlin Wall fell on November 9, 1989, leading to German reunification in 1990."
+                },
+                {
+                    question: "Who was the first female Prime Minister of Britain?",
+                    options: ["Theresa May", "Margaret Thatcher", "Indira Gandhi", "Golda Meir"],
+                    answer: 1,
+                    explanation: "Margaret Thatcher served as British Prime Minister from 1979 to 1990 and was known as the 'Iron Lady'."
+                }
+            ]
+        };
+
+        allQuestions.technology = {
+            easy: [
+                {
+                    question: "Which company created the iPhone?",
+                    options: ["Samsung", "Apple", "Google", "Microsoft"],
+                    answer: 1,
+                    explanation: "Apple introduced the first iPhone in 2007, revolutionizing the smartphone industry."
+                },
+                {
+                    question: "What does 'www' stand for in websites?",
+                    options: ["World Wide Web", "Web World Wide", "World Web Wide", "Wide World Web"],
+                    answer: 0,
+                    explanation: "The World Wide Web was invented by Tim Berners-Lee in 1989 while working at CERN."
+                }
+            ],
+            medium: [
+                {
+                    question: "What is the main programming language of Android apps?",
+                    options: ["Swift", "Java", "Python", "C++"],
+                    answer: 1,
+                    explanation: "Android apps are primarily written in Java, though Kotlin is now also officially supported."
+                },
+                {
+                    question: "Which year was Facebook launched?",
+                    options: ["2002", "2004", "2006", "2008"],
+                    answer: 1,
+                    explanation: "Mark Zuckerberg launched Facebook in 2004 while at Harvard as 'Thefacebook'."
+                }
+            ],
+            hard: [
+                {
+                    question: "What does API stand for in programming?",
+                    options: ["Application Programming Interface", "Automated Program Interaction", "Advanced Programming Instruction", "Application Process Integration"],
+                    answer: 0,
+                    explanation: "An API is a set of protocols and tools for building software applications."
+                },
+                {
+                    question: "Which was the first cryptocurrency?",
+                    options: ["Ethereum", "Bitcoin", "Litecoin", "Ripple"],
+                    answer: 1,
+                    explanation: "Bitcoin, created by Satoshi Nakamoto in 2009, was the first decentralized cryptocurrency."
+                }
+            ]
+        };
+
+        // Update the categories HTML to include new categories
+        const categoriesContainer = document.querySelector('.categories');
+        categoriesContainer.innerHTML += `
+            <div class="category" data-category="history">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                    <h3>History</h3>
+                </div>
+                <p>Journey through ancient civilizations and modern events</p>
+                <div class="category-stats">
+                    <span><i class="fas fa-question"></i> 20 questions</span>
+                    <span><i class="fas fa-users"></i> 950K players</span>
+                </div>
+            </div>
+            
+            <div class="category" data-category="technology">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                    <h3>Technology</h3>
+                </div>
+                <p>Explore the digital world of computers and innovation</p>
+                <div class="category-stats">
+                    <span><i class="fas fa-question"></i> 25 questions</span>
+                    <span><i class="fas fa-users"></i> 1.5M players</span>
+                </div>
+            </div>
+        `;
+
+        // Add event listeners to new categories
+        document.querySelectorAll('.category').forEach(category => {
+            category.addEventListener('click', () => {
+                currentCategory = category.dataset.category;
+                questions = allQuestions[currentCategory][currentDifficulty];
+                
+                // Show quiz container
+                categorySelection.style.display = 'none';
+                quizContainer.classList.add('active');
+                scoreTracker.classList.add('active');
+                streakCounter.classList.add('active');
+                
+                // Set category name
+                categoryNameEl.textContent = category.querySelector('h3').textContent;
+                
+                // Initialize quiz
+                currentQuestion = 0;
+                score = 0;
+                selectedOption = null;
+                updateScoreTracker();
+                loadQuestion();
+                startTimer();
+            });
+        });
+
+        // Add more visual effects
+        function addHoverEffects() {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('mouseenter', () => {
+                    if (!option.classList.contains('selected')) {
+                        option.style.transform = 'scale(1.02)';
+                        option.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    }
+                });
+                option.addEventListener('mouseleave', () => {
+                    if (!option.classList.contains('selected')) {
+                        option.style.transform = 'scale(1)';
+                        option.style.boxShadow = '0 3px 10px rgba(0,0,0,0.05)';
+                    }
+                });
+            });
+        }
+
+        // Add background animation
+        function animateBackground() {
+            const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f'];
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                document.body.style.setProperty('--primary', colors[currentIndex]);
+                currentIndex = (currentIndex + 1) % colors.length;
+            }, 10000);
+        }
+
+        // Initialize animations
+        animateBackground();
+    </script>
+</body>
+</html>
+           

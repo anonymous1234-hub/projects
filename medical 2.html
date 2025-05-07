@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Center - Advanced Medical Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #00c6ff;
+            --accent-color: #ffcc00;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome {
+            background: linear-gradient(rgba(0, 123, 255, 0.9), rgba(0, 198, 255, 0.9)), url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s both;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeInUp 1s both 0.3s;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: var(--transition);
+            animation: fadeIn 1s both 0.6s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background-color: #ffd633;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul li a.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 20px;
+            margin-top: 60px;
+        }
+
+        section {
+            padding: 60px 20px;
+            margin: 40px auto;
+            max-width: 1200px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* Service Cards */
+        .services-grid, .health-tips-grid, .faqs-grid, .testimonials-grid, .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .service, .health-tip, .faq, .testimonial, .team-member {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service:hover, .health-tip:hover, .testimonial:hover, .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon, .health-icon, .faq-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .service:hover .service-icon, 
+        .health-tip:hover .health-icon {
+            transform: scale(1.2);
+            color: var(--secondary-color);
+        }
+
+        .service h3, .health-tip h3, .faq h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* FAQ Styles */
+        .faq {
+            cursor: pointer;
+        }
+
+        .faq h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq h3::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .faq.active h3::after {
+            content: '-';
+            color: var(--danger-color);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-top: 0;
+        }
+
+        .faq.active .faq-content {
+            max-height: 300px;
+            padding-top: 15px;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            position: relative;
+            padding: 30px;
+        }
+
+        .testimonial::before {
+            content: '\201C';
+            font-size: 5rem;
+            color: rgba(0, 123, 255, 0.1);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            line-height: 1;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: right;
+        }
+
+        /* Team Members */
+        .team-member {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .team-member img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .team-member h3 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Forms */
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+
+        button[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Response Messages */
+        .response {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .error {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bbb;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 123, 255, 0.2);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-color);
+                padding: 20px;
+                gap: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .welcome h1 {
+                font-size: 2rem;
+            }
+
+            .welcome p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 40px 15px;
+                margin: 20px 10px;
+            }
+
+            .services-grid, .health-tips-grid, .faqs-grid, .testimonials-grid, .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="welcome">
+            <h1>Welcome to MediCare Center</h1>
+            <p>Your health is our priority. Experience world-class healthcare with our expert team.</p>
+            <a href="#appointments" class="cta-button">Book an Appointment</a>
+        </div>
+        <nav>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul>
+                <li><a href="#services" class="active">Services</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#health-tips">Health Tips</a></li>
+                <li><a href="#faqs">FAQs</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#team">Our Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#appointments">Appointments</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="services">
+            <h2>Our Medical Services</h2>
+            <div class="services-grid">
+                <div class="service">
+                    <i class="fas fa-user-md service-icon"></i>
+                    <h3>General Checkup</h3>
+                    <p>Comprehensive health evaluations with personalized care plans tailored to your specific needs and health goals.</p>
+                    <button class="learn-more">Learn More</button>
+                </div>
+                <div class="service">
+                    <i class="fas fa-baby service-icon"></i>
+                    <h3>Pediatrics</h3>
+                    <p>Specialized, compassionate care for children from infancy through adolescence in a child-friendly environment.</p>
+                    <button class="learn-more">Learn More</button>
+                </div>
+                <div class="service">
+                    <i class="fas fa-heartbeat service-icon"></i>
+                    <h3>Cardiology</h3>
+                    <p>Advanced diagnostic and treatment options for heart conditions using cutting-edge technology and techniques.</p>
+                    <button class="learn-more">Learn More</button>
+                </div>
+                <div class="service">
+                    <i class="fas fa-procedures service-icon"></i>
+                    <h3>Surgery</h3>
+                    <p>Minimally invasive and traditional surgical procedures performed by board-certified surgeons in state-of-the-art facilities.</p>
+                    <button class="learn-more">Learn More</button>
+                </div>
+                <div class="service">
+                    <i class="fas fa-x-ray service-icon"></i>
+                    <h3>Diagnostic Imaging</h3>
+                    <p>High-quality imaging services including X-rays, MRIs, CT scans, and ultrasounds with rapid results.</p>
+                    <button class="learn-more">Learn More</button>
+                </div>
+                <div class="service">
+                    <i class="fas fa-mental-health service-icon"></i>
+                    <h3>Mental Health</h3>
+                    <p>Compassionate counseling and psychiatric services for individuals, couples, and families facing mental health challenges.</p>
+                    <button class="learn-more">Learn More</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="health-tips">
+            <h2>Health & Wellness Tips</h2>
+            <div class="health-tips-grid">
+                <div class="health-tip">
+                    <i class="fas fa-apple-alt health-icon"></i>
+                    <h3>Balanced Nutrition</h3>
+                    <p>Focus on whole foods: fruits, vegetables, lean proteins, and whole grains. Limit processed foods and added sugars for optimal health.</p>
+                </div>
+                <div class="health-tip">
+                    <i class="fas fa-running health-icon"></i>
+                    <h3>Regular Exercise</h3>
+                    <p>Aim for 150 minutes of moderate activity weekly. Include strength training twice a week for comprehensive fitness benefits.</p>
+                </div>
+                <div class="health-tip">
+                    <i class="fas fa-bed health-icon"></i>
+                    <h3>Quality Sleep</h3>
+                    <p>7-9 hours nightly improves immunity, mood, and cognitive function. Maintain a consistent sleep schedule for best results.</p>
+                </div>
+                <div class="health-tip">
+                    <i class="fas fa-hand-holding-water health-icon"></i>
+                    <h3>Hydration</h3>
+                    <p>Drink at least 8 glasses of water daily. Proper hydration supports digestion, circulation, and temperature regulation.</p>
+                </div>
+                <div class="health-tip">
+                    <i class="fas fa-smile health-icon"></i>
+                    <h3>Stress Management</h3>
+                    <p>Practice mindfulness, deep breathing, or yoga to reduce stress levels and improve overall well-being.</p>
+                </div>
+                <div class="health-tip">
+                    <i class="fas fa-smoking-ban health-icon"></i>
+                    <h3>Avoid Harmful Habits</h3>
+                    <p>Eliminate smoking and limit alcohol consumption to significantly reduce risk of chronic diseases and improve longevity.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faqs">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faqs-grid">
+                <div class="faq">
+                    <h3>What should I bring to my first appointment? <span class="toggle-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>For your first visit, please bring:</p>
+                        <ul>
+                            <li>Photo ID and insurance card</li>
+                            <li>List of current medications</li>
+                            <li>Medical records from previous providers</li>
+                            <li>Any relevant test results or imaging</li>
+                            <li>A list of questions or concerns</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq">
+                    <h3>What are your office hours? <span class="toggle-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>Our regular hours are:</p>
+                        <ul>
+                            <li>Monday-Friday: 8:00 AM - 6:00 PM</li>
+                            <li>Saturday: 9:00 AM - 2:00 PM</li>
+                            <li>Sunday: Closed</li>
+                        </ul>
+                        <p>We offer extended hours for urgent care needs. Please call ahead for availability.</p>
+                    </div>
+                </div>
+                <div class="faq">
+                    <h3>Do you accept my insurance? <span class="toggle-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>We participate with most major insurance plans including:</p>
+                        <ul>
+                            <li>Blue Cross Blue Shield</li>
+                            <li>Aetna</li>
+                            <li>UnitedHealthcare</li>
+                            <li>Medicare</li>
+                            <li>Medicaid</li>
+                            <li>Cigna</li>
+                        </ul>
+                        <p>Please contact our billing department to verify your specific coverage.</p>
+                    </div>
+                </div>
+                <div class="faq">
+                    <h3>How do I request prescription refills? <span class="toggle-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>Prescription refill requests should be made through:</p>
+                        <ul>
+                            <li>Our patient portal (preferred method)</li>
+                            <li>By calling our prescription refill line</li>
+                            <li>Through your pharmacy (they will contact us)</li>
+                        </ul>
+                        <p>Please allow 48 hours for processing. Controlled substances require an office visit.</p>
+                    </div>
+                </div>
+                <div class="faq">
+                    <h3>What COVID-19 precautions are in place? <span class="toggle-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>We continue to follow CDC guidelines to protect our patients and staff:</p>
+                        <ul>
+                            <li>Enhanced cleaning protocols</li>
+                            <li>Mask requirements when community levels are high</li>
+                            <li>Social distancing in waiting areas</li>
+                            <li>Telehealth options for appropriate visits</li>
+                            <li>Vaccination and testing services available</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq">
+                    <h3>How do I access my medical records? <span class="toggle-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>You can access your medical records through:</p>
+                        <ul>
+                            <li>Our secure patient portal</li>
+                            <li>By submitting a written request to our medical records department</li>
+                        </ul>
+                        <p>There may be fees for printed copies as allowed by state law. Portal access is free.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>About MediCare Center</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Founded in 1995, MediCare Center has grown from a small neighborhood practice to a comprehensive healthcare facility serving over 50,000 patients annually. Our mission is to provide exceptional, patient-centered care that improves the health and well-being of our community.</p>
+                    <p>What sets us apart:</p>
+                    <ul>
+                        <li>Board-certified physicians in multiple specialties</li>
+                        <li>State-of-the-art diagnostic and treatment facilities</li>
+                        <li>Same-day appointments for urgent needs</li>
+                        <li>Integrated electronic health records for coordinated care</li>
+                        <li>Compassionate staff dedicated to your comfort and privacy</li>
+                    </ul>
+                    <p>We believe healthcare should be accessible, understandable, and tailored to each patient's unique needs. Our team takes the time to listen, explain, and partner with you in your healthcare journey.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h3>25+</h3>
+                        <p>Years of Service</p>
+                    </div>
+                    <div class="stat">
+                        <h3>15</h3>
+                        <p>Specialties</p>
+                    </div>
+                    <div class="stat">
+                        <h3>50+</h3>
+                        <p>Providers</p>
+                    </div>
+                    <div class="stat">
+                        <h3>98%</h3>
+                        <p>Patient Satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <h2>Patient Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <p>"The care I received at MediCare Center was exceptional. Dr. Smith took the time to thoroughly explain my treatment options and made me feel like a partner in my healthcare decisions. The entire staff was compassionate and professional."</p>
+                    <div class="testimonial-author">- Sarah Johnson</div>
+                </div>
+                <div class="testimonial">
+                    <p>"As a busy parent, I appreciate how easy it is to get appointments that fit my schedule. The pediatric team is wonderful with my children, making what could be stressful visits actually pleasant experiences."</p>
+                    <div class="testimonial-author">- Michael Chen</div>
+                </div>
+                <div class="testimonial">
+                    <p>"After struggling with chronic pain for years, the specialists at MediCare Center finally diagnosed and treated my condition effectively. I've gotten my life back thanks to their expertise and persistence."</p>
+                    <div class="testimonial-author">- Elizabeth Martinez</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team">
+            <h2>Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dr. Vidurdev">
+                    <div>
+                        <h3>Dr. Vidurdev</h3>
+                        <p>Chief Medical Officer</p>
+                        <p>Internal Medicine Specialist with over 20 years of experience in primary care and preventive medicine.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Dr. Aman">
+                    <div>
+                        <h3>Dr. Aman</h3>
+                        <p>Pediatrics Director</p>
+                        <p>Board-certified pediatrician specializing in adolescent medicine and childhood development.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Dr. Smith">
+                    <div>
+                        <h3>Dr. Emily Smith</h3>
+                        <p>Cardiology Specialist</p>
+                        <p>Fellowship-trained cardiologist with expertise in non-invasive cardiac diagnostics.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Dr. Johnson">
+                    <div>
+                        <h3>Dr. Robert Johnson</h3>
+                        <p>Orthopedic Surgeon</p>
+                        <p>Specializes in minimally invasive joint procedures and sports medicine.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Visit Our Clinic</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Healthcare Avenue, Medical City, MC 12345</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@medicarecenter.com</p>
+                    <p><i class="fas fa-clock"></i> Monday-Friday: 8am-6pm, Saturday: 9am-2pm</p>
+                    
+                    <h3>Emergency Contacts</h3>
+                    <p>For life-threatening emergencies, please call 911 or go to the nearest emergency room.</p>
+                    <p>After-hours urgent concerns: (555) 987-6543</p>
+                </div>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject">
+                            <option value="general">General Inquiry</option>
+                            <option value="appointment">Appointment Request</option>
+                            <option value="billing">Billing Question</option>
+                            <option value="feedback">Feedback/Suggestion</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                    <div id="formResponse" class="response"></div>
+                    <div class="loading-spinner" id="contactSpinner"></div>
+                </form>
+            </div>
+        </section>
+
+        <section id="appointments">
+            <h2>Book an Appointment</h2>
+            <div class="appointment-container">
+                <div class="appointment-info">
+                    <h3>Scheduling Options</h3>
+                    <p>We offer flexible scheduling to meet your needs:</p>
+                    <ul>
+                        <li>Online booking (available 24/7)</li>
+                        <li>Phone scheduling during office hours</li>
+                        <li>Same-day appointments for urgent needs</li>
+                        <li>Evening and weekend availability</li>
+                        <li>Telehealth visits for certain conditions</li>
+                    </ul>
+                    <p>New patients: Please arrive 15 minutes early to complete paperwork or download forms from our patient portal.</p>
+                </div>
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <label for="appointmentName">Full Name</label>
+                        <input type="text" id="appointmentName" name="appointmentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentEmail">Email Address</label>
+                        <input type="email" id="appointmentEmail" name="appointmentEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentPhone">Phone Number</label>
+                        <input type="tel" id="appointmentPhone" name="appointmentPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentDate">Preferred Date</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentTime">Preferred Time</label>
+                        <input type="time" id="appointmentTime" name="appointmentTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentReason">Reason for Visit</label>
+                        <select id="appointmentReason" name="appointmentReason">
+                            <option value="checkup">Annual Checkup</option>
+                            <option value="followup">Follow-up Visit</option>
+                            <option value="sick">Illness/Symptoms</option>
+                            <option value="injury">Injury</option>
+                            <option value="vaccination">Vaccination</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentNotes">Additional Notes</label>
+                        <textarea id="appointmentNotes" name="appointmentNotes" rows="3"></textarea>
+                    </div>
+                    <button type="submit">Request Appointment</button>
+                    <div id="appointmentResponse" class="response"></div>
+                    <div class="loading-spinner" id="appointmentSpinner"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#services">Our Services</a>
+                <a href="#team">Our Team</a>
+                <a href="#appointments">Book Appointment</a>
+                <a href="#faqs">FAQs</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <a href="#">Primary Care</a>
+                <a href="#">Pediatrics</a>
+                <a href="#">Cardiology</a>
+                <a href="#">Surgery</a>
+                <a href="#">Diagnostics</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Healthcare Ave, Medical City</p>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@medicarecenter.com</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 MediCare Center. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // DOM Elements
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navList = document.querySelector('nav ul');
+        const navLinks = document.querySelectorAll('nav ul li a');
+        const sections = document.querySelectorAll('section');
+        const faqs = document.querySelectorAll('.faq');
+        const backToTopBtn = document.querySelector('.back-to-top');
+        const contactForm = document.getElementById('contactForm');
+        const appointmentForm = document.getElementById('appointmentForm');
+        const contactSpinner = document.getElementById('contactSpinner');
+        const appointmentSpinner = document.getElementById('appointmentSpinner');
+
+        // Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            navList.classList.toggle('show');
+            mobileMenuBtn.innerHTML = navList.classList.contains('show') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Smooth Scrolling and Section Activation
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+
+                // Close mobile menu if open
+                navList.classList.remove('show');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+
+                // Update active nav link
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                link.classList.add('active');
+
+                // Scroll to section
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // FAQ Toggle Functionality
+        faqs.forEach(faq => {
+            faq.addEventListener('click', () => {
+                faq.classList.toggle('active');
+            });
+        });
+
+        // Show/Hide Back to Top Button
+        window.addEventListener('scroll', () => {
+            // Back to top button
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+
+            // Header scroll effect
+            if (window.pageYOffset > 100) {
+                document.querySelector('header').classList.add('scrolled');
+            } else {
+                document.querySelector('header').classList.remove('scrolled');
+            }
+
+            // Section activation on scroll
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const scrollPosition = window.pageYOffset + window.innerHeight - 100;
+
+                if (scrollPosition > sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                    section.classList.add('active');
+                    
+                    // Update active nav link
+                    const id = section.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Back to Top Button
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Contact Form Submission
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formResponse = document.getElementById('formResponse');
+            
+            // Show loading spinner
+            contactSpinner.style.display = 'block';
+            formResponse.textContent = '';
+            formResponse.className = 'response';
+            
+            // Simulate form submission
+            setTimeout(() => {
+                const name = document.getElementById('name').value;
+                
+                // Hide spinner
+                contactSpinner.style.display = 'none';
+                
+                // Show success message
+                formResponse.textContent = `Thank you, ${name}! Your message has been sent. We'll respond within 24 hours.`;
+                formResponse.classList.add('success');
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    formResponse.textContent = '';
+                    formResponse.className = 'response';
+                }, 5000);
+            }, 1500);
+        });
+
+        // Appointment Form Submission
+        appointmentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const appointmentResponse = document.getElementById('appointmentResponse');
+            
+            // Show loading spinner
+            appointmentSpinner.style.display = 'block';
+            appointmentResponse.textContent = '';
+            appointmentResponse.className = 'response';
+            
+            // Simulate form submission
+            setTimeout(() => {
+                const name = document.getElementById('appointmentName').value;
+                const date = document.getElementById('appointmentDate').value;
+                const time = document.getElementById('appointmentTime').value;
+                
+                // Format date
+                const formattedDate = new Date(date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                // Hide spinner
+                appointmentSpinner.style.display = 'none';
+                
+                // Show success message
+                appointmentResponse.textContent = `Thank you, ${name}! Your appointment request for ${formattedDate} at ${time} has been received. We'll confirm shortly.`;
+                appointmentResponse.classList.add('success');
+                
+                // Reset form
+                appointmentForm.reset();
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    appointmentResponse.textContent = '';
+                    appointmentResponse.className = 'response';
+                }, 5000);
+            }, 1500);
+        });
+
+        // Initialize first section as active
+        document.querySelector('section').classList.add('active');
+
+        // Service card "Learn More" buttons
+        document.querySelectorAll('.service .learn-more').forEach(button => {
+            button.addEventListener('click', function() {
+                const serviceTitle = this.parentElement.querySelector('h3').textContent;
+                alert(`More information about our ${serviceTitle} service will be displayed here. In a real implementation, this might open a modal or navigate to a detailed service page.`);
+            });
+        });
+
+        // Animation for stats in About section
+        if (document.querySelector('.about-stats')) {
+            const stats = document.querySelectorAll('.stat h3');
+            
+            const animateStats = () => {
+                stats.forEach(stat => {
+                    const target = +stat.textContent.replace('+', '');
+                    const increment = target / 50;
+                    let current = 0;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            clearInterval(timer);
+                            stat.textContent = target + (stat.textContent.includes('+') ? '+' : '');
+                        } else {
+                            stat.textContent = Math.floor(current);
+                        }
+                    }, 20);
+                });
+            };
+            
+            // Only animate when About section is in view
+            const aboutSection = document.getElementById('about');
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    animateStats();
+                    observer.unobserve(aboutSection);
+                }
+            }, { threshold: 0.5 });
+            
+            observer.observe(aboutSection);
+        }
+    </script>
+</body>
+</html>

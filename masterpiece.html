@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #4facfe, #00f2fe);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            transition: background-color 0.5s;
+        }
+
+        /* Header */
+        header {
+            background: rgba(53, 66, 74, 0.8);
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f;
+            transform: scale(1.1);
+        }
+
+        /* Main Content */
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 5;
+        }
+
+        h2 {
+            color: rgb(53, 66, 74);
+            transition: color 0.3s;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #f1c40f;
+            padding-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: rgb(53, 66, 74);
+            color: rgb(255, 255, 255);
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            background-color: rgb(53, 66, 74);
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 16px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: rgb(44, 62, 80);
+            transform: scale(1.05);
+        }
+
+        /* Sections */
+        .section {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #home {
+            background-color: rgb(209, 231, 221);
+        }
+
+        #login {
+            background-color: rgb(248, 215, 218);
+        }
+
+        #premium {
+            background-color: rgb(255, 243, 205);
+        }
+
+        #subjects {
+            background-color: rgb(207, 226, 243);
+        }
+
+        .section.hidden {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .section:not(.hidden) {
+            transform: scale(1);
+            opacity: 1;
+            transition: opacity 0. 3s ease-in, transform 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .loading div {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #3498db;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrolling Animation */
+        .scrolling-animation {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .scrolling-animation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div></div>
+    </div>
+
+    <div class="background-image"></div>
+    <div class="content">
+        <header>
+            <h1 class="moving-text-with-color-changing-effect">Student Portal</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('login')">Login</a></li>
+                    <li><a href="#" onclick="showSection('premium')">Premium</a></li>
+                    <li><a href="#" onclick="showSection('subjects')">Subjects</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div id="home" class="section fade-in scrolling-animation">
+                <h2>Welcome to the Student Portal</h2>
+                <p>Your one-stop solution for learning!</p>
+            </div>
+
+            <div id="login" class="section hidden fade-in scrolling-animation">
+                <h2>Login</h2>
+                <form action="#" method="post">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <br>
+                    <button class="button-animated" type="submit">Login</button>
+                </form>
+            </div>
+
+            <div id="premium" class="section hidden fade-in scrolling-animation">
+                <h2>Premium Content</h2>
+                <p>Unlock premium features by subscribing to access exclusive content and resources.</p>
+                <button class="button-animated">Subscribe Now</button>
+            </div>
+
+            <div id="subjects" class="section hidden fade-in scrolling-animation">
+                <h2>Available Subjects</h2>
+                <ul>
+                    <li><a href="#" onclick="showSection('questions_computer_fundamentals')">Computer Fundamentals</a></li>
+                    <li><a href="#" onclick="showSection('questions_c_programming')">C Programming</a></li>
+                    <li><a href="#" onclick="showSection('questions_office_automation')">Office Automation Tools</a></li>
+                    <li><a href="#" onclick="showSection('questions_digital_electronics')">Digital Electronics</a></li>
+                    <li><a href="#" onclick="showSection('questions_data_structure')">Data Structure</a></li>
+                    <li><a href="#" onclick="showSection('questions_dbms')">Database Management System</a></li>
+                    <li><a href="#" onclick="showSection('questions_business_practices')">Business Practices and Management</a></li>
+                    <li><a href="#" onclick="showSection('questions_computer_organization')">Computer Organization</a></li>
+                    <li><a href="#" onclick="showSection('questions_oop_cplusplus')">Object Oriented C++</a></li>
+                    <li><a href="#" onclick="showSection('questions_desktop_publishing')">Desktop Publishing and Designing</a></li>
+                    <li><a href="#" onclick="showSection('questions_personnel_management')">Personnel Management</a></li>
+                    <li><a href="#" onclick="showSection('questions_system_analysis')">System Analysis and Design</a></li>
+                    <li><a href="#" onclick="showSection('questions_internet_technology')">Internet Technology and Web Page Design</a></li>
+                    <li><a href="#" onclick="showSection('questions_visual_basic')">Programming in Visual Basic</a></li>
+                    <li><a href="#" onclick="showSection('questions_operating_system')">Operating System</a></li>
+                    <li><a href="#" onclick="showSection('questions_e_commerce')">E-Commerce</a></li>
+                    <li><a href="#" onclick="showSection('questions_management_information_system')">Management Information System</a></li>
+                    <li><a href="#" onclick="showSection('questions_asp_net')">ASP.NET Technology</a></li>
+                    <li><a href="#" onclick="showSection('questions_computer_network')">Computer Network</a></li>
+                    <li><a href="#" onclick="showSection('questions_multimedia_technology')">Multimedia Technology</a></li>
+                    <li><a href="#" onclick="showSection('questions_computer_graphics')">Computer Graphics</a></li>
+                    <li><a href="#" onclick="showSection('questions_software_engineering')">Software Engineering</a></li>
+                </ul>
+            </div>
+
+            <div id="questions_computer_fundamentals" class="section hidden fade-in scrolling-animation">
+                <h2>Computer Fundamentals Questions</h2>
+                <p>Content for Computer Fundamentals will be added here.</p>
+                <button class="button-animated" onclick="showSection('unit1_computer_fundamentals')">Unit 1: Characteristics and Evolution of Computers</button>
+                <button class="button-animated" onclick="showSection('unit2_computer_fundamentals')">Unit 2: Advanced Topics in Computer Fundamentals</button>
+            </div>
+
+            <div id="unit1_computer_fundamentals" class="section hidden fade-in scrolling-animation">
+                <h2>Unit 1: Characteristics and Evolution of Computers</h2>
+                <h3>1. Characteristics of Computers</h3>
+                <ul>
+                    <li>Speed – Computers can process data and perform calculations in milliseconds.</li>
+                    <li>Automation – Once a program is loaded, computers work automatically without human intervention.</li>
+                    <li>Accuracy – Computers provide highly accurate results if given correct instructions.</li>
+                    <li>Multitasking – A computer can perform multiple tasks simultaneously.</li>
+                    <li>Storage – Computers can store vast amounts of data for future use.</li>
+                    <li>Connectivity – They can connect to the internet and share information globally.</li>
+                    <li>Versatility – Computers can be used in different fields like education, healthcare, business, etc.</li>
+                    <li>Diligence – Unlike humans, computers do not suffer from tiredness or lack of concentration.</li>
+                </ul>
+                <h3>2. Evolution of Computers</h3>
+                <ul>
+                    <li>First Generation (1940-1956) – Used vacuum tubes, very large and slow. Example: ENIAC, UNIVAC.</li>
+                    <li>Second Generation (1956-1963) – Used transistors, smaller, and more efficient than vacuum tubes.</li>
+                    <li>Third Generation (1964-1971) – Used integrated circuits (ICs), making computers smaller and faster.</li>
+                    <li>Fourth Generation (1971-Present) – Uses microprocessors, personal computers (PCs) became common.</li>
+                    <li>Fifth Generation (Future) – Focuses on artificial intelligence (AI) and quantum computing.</li>
+                </ul>
+                <h3>3. Capabilities and Limitations of Computers</h3>
+                <h4>Capabilities:</h4>
+                <ul>
+                    <li>Can perform complex calculations at high speed.</li>
+                    <li>Can store and retrieve large amounts of data.</li>
+                    <li>Can operate without fatigue or mistakes.</li>
+                    <li>Can automate repetitive tasks.</li>
+                    <li>Can support communication via the internet.</li>
+                </ul>
+                <h4>Limitations:</h4>
+                <ul>
+                    <li>Cannot think or make decisions like humans.</li>
+                    <li>Lacks emotions and creativity.</li>
+                    <li>Completely dependent on instructions (software).</li>
+                    <li>Prone to cyberattacks and hardware failures.</li>
+                </ul>
+                <h3>4. Generations of Computers</h3>
+                <table>
+                    <tr>
+                        <th>Generation</th>
+                        <th>Technology Used</th>
+                        <th> Example</th>
+                    </tr>
+                    <tr>
+                        <td>First (1940-1956)</td>
+                        <td>Vacuum Tubes</td>
+                        <td>ENIAC, UNIVAC</td>
+                    </tr>
+                    <tr>
+                        <td>Second (1956-1963)</td>
+                        <td>Transistors</td>
+                        <td>IBM 1401</td>
+                    </tr>
+                    <tr>
+                        <td>Third (1964-1971)</td>
+                        <td>Integrated Circuits</td>
+                        <td>IBM 360</td>
+                    </tr>
+                    <tr>
+                        <td>Fourth (1971-Present)</td>
+                        <td>Microprocessors</td>
+                        <td>Intel 4004, Modern PCs</td>
+                    </tr>
+                    <tr>
+                        <td>Fifth (Future)</td>
+                        <td>AI & Quantum Computing</td>
+                        <td>AI-based systems</td>
+                    </tr>
+                </table>
+                <h3>5. Types of Computers</h3>
+                <ul>
+                    <li>Microcomputers – Personal computers (PCs), laptops, desktops. Example: Dell, HP laptops.</li>
+                    <li>Minicomputers – Medium-sized computers used in businesses. Example: PDP-11.</li>
+                    <li>Mainframe Computers – Powerful machines used by large organizations. Example: IBM zSeries.</li>
+                    <li>Supercomputers – Extremely powerful for complex calculations. Example: PARAM, Summit.</li>
+                </ul>
+                <h3>6. Block Diagram of a Computer</h3>
+                <p>A computer consists of several components that work together. The block diagram includes:</p>
+                <ul>
+                    <li>Input Unit – Accepts data (Keyboard, Mouse, Scanner).</li>
+                    <li>CPU (Central Processing Unit) – Processes the data.</li>
+                    <li>ALU (Arithmetic Logic Unit) – Performs calculations and logical operations.</li>
+                    <li>CU (Control Unit) – Controls all operations of the computer.</li>
+                    <li>Registers – Small memory units for temporary data storage.</li>
+                    <li>Memory Unit – Stores data temporarily (RAM) or permanently (Hard Disk).</li>
+                    <li>Output Unit – Displays the processed data (Monitor, Printer).</li>
+                </ul>
+                <h3>7. Basic Components of a Computer System</h3>
+                <ul>
+                    <li>Input Unit – Devices that provide data to the computer (Keyboard, Mouse).</li>
+                    <li>Output Unit – Devices that show the results (Monitor, Speaker).</li>
+                    <li>Arithmetic Logic Unit (ALU) – Performs mathematical and logical operations.</li>
+                    <li>Control Unit (CU) – Directs the operation of the computer.</li>
+                    <li>Central Processing Unit (CPU) – The brain of the computer (ALU + CU).</li>
+                </ul>
+                <h3>8. Instruction Set, Registers, Processor Speed, and Types of Processors</h3>
+                <h4>Instruction Set:</h4>
+                <p>A set of commands that a processor can execute. Example: ADD, SUBTRACT.</p>
+                <h4>Registers:</h4>
+                <p>Small, fast storage areas in the CPU that hold temporary data.</p>
+                <h4>Processor Speed:</h4>
+                <p>Measured in GHz, determines how fast a CPU executes instructions. Example: Intel Core i7 (3.4 GHz).</p>
+                <h4>Types of Processors :</h4>
+                <ul>
+                    <li>CISC (Complex Instruction Set Computer) – Used in desktop computers. Example: Intel, AMD.</li>
+                    <li>RISC (Reduced Instruction Set Computer) – Used in mobile devices. Example: ARM processors.</li>
+                    <li>Multicore Processors – Multiple cores for faster processing. Example: Intel Core i9.</li>
+                </ul>
+                <button class="button-animated" onclick="showSection('questions_computer_fundamentals')">Back to Computer Fundamentals</button>
+            </div>
+
+            <div id="unit2_computer_fundamentals" class="section hidden fade-in scrolling-animation">
+                <h2>Unit 2: Advanced Topics in Computer Fundamentals</h2>
+                <h3>1. Data Representation</h3>
+                <ul>
+                    <li>Binary System – The fundamental language of computers, using 0s and 1s.</li>
+                    <li>ASCII – A character encoding standard for electronic communication.</li>
+                    <li>Unicode – A standard for encoding characters from multiple languages.</li>
+                </ul>
+                <h3>2. Computer Architecture</h3>
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>CPU</td>
+                        <td>Central Processing Unit, the brain of the computer.</td>
+                    </tr>
+                    <tr>
+                        <td>Memory</td>
+                        <td>Temporary storage for data and instructions.</td>
+                    </tr>
+                    <tr>
+                        <td>Storage</td>
+                        <td>Long-term data storage solutions like HDDs and SSDs.</td>
+                    </tr>
+                    <tr>
+                        <td>Input/Output Devices</td>
+                        <td>Devices that allow interaction with the computer (e.g., keyboard, mouse, printer).</td>
+                    </tr>
+                </table>
+                <h3>3. Operating Systems</h3>
+                <ul>
+                    <li>Functions of an Operating System – Manages hardware and software resources.</li>
+                    <li>Types of Operating Systems – Examples include Windows, macOS, Linux.</li>
+                    <li>System Calls – Interfaces for programs to request services from the OS.</li>
+                </ul>
+                <h3>4. Networking Basics</h3>
+                <ul>
+                    <li>Types of Networks – LAN, WAN, MAN, and their characteristics.</li>
+                    <li>Network Protocols – Rules for data communication (e.g., TCP/IP).</li>
+                    <li>Internet vs. Intranet – Differences and use cases.</li>
+                </ul>
+                <button class="button-animated" onclick="showSection('questions_computer_fundamentals')">Back to Computer Fundamentals</button>
+            </div>
+
+            <div id="questions_c_programming" class="section hidden fade-in scrolling-animation">
+                <h2>C Programming Questions</h2>
+                <p>Content for C Programming will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_office_automation" class="section hidden fade-in scrolling-animation">
+                <h2>Office Automation Tools Questions</h2>
+                <p>Content for Office Automation Tools will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_communicative_english" class="section hidden fade-in scrolling-animation">
+                <h2>Communicative English Questions</h2>
+                <p>Content for Communicative English will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_digital_electronics" class="section hidden fade-in scrolling-animation">
+                <h2>Digital Electronics Questions</h2>
+                <p>Content for Digital Electronics will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_data_structure" class="section hidden fade-in scrolling-animation">
+                <h2>Data Structure Questions</h2>
+                <p>Content for Data Structure will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_dbms" class="section hidden fade-in scrolling-animation">
+                <h2>Database Management System Questions</h2>
+                <p>Content for Database Management System will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_business_practices" class="section hidden fade-in scrolling-animation">
+                <h2>Business Practices and Management Questions</h2>
+                <p>Content for Business Practices and Management will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_computer_organization" class="section hidden fade-in scrolling-animation">
+                <h2>Computer Organization Questions</h2>
+                <p>Content for Computer Organization will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_oop_cplusplus" class="section hidden fade-in scrolling-animation">
+                <h2>Object Oriented C++ Questions</h2>
+                <p>Content for Object Oriented C++ will be added here .</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_desktop_publishing" class="section hidden fade-in scrolling-animation">
+                <h2>Desktop Publishing and Designing Questions</h2>
+                <p>Content for Desktop Publishing and Designing will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_personnel_management" class="section hidden fade-in scrolling-animation">
+                <h2>Personnel Management Questions</h2>
+                <p>Content for Personnel Management will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_system_analysis" class="section hidden fade-in scrolling-animation">
+                <h2>System Analysis and Design Questions</h2>
+                <p>Content for System Analysis and Design will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_internet_technology" class="section hidden fade-in scrolling-animation">
+                <h2>Internet Technology and Web Page Design Questions</h2>
+                <p>Content for Internet Technology and Web Page Design will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_visual_basic" class="section hidden fade-in scrolling-animation">
+                <h2>Programming in Visual Basic Questions</h2>
+                <p>Content for Programming in Visual Basic will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_operating_system" class="section hidden fade-in scrolling-animation">
+                <h2>Operating System Questions</h2>
+                <p>Content for Operating System will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_e_commerce" class="section hidden fade-in scrolling-animation">
+                <h2>E-Commerce Questions</h2>
+                <p>Content for E-Commerce will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_management_information_system" class="section hidden fade-in scrolling-animation">
+                <h2>Management Information System Questions</h2>
+                <p>Content for Management Information System will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_asp_net" class="section hidden fade-in scrolling-animation">
+                <h2>ASP.NET Technology Questions</h2>
+                <p>Content for ASP.NET Technology will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_computer_network" class="section hidden fade-in scrolling-animation">
+                <h2>Computer Network Questions</h2>
+                <p>Content for Computer Network will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_multimedia_technology" class="section hidden fade-in scrolling-animation">
+                <h2>Multimedia Technology Questions</h2>
+                <p>Content for Multimedia Technology will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_computer_graphics" class="section hidden fade-in scrolling-animation">
+                <h2>Computer Graphics Questions</h2>
+                <p>Content for Computer Graphics will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+
+            <div id="questions_software_engineering" class="section hidden fade-in scrolling-animation">
+                <h2>Software Engineering Questions</h2>
+                <p>Content for Software Engineering will be added here.</p>
+                <button class="button-animated" onclick="showSection('subjects')">Back to Subjects</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showSection(sectionId ) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        // Scroll Animation
+        const sections = document.querySelectorAll('.section, .subject-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

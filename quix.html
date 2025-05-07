@@ -13,6 +13,8 @@
             --bg: #ecf0f1;
             --card: #ffffff;
             --highlight: #f1c40f;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
         }
 
         .high-contrast {
@@ -24,16 +26,403 @@
             --accent: #00ff00;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 0;
             transition: all 0.3s;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* Header Styles */
+        header {
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--highlight);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight);
+        }
+
+        .nav-links a.active {
+            color: var(--highlight);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--highlight);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIj48L3JlY3Q+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIj48L3JlY3Q+PC9zdmc+');
+        }
+
+        .btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background: var(--highlight);
+            color: var(--text);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Module Styles */
+        .module {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        .module-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .module-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .module-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .module-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #7f8c8d;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--light);
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            border-radius: 10px;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(52, 152, 219, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #555;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .author-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            color: var(--highlight);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--highlight);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--highlight);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Quiz Container Styles (from original code) */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -592,177 +981,6 @@
             animation: float linear infinite;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
-            }
-        }
-
-        @keyframes bounceIn {
-            0% {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes confetti {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        .confetti {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background: var(--secondary);
-            top: -10px;
-            animation: confetti 3s linear forwards;
-            z-index: 1000;
-            border-radius: 50%;
-        }
-
-        .category-animation {
-            animation: categoryEntry 0.5s ease-out forwards;
-        }
-
-        @keyframes categoryEntry {
-            0% {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .leaderboard {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
-        }
-
-        .leaderboard th, .leaderboard td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .leaderboard th {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .leaderboard tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .leaderboard tr:hover {
-            background-color: #e9e9e9;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .user-row {
-            display: flex;
-            align-items: center;
-        }
-
-        .rank {
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .score-value {
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .difficulty-selector {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .difficulty-btn {
-            padding: 8px 15px;
-            border-radius: 20px;
-            background: #ecf0f1;
-            border: 2px solid #bdc3c7;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .difficulty-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .difficulty-btn.easy.active {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .difficulty-btn.hard.active {
-            background: var(--secondary);
-            border-color: var(--secondary);
-        }
-
         .streak-counter {
             position: fixed;
             top: 20px;
@@ -824,12 +1042,638 @@
             z-index: 1;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
+
+        /* Premium Content */
+        .premium-banner {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-banner h2 {
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-banner p {
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIj48L3JlY3Q+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIj48L3JlY3Q+PC9zdmc+');
+            opacity: 0.3;
+        }
+
+        /* Flashcards */
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .flashcard {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard:hover .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 10px;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            border-radius: 10px;
+            transform: rotateY(180deg);
+        }
+
+        .flashcard h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .flashcard p {
+            font-size: 1rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                display: none;
+                margin-top: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .module-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes categoryEntry {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="floating-particles" id="particles"></div>
     
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo" onclick="showModule('home')">
+                <i class="fas fa-trophy"></i> QuizMaster Pro
+            </a>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" class="active" onclick="showModule('home')">Home</a></li>
+                <li><a href="#" onclick="showModule('subjects')">Subjects</a></li>
+                <li><a href="#" onclick="showModule('premium')">Premium</a></li>
+                <li><a href="#" onclick="showModule('flashcards')">Flashcards</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Module -->
+        <div class="module active" id="home-module">
+            <section class="hero">
+                <div class="hero-bg"></div>
+                <h1>Welcome to QuizMaster Pro</h1>
+                <p>Test your knowledge and master various subjects with our interactive quizzes. Challenge yourself and track your progress as you learn!</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showModule('subjects')">
+                        <i class="fas fa-book-open"></i> Start Learning
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="showModule('premium')">
+                        <i class="fas fa-crown"></i> Explore Premium
+                    </a>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Comprehensive Subjects</h3>
+                    <p>Access a wide range of subjects from Science to Politics with questions at different difficulty levels.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Track Your Progress</h3>
+                    <p>Monitor your learning journey with detailed statistics and performance analytics.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-medal"></i>
+                    <h3>Earn Achievements</h3>
+                    <p>Unlock badges and rewards as you master different topics and improve your scores.</p>
+                </div>
+            </section>
+
+            <section class="testimonials">
+                <h2>What Our Users Say</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            QuizMaster Pro has completely transformed how I prepare for my exams. The interactive quizzes make learning fun and effective!
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">AS</div>
+                            <div class="author-info">
+                                <h4>Alex Smith</h4>
+                                <p>Computer Science Student</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            As a teacher, I recommend this platform to all my students. The quality of questions and explanations is outstanding.
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">MJ</div>
+                            <div class="author-info">
+                                <h4>Maria Johnson</h4>
+                                <p>University Professor</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            I've tried many quiz apps, but QuizMaster Pro stands out with its clean interface and challenging questions. Love it!
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">RD</div>
+                            <div class="author-info">
+                                <h4>Robert Davis</h4>
+                                <p>Software Engineer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Subjects Module -->
+        <div class="module" id="subjects-module">
+            <div class="module-header">
+                <h2>Choose Your Subject</h2>
+                <p>Select from our wide range of subjects and start testing your knowledge today</p>
+            </div>
+
+            <div class="container">
+                <div class="difficulty-selector" style="margin-bottom: 2rem;">
+                    <button class="difficulty-btn easy" data-difficulty="easy">Easy</button>
+                    <button class="difficulty-btn medium active" data-difficulty="medium">Medium</button>
+                    <button class="difficulty-btn hard" data-difficulty="hard">Hard</button>
+                </div>
+                
+                <div class="categories">
+                    <div class="category" data-category="international">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>International Affairs</h3>
+                        </div>
+                        <p>Test your knowledge of global politics and international relations</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 25 questions</span>
+                            <span><i class="fas fa-users"></i> 1.2M players</span>
+                        </div>
+                    </div>
+                    
+                    <div class="category" data-category="science">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>Science</h3>
+                        </div>
+                        <p>Explore the wonders of physics, chemistry, and biology</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 30 questions</span>
+                            <span><i class="fas fa-users"></i> 890K players</span>
+                        </div>
+                    </div>
+                    
+                    <div class="category" data-category="general">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>General Knowledge</h3>
+                        </div>
+                        <p>A mix of everything from history to pop culture</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 40 questions</span>
+                            <span><i class="fas fa-users"></i> 2.5M players</span>
+                        </div>
+                    </div>
+                    
+                    <div class="category" data-category="geography">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>Geography</h3>
+                        </div>
+                        <p>Journey through countries, capitals, and natural wonders</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 20 questions</span>
+                            <span><i class="fas fa-users"></i> 750K players</span>
+                        </div>
+                    </div>
+                    
+                    <div class="category" data-category="politics">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1575320181282-9afab399332c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>Indian Polity</h3>
+                        </div>
+                        <p>Understand the constitution and political system of India</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 15 questions</span>
+                            <span><i class="fas fa-users"></i> 500K players</span>
+                        </div>
+                    </div>
+                    
+                    <div class="category" data-category="math">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>Mathematics</h3>
+                        </div>
+                        <p>Challenge your numerical and problem-solving skills</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 25 questions</span>
+                            <span><i class="fas fa-users"></i> 680K players</span>
+                        </div>
+                    </div>
+
+                    <div class="category" data-category="dbms">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>DBMS</h3>
+                        </div>
+                        <p>Database Management Systems concepts and SQL queries</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 20 questions</span>
+                            <span><i class="fas fa-users"></i> 420K players</span>
+                        </div>
+                    </div>
+
+                    <div class="category" data-category="se">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>Software Engineering</h3>
+                        </div>
+                        <p>Software development methodologies and best practices</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 25 questions</span>
+                            <span><i class="fas fa-users"></i> 380K players</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div class="quiz-container" id="quiz">
+                <div class="quiz-header">
+                    <div id="category-name" style="font-weight: bold; color: var(--primary);"></div>
+                    <div id="timer"><i class="fas fa-clock"></i> 30s</div>
+                </div>
+                
+                <div class="quiz-progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <div class="question" id="question">Loading question...</div>
+                <div class="options" id="options"></div>
+                <div class="controls">
+                    <button id="prev" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button id="next"><i class="fas fa-arrow-right"></i> Next</button>
+                </div>
+            </div>
+
+            <!-- Score Container -->
+            <div class="score-container" id="score-container">
+                <h2>Quiz Completed! <i class="fas fa-trophy" style="color: var(--highlight);"></i></h2>
+                <div class="score-display">
+                    <span id="score">0</span>/<span id="total-questions">0</span>
+                </div>
+                <div id="score-message" style="font-size: 1.2rem; margin-bottom: 20px;"></div>
+                
+                <div class="badges" id="badges">
+                    <div class="badge" id="badge1">
+                        <i class="fas fa-medal"></i>
+                        <div class="badge-info">Score 50%</div>
+                    </div>
+                    <div class="badge" id="badge2">
+                        <i class="fas fa-trophy"></i>
+                        <div class="badge-info">Score 75%</div>
+                    </div>
+                    <div class="badge" id="badge3">
+                        <i class="fas fa-crown"></i>
+                        <div class="badge-info">Perfect Score!</div>
+                    </div>
+                </div>
+                
+                <div id="share-buttons" style="margin: 20px 0;">
+                    <button style="background: #3b5998; margin-right: 10px;"><i class="fab fa-facebook-f"></i> Share</button>
+                    <button style="background: #1da1f2;"><i class="fab fa-twitter"></i> Tweet</button>
+                </div>
+                
+                <button id="restart"><i class="fas fa-redo"></i> Play Again</button>
+            </div>
+        </div>
+
+        <!-- Premium Module -->
+        <div class="module" id="premium-module">
+            <div class="module-header">
+                <h2>Premium Content</h2>
+                <p>Unlock exclusive premium content to enhance your learning experience</p>
+            </div>
+
+            <div class="premium-banner">
+                <h2>Upgrade to Premium</h2>
+                <p>Get access to all premium content including advanced quizzes, detailed explanations, and ad-free experience.</p>
+                <button class="btn btn-primary">
+                    <i class="fas fa-crown"></i> Get Premium
+                </button>
+            </div>
+
+            <div class="container">
+                <div class="categories">
+                    <div class="category" data-category="os">
+                        <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
+                            <h3>Operating Systems</h3>
+                        </div>
+                        <p>Processes, memory management, file systems and more (Premium Only)</p>
+                        <div class="category-stats">
+                            <span><i class="fas fa-question"></i> 30 questions</span>
+                            <span><i class="fas fa-users"></i> 150K players</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flashcards Module -->
+        <div class="module" id="flashcards-module">
+            <div class="module-header">
+                <h2>Flashcards</h2>
+                <p>Learn key concepts with our interactive flashcards</p>
+            </div>
+
+            <div class="flashcards-container">
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3>DBMS</h3>
+                            <p>Click to flip</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>A Database Management System (DBMS) is software that interacts with end users, applications, and the database itself to capture and analyze data.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3>Normalization</h3>
+                            <p>Click to flip</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3>SQL</h3>
+                            <p>Click to flip</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>Structured Query Language (SQL) is a standard language for storing, manipulating and retrieving data in databases.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3>Agile</h3>
+                            <p>Click to flip</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>Agile is an iterative approach to project management and software development that helps teams deliver value faster.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3>SDLC</h3>
+                            <p>Click to flip</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>Software Development Life Cycle (SDLC) is a process used by the software industry to design, develop and test high quality software.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3>Kernel</h3>
+                            <p>Click to flip</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>The kernel is a computer program that is the core of a computer's operating system, with complete control over everything in the system.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>QuizMaster Pro</h3>
+                <p>Your ultimate destination for interactive learning and knowledge testing across various subjects.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showModule('home')">Home</a></li>
+                    <li><a href="#" onclick="showModule('subjects')">Subjects</a></li>
+                    <li><a href="#" onclick="showModule('premium')">Premium</a></li>
+                    <li><a href="#" onclick="showModule('flashcards')">Flashcards</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Thank you for visiting our website. We hope this platform will help you in your learning journey.</p>
+            <p>&copy; 2023 QuizMaster Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Quiz Elements -->
     <div class="streak-counter" id="streak-counter">
         <i class="fas fa-fire"></i> Streak: <span class="streak-count">0</span>
     </div>
@@ -842,196 +1686,6 @@
     <button id="a11y-btn" aria-label="Accessibility options">
         <i class="fas fa-universal-access"></i>
     </button>
-    
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-trophy" style="color: var(--highlight); margin-right: 10px;"></i>QuizMaster Pro</h1>
-            <div id="user-profile" style="display: none;">
-                <div style="display: flex; align-items: center;">
-                    <div class="avatar">JP</div>
-                    <span>John Player</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Category Selection -->
-        <div id="category-selection">
-            <h2 style="text-align: center; margin-bottom: 30px;">Choose Your Quiz Challenge</h2>
-            
-            <div class="difficulty-selector">
-                <button class="difficulty-btn easy" data-difficulty="easy">Easy</button>
-                <button class="difficulty-btn medium active" data-difficulty="medium">Medium</button>
-                <button class="difficulty-btn hard" data-difficulty="hard">Hard</button>
-            </div>
-            
-            <div class="categories">
-                <div class="category" data-category="international">
-                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                        <h3>International Affairs</h3>
-                    </div>
-                    <p>Test your knowledge of global politics and international relations</p>
-                    <div class="category-stats">
-                        <span><i class="fas fa-question"></i> 25 questions</span>
-                        <span><i class="fas fa-users"></i> 1.2M players</span>
-                    </div>
-                </div>
-                
-                <div class="category" data-category="science">
-                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                        <h3>Science</h3>
-                    </div>
-                    <p>Explore the wonders of physics, chemistry, and biology</p>
-                    <div class="category-stats">
-                        <span><i class="fas fa-question"></i> 30 questions</span>
-                        <span><i class="fas fa-users"></i> 890K players</span>
-                    </div>
-                </div>
-                
-                <div class="category" data-category="general">
-                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                        <h3>General Knowledge</h3>
-                    </div>
-                    <p>A mix of everything from history to pop culture</p>
-                    <div class="category-stats">
-                        <span><i class="fas fa-question"></i> 40 questions</span>
-                        <span><i class="fas fa-users"></i> 2.5M players</span>
-                    </div>
-                </div>
-                
-                <div class="category" data-category="geography">
-                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                        <h3>Geography</h3>
-                    </div>
-                    <p>Journey through countries, capitals, and natural wonders</p>
-                    <div class="category-stats">
-                        <span><i class="fas fa-question"></i> 20 questions</span>
-                        <span><i class="fas fa-users"></i> 750K players</span>
-                    </div>
-                </div>
-                
-                <div class="category" data-category="politics">
-                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1575320181282-9afab399332c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                        <h3>Indian Polity</h3>
-                    </div>
-                    <p>Understand the constitution and political system of India</p>
-                    <div class="category-stats">
-                        <span><i class="fas fa-question"></i> 15 questions</span>
-                        <span><i class="fas fa-users"></i> 500K players</span>
-                    </div>
-                </div>
-                
-                <div class="category" data-category="math">
-                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                        <h3>Mathematics</h3>
-                    </div>
-                    <p>Challenge your numerical and problem-solving skills</p>
-                    <div class="category-stats">
-                        <span><i class="fas fa-question"></i> 25 questions</span>
-                        <span><i class="fas fa-users"></i> 680K players</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <h3>Top Players This Week</h3>
-                <table class="leaderboard">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Player</th>
-                            <th>Score</th>
-                            <th>Category</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="rank">1</td>
-                            <td>
-                                <div class="user-row">
-                                    <div class="avatar" style="background-color: var(--highlight);">AM</div>
-                                    <span>Alex Master</span>
-                                </div>
-                            </td>
-                            <td class="score-value">980</td>
-                            <td>General</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">2</td>
-                            <td>
-                                <div class="user-row">
-                                    <div class="avatar" style="background-color: var(--primary);">QP</div>
-                                    <span>Quiz Pro</span>
-                                </div>
-                            </td>
-                            <td class="score-value">950</td>
-                            <td>Science</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">3</td>
-                            <td>
-                                <div class="user-row">
-                                    <div class="avatar" style="background-color: var(--accent);">GK</div>
-                                    <span>Genius Kid</span>
-                                </div>
-                            </td>
-                            <td class="score-value">920</td>
-                            <td>Math</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Quiz Container -->
-        <div class="quiz-container" id="quiz">
-            <div class="quiz-header">
-                <div id="category-name" style="font-weight: bold; color: var(--primary);"></div>
-                <div id="timer"><i class="fas fa-clock"></i> 30s</div>
-            </div>
-            
-            <div class="quiz-progress">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-            
-            <div class="question" id="question">Loading question...</div>
-            <div class="options" id="options"></div>
-            <div class="controls">
-                <button id="prev" disabled><i class="fas fa-arrow-left"></i> Previous</button>
-                <button id="next"><i class="fas fa-arrow-right"></i> Next</button>
-            </div>
-        </div>
-
-        <!-- Score Container -->
-        <div class="score-container" id="score-container">
-            <h2>Quiz Completed! <i class="fas fa-trophy" style="color: var(--highlight);"></i></h2>
-            <div class="score-display">
-                <span id="score">0</span>/<span id="total-questions">0</span>
-            </div>
-            <div id="score-message" style="font-size: 1.2rem; margin-bottom: 20px;"></div>
-            
-            <div class="badges" id="badges">
-                <div class="badge" id="badge1">
-                    <i class="fas fa-medal"></i>
-                    <div class="badge-info">Score 50%</div>
-                </div>
-                <div class="badge" id="badge2">
-                    <i class="fas fa-trophy"></i>
-                    <div class="badge-info">Score 75%</div>
-                </div>
-                <div class="badge" id="badge3">
-                    <i class="fas fa-crown"></i>
-                    <div class="badge-info">Perfect Score!</div>
-                </div>
-            </div>
-            
-            <div id="share-buttons" style="margin: 20px 0;">
-                <button style="background: #3b5998; margin-right: 10px;"><i class="fab fa-facebook-f"></i> Share</button>
-                <button style="background: #1da1f2;"><i class="fab fa-twitter"></i> Tweet</button>
-            </div>
-            
-            <button id="restart"><i class="fas fa-redo"></i> Play Again</button>
-        </div>
-    </div>
 
     <script>
         // Enhanced quiz questions with difficulty levels
@@ -1623,6 +2277,300 @@
                         explanation: "π/2 radians is 90°. The sine of 90° is 1. The unit circle relates angles to coordinates: at 90°, the y-coordinate is 1."
                     }
                 ]
+            },
+            dbms: {
+                easy: [
+                    {
+                        question: "What does DBMS stand for?",
+                        options: ["Database Management System", "Data Backup Management System", "Digital Business Management System", "Database Modeling System"],
+                        answer: 0,
+                        explanation: "DBMS stands for Database Management System, which is software for creating and managing databases."
+                    },
+                    {
+                        question: "Which of these is not a type of database model?",
+                        options: ["Relational", "Hierarchical", "Network", "Linear"],
+                        answer: 3,
+                        explanation: "The main database models are relational, hierarchical, network, and object-oriented. Linear is not a database model."
+                    },
+                    {
+                        question: "What is the primary key in a database table?",
+                        options: ["A key that opens the database", "A field that uniquely identifies each record", "The first field in every table", "A key used for encryption"],
+                        answer: 1,
+                        explanation: "A primary key is a field (or combination of fields) that uniquely identifies each record in a table."
+                    },
+                    {
+                        question: "Which SQL command is used to retrieve data from a database?",
+                        options: ["GET", "SELECT", "RETRIEVE", "FETCH"],
+                        answer: 1,
+                        explanation: "The SELECT statement is used to select data from a database. The data returned is stored in a result table, called the result-set."
+                    },
+                    {
+                        question: "What does SQL stand for?",
+                        options: ["Structured Query Language", "Simple Query Language", "Standard Query Language", "System Query Language"],
+                        answer: 0,
+                        explanation: "SQL stands for Structured Query Language, which is a standard language for accessing and manipulating databases."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "What is normalization in DBMS?",
+                        options: ["The process of organizing data to minimize redundancy", "Making all data uppercase", "Converting data to normal form", "Standardizing database sizes"],
+                        answer: 0,
+                        explanation: "Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity."
+                    },
+                    {
+                        question: "Which normal form is considered the most desirable for relational databases?",
+                        options: ["First Normal Form (1NF)", "Second Normal Form (2NF)", "Third Normal Form (3NF)", "Boyce-Codd Normal Form (BCNF)"],
+                        answer: 3,
+                        explanation: "While 3NF is sufficient for most applications, Boyce-Codd Normal Form (BCNF) is considered stronger and more desirable."
+                    },
+                    {
+                        question: "What is a foreign key?",
+                        options: ["A key from another country", "A field that links to the primary key in another table", "A key that is no longer valid", "An encrypted primary key"],
+                        answer: 1,
+                        explanation: "A foreign key is a field in one table that uniquely identifies a row of another table, creating a relationship between the two tables."
+                    },
+                    {
+                        question: "Which SQL command is used to update data in a database?",
+                        options: ["MODIFY", "CHANGE", "UPDATE", "ALTER"],
+                        answer: 2,
+                        explanation: "The UPDATE statement is used to modify the existing records in a table."
+                    },
+                    {
+                        question: "What is a transaction in DBMS?",
+                        options: ["A financial exchange", "A sequence of operations performed as a single logical unit of work", "A type of database table", "A communication between databases"],
+                        answer: 1,
+                        explanation: "A transaction is a sequence of operations performed as a single logical unit of work that must be either completed entirely or not at all."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "What is the ACID property in DBMS?",
+                        options: ["Atomicity, Consistency, Isolation, Durability", "Accuracy, Consistency, Integrity, Durability", "Atomicity, Concurrency, Integrity, Durability", "Atomicity, Consistency, Integrity, Duration"],
+                        answer: 0,
+                        explanation: "ACID stands for Atomicity, Consistency, Isolation, and Durability - the four key properties that guarantee database transactions are processed reliably."
+                    },
+                    {
+                        question: "What is denormalization?",
+                        options: ["The reverse process of normalization", "Removing all keys from a database", "Making a database less secure", "Converting a database to NoSQL"],
+                        answer: 0,
+                        explanation: "Denormalization is the process of adding redundant data to a database to improve read performance, at the cost of write performance and data integrity."
+                    },
+                    {
+                        question: "Which join returns all records when there is a match in either left or right table?",
+                        options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN"],
+                        answer: 3,
+                        explanation: "A FULL OUTER JOIN returns all records when there is a match in either left or right table, filling in NULLs for non-matching rows."
+                    },
+                    {
+                        question: "What is a stored procedure?",
+                        options: ["A method for storing data", "A prepared SQL code that can be saved and reused", "A type of database backup", "A procedure for storing tables"],
+                        answer: 1,
+                        explanation: "A stored procedure is a prepared SQL code that you can save and reuse, allowing you to execute complex operations with a single call."
+                    },
+                    {
+                        question: "What is the difference between DELETE and TRUNCATE commands?",
+                        options: ["DELETE removes data permanently, TRUNCATE doesn't", "TRUNCATE is faster but can't be rolled back", "DELETE can be used with WHERE clause, TRUNCATE can't", "Both B and C"],
+                        answer: 3,
+                        explanation: "TRUNCATE is faster as it doesn't log individual row deletions but can't be used with WHERE clause. DELETE can be rolled back and used with WHERE."
+                    }
+                ]
+            },
+            se: {
+                easy: [
+                    {
+                        question: "What is Software Engineering?",
+                        options: ["Writing code", "The application of engineering to software development", "Computer programming", "Hardware design"],
+                        answer: 1,
+                        explanation: "Software engineering is the systematic application of engineering approaches to the development of software."
+                    },
+                    {
+                        question: "Which of these is not a software development model?",
+                        options: ["Waterfall", "Agile", "Spiral", "Square"],
+                        answer: 3,
+                        explanation: "Square is not a software development model. Common models include Waterfall, Agile, Spiral, V-Model, and Iterative."
+                    },
+                    {
+                        question: "What is the first phase in the Waterfall model?",
+                        options: ["Coding", "Testing", "Requirements gathering", "Design"],
+                        answer: 2,
+                        explanation: "The Waterfall model phases are: Requirements, Design, Implementation, Verification, and Maintenance."
+                    },
+                    {
+                        question: "What does SDLC stand for?",
+                        options: ["Software Design Life Cycle", "System Development Life Cycle", "Software Development Life Cycle", "System Design Life Cycle"],
+                        answer: 2,
+                        explanation: "SDLC stands for Software Development Life Cycle, which is a process for planning, creating, testing, and deploying software."
+                    },
+                    {
+                        question: "Which of these is a version control system?",
+                        options: ["Git", "Java", "Python", "MySQL"],
+                        answer: 0,
+                        explanation: "Git is a distributed version control system. Others are programming languages or database systems."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "What is the main principle behind Agile development?",
+                        options: ["Comprehensive documentation", "Following a strict plan", "Responding to change over following a plan", "Complete each phase before moving to next"],
+                        answer: 2,
+                        explanation: "Agile values responding to change over following a plan, as stated in the Agile Manifesto."
+                    },
+                    {
+                        question: "What is a use case in software engineering?",
+                        options: ["A legal case about software", "A list of steps defining interactions between actors and the system", "A type of software testing", "A software requirement document"],
+                        answer: 1,
+                        explanation: "A use case is a list of actions or event steps defining the interactions between a role (actor) and a system to achieve a goal."
+                    },
+                    {
+                        question: "What is white-box testing?",
+                        options: ["Testing with knowledge of internal code", "Testing the UI only", "Testing without any knowledge of internals", "Testing in a white environment"],
+                        answer: 0,
+                        explanation: "White-box testing is a method where internal structure/design/implementation is known to the tester."
+                    },
+                    {
+                        question: "What is the purpose of UML in software engineering?",
+                        options: ["To write code", "To visualize system design", "To test software", "To document requirements"],
+                        answer: 1,
+                        explanation: "Unified Modeling Language (UML) is a standardized modeling language for visualizing system design."
+                    },
+                    {
+                        question: "What is refactoring in software development?",
+                        options: ["Rewriting the entire codebase", "Changing code without altering external behavior", "Fixing bugs", "Adding new features"],
+                        answer: 1,
+                        explanation: "Refactoring is restructuring existing code without changing its external behavior to improve nonfunctional attributes."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "What is cyclomatic complexity?",
+                        options: ["The number of cycles a program takes to execute", "A measure of program complexity based on decision points", "How complex the cyclic dependencies are", "The complexity of loop structures"],
+                        answer: 1,
+                        explanation: "Cyclomatic complexity is a software metric measuring the number of linearly independent paths through a program's source code."
+                    },
+                    {
+                        question: "What is the difference between verification and validation?",
+                        options: ["Verification checks if product is built right, validation checks if right product is built", "They mean the same thing", "Verification is for code, validation is for design", "Verification is done by developers, validation by testers"],
+                        answer: 0,
+                        explanation: "Verification: Are we building the product right? Validation: Are we building the right product?"
+                    },
+                    {
+                        question: "What is the Law of Demeter in software design?",
+                        options: ["A legal principle about software", "A principle of minimal knowledge between objects", "A rule about democratic development", "A law about software patents"],
+                        answer: 1,
+                        explanation: "The Law of Demeter is a design guideline that promotes loose coupling by restricting communication between objects to only 'close friends'."
+                    },
+                    {
+                        question: "What is pair programming?",
+                        options: ["Two programmers writing the same code simultaneously", "Two programmers working on different parts of the same project", "One programmer writing code while another reviews it", "Two programmers working together at one workstation"],
+                        answer: 3,
+                        explanation: "Pair programming involves two programmers working together at one workstation, with one typing (driver) and the other reviewing (navigator)."
+                    },
+                    {
+                        question: "What is the main advantage of continuous integration?",
+                        options: ["Reduces integration problems", "Makes code run faster", "Eliminates the need for testing", "Reduces the need for documentation"],
+                        answer: 0,
+                        explanation: "Continuous integration helps detect integration errors quickly by frequently merging all developer working copies to a shared mainline."
+                    }
+                ]
+            },
+            os: {
+                easy: [
+                    {
+                        question: "What is an operating system?",
+                        options: ["A program that manages computer hardware", "A type of computer hardware", "A programming language", "A database system"],
+                        answer: 0,
+                        explanation: "An operating system is system software that manages computer hardware, software resources, and provides common services for computer programs."
+                    },
+                    {
+                        question: "Which of these is not an operating system?",
+                        options: ["Windows", "Linux", "macOS", "Python"],
+                        answer: 3,
+                        explanation: "Python is a programming language, not an operating system. Windows, Linux, and macOS are all operating systems."
+                    },
+                    {
+                        question: "What is the main function of a kernel?",
+                        options: ["To provide user interface", "To manage system resources", "To run applications", "To store files"],
+                        answer: 1,
+                        explanation: "The kernel is the core of the OS that manages system resources like CPU, memory, and I/O devices."
+                    },
+                    {
+                        question: "What is virtual memory?",
+                        options: ["Memory that doesn't really exist", "A memory management technique that uses disk space as RAM", "Memory used in virtual machines", "Memory for graphics processing"],
+                        answer: 1,
+                        explanation: "Virtual memory is a memory management technique that uses disk space to extend the apparent amount of physical memory available."
+                    },
+                    {
+                        question: "What is a process in operating systems?",
+                        options: ["A program in execution", "A type of computer virus", "A hardware component", "A user interface element"],
+                        answer: 0,
+                        explanation: "A process is an instance of a computer program that is being executed by one or many threads."
+                    }
+                ],
+                medium: [
+                    {
+                        question: "What is CPU scheduling?",
+                        options: ["Planning CPU purchases", "Determining which process runs next on CPU", "Scheduling when to turn CPU on/off", "Planning CPU manufacturing"],
+                        answer: 1,
+                        explanation: "CPU scheduling is the process of determining which process runs next on the CPU when multiple processes are ready to execute."
+                    },
+                    {
+                        question: "What is a deadlock?",
+                        options: ["A locked computer", "When processes wait indefinitely for resources held by each other", "A security feature", "A type of computer virus"],
+                        answer: 1,
+                        explanation: "Deadlock is a situation where a set of processes are blocked because each is holding a resource and waiting for another resource acquired by some other process."
+                    },
+                    {
+                        question: "What is paging in memory management?",
+                        options: ["Numbering memory pages", "Dividing memory into fixed-size blocks", "Writing to memory", "Reading from memory"],
+                        answer: 1,
+                        explanation: "Paging is a memory management scheme that eliminates the need for contiguous allocation of physical memory by dividing memory into fixed-size blocks called pages."
+                    },
+                    {
+                        question: "What is the difference between multiprogramming and multitasking?",
+                        options: ["They mean the same thing", "Multiprogramming is for multiple CPUs", "Multitasking involves time-sharing", "Multiprogramming is for batch systems"],
+                        answer: 2,
+                        explanation: "Multitasking is multiprogramming with time-sharing, where the CPU switches between tasks so quickly that users can interact with each program while it's running."
+                    },
+                    {
+                        question: "What is a shell in operating systems?",
+                        options: ["A protective layer around the kernel", "A user interface to access OS services", "A type of computer virus", "A hardware component"],
+                        answer: 1,
+                        explanation: "A shell is a user interface for access to an operating system's services, either command-line (CLI) or graphical (GUI)."
+                    }
+                ],
+                hard: [
+                    {
+                        question: "What is the difference between preemptive and non-preemptive scheduling?",
+                        options: ["Preemptive allows process to run to completion", "Non-preemptive can interrupt running process", "Preemptive can interrupt running process", "There is no difference"],
+                        answer: 2,
+                        explanation: "In preemptive scheduling, the OS can interrupt a running process to give CPU to another process. In non-preemptive, a process runs until it voluntarily releases the CPU."
+                    },
+                    {
+                        question: "What is the Belady's anomaly?",
+                        options: ["A memory management phenomenon where more page frames can lead to more page faults", "A scheduling algorithm", "A type of deadlock", "A security vulnerability"],
+                        answer: 0,
+                        explanation: "Belady's anomaly is the phenomenon where increasing the number of page frames results in an increase in page faults for certain memory access patterns."
+                    },
+                    {
+                        question: "What is the difference between monolithic and microkernel architectures?",
+                        options: ["Monolithic has all OS services in kernel space", "Microkernel is faster", "Monolithic is more secure", "Microkernel has all services in kernel space"],
+                        answer: 0,
+                        explanation: "In monolithic kernels, all OS services run in kernel space. In microkernels, most services run in user space with only basic functions in kernel space."
+                    },
+                    {
+                        question: "What is the purpose of the Translation Lookaside Buffer (TLB)?",
+                        options: ["To speed up virtual-to-physical address translation", "To store frequently used files", "To cache CPU instructions", "To buffer network packets"],
+                        answer: 0,
+                        explanation: "The TLB is a memory cache that stores recent translations of virtual memory to physical addresses to speed up virtual memory access."
+                    },
+                    {
+                        question: "What is the difference between internal and external fragmentation?",
+                        options: ["Internal is within a partition, external is between partitions", "They mean the same thing", "Internal is in RAM, external is on disk", "Internal is in kernel, external is in user space"],
+                        answer: 0,
+                        explanation: "Internal fragmentation occurs when allocated memory is slightly larger than requested memory (within a partition). External fragmentation occurs when free memory is broken into small pieces between allocated segments."
+                    }
+                ]
             }
         };
 
@@ -1650,6 +2598,14 @@
         const categoryNameEl = document.getElementById('category-name');
         const scoreMessageEl = document.getElementById('score-message');
         const particlesEl = document.getElementById('particles');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        const modules = {
+            home: document.getElementById('home-module'),
+            subjects: document.getElementById('subjects-module'),
+            premium: document.getElementById('premium-module'),
+            flashcards: document.getElementById('flashcards-module')
+        };
 
         // Quiz state
         let currentCategory = '';
@@ -1682,6 +2638,34 @@
 
         // Initialize particles
         createParticles();
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Module navigation
+        function showModule(moduleName) {
+            // Hide all modules
+            Object.values(modules).forEach(module => {
+                module.classList.remove('active');
+            });
+            
+            // Show selected module
+            modules[moduleName].classList.add('active');
+            
+            // Update nav link active state
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`.nav-links a[onclick="showModule('${moduleName}')"]`).classList.add('active');
+            
+            // Close mobile menu if open
+            navLinks.classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
 
         // Difficulty selection
         difficultyBtns.forEach(btn => {
@@ -1806,7 +2790,7 @@
                     <i class="fas fa-text-width"></i> Reset Text Size
                 </button>
             `;
-                        document.body.appendChild(menu);
+            document.body.appendChild(menu);
             setTimeout(() => menu.classList.add('active'), 10);
         });
 
@@ -1823,7 +2807,7 @@
                 }, 200);
                 
                 // Show quiz container
-                categorySelection.style.display = 'none';
+                modules.subjects.style.display = 'block';
                 quizContainer.classList.add('active');
                 scoreTracker.classList.add('active');
                 streakCounter.classList.add('active');
@@ -2036,7 +3020,7 @@
         // Restart quiz
         restartBtn.addEventListener('click', () => {
             scoreContainer.style.display = 'none';
-            categorySelection.style.display = 'block';
+            modules.subjects.style.display = 'block';
             currentQuestion = 0;
             score = 0;
             selectedOption = null;
@@ -2061,194 +3045,6 @@
                 setTimeout(() => {
                     category.classList.add('category-animation');
                 }, index * 100);
-            });
-        });
-
-        // Add more questions to existing categories
-        allQuestions.international.easy.push(
-            {
-                question: "Which country is known as the 'Land of the Rising Sun'?",
-                options: ["China", "Japan", "South Korea", "Thailand"],
-                answer: 1,
-                explanation: "Japan is called the 'Land of the Rising Sun' because from China's perspective, the sun rises from the direction of Japan."
-            },
-            {
-                question: "The European Union's currency is:",
-                options: ["Euro", "Pound", "Franc", "Mark"],
-                answer: 0,
-                explanation: "The Euro (€) is used by 19 of the 27 EU member states, collectively known as the Eurozone."
-            }
-        );
-
-        allQuestions.science.medium.push(
-            {
-                question: "What is the main gas that makes up the Sun?",
-                options: ["Oxygen", "Hydrogen", "Helium", "Nitrogen"],
-                answer: 1,
-                explanation: "The Sun is about 70% hydrogen and 28% helium by mass, with heavier elements making up the remaining 2%."
-            },
-            {
-                question: "Which planet is known as the 'Red Planet'?",
-                options: ["Venus", "Mars", "Jupiter", "Saturn"],
-                answer: 1,
-                explanation: "Mars appears red due to iron oxide (rust) on its surface. It's the fourth planet from the Sun."
-            }
-        );
-
-        allQuestions.general.hard.push(
-            {
-                question: "Which country consumes the most chocolate per capita?",
-                options: ["United States", "Germany", "Switzerland", "Belgium"],
-                answer: 2,
-                explanation: "Switzerland leads with about 8.8 kg per person annually. Chocolate was first consumed as a bitter drink by the Maya and Aztecs."
-            },
-            {
-                question: "What is the world's most spoken language by native speakers?",
-                options: ["English", "Hindi", "Spanish", "Mandarin Chinese"],
-                answer: 3,
-                explanation: "Mandarin Chinese has about 1.1 billion native speakers. English is the most widely spoken second language."
-            }
-        );
-
-        // Add new categories
-        allQuestions.history = {
-            easy: [
-                {
-                    question: "In which year did World War II end?",
-                    options: ["1943", "1945", "1947", "1950"],
-                    answer: 1,
-                    explanation: "World War II ended in 1945 with the surrender of Germany in May and Japan in September."
-                },
-                {
-                    question: "Who was the first President of the United States?",
-                    options: ["Thomas Jefferson", "John Adams", "George Washington", "Abraham Lincoln"],
-                    answer: 2,
-                    explanation: "George Washington served as the first U.S. President from 1789 to 1797."
-                }
-            ],
-            medium: [
-                {
-                    question: "The Industrial Revolution began in which country?",
-                    options: ["France", "Germany", "United States", "Great Britain"],
-                    answer: 3,
-                    explanation: "The Industrial Revolution began in Britain in the late 18th century before spreading worldwide."
-                },
-                {
-                    question: "Which ancient civilization built the pyramids?",
-                    options: ["Greeks", "Romans", "Egyptians", "Mayans"],
-                    answer: 2,
-                    explanation: "The ancient Egyptians built the pyramids as tombs for pharaohs, with the Great Pyramid built around 2560 BCE."
-                }
-            ],
-            hard: [
-                {
-                    question: "Which year did the Berlin Wall fall?",
-                    options: ["1987", "1989", "1991", "1993"],
-                    answer: 1,
-                    explanation: "The Berlin Wall fell on November 9, 1989, leading to German reunification in 1990."
-                },
-                {
-                    question: "Who was the first female Prime Minister of Britain?",
-                    options: ["Theresa May", "Margaret Thatcher", "Indira Gandhi", "Golda Meir"],
-                    answer: 1,
-                    explanation: "Margaret Thatcher served as British Prime Minister from 1979 to 1990 and was known as the 'Iron Lady'."
-                }
-            ]
-        };
-
-        allQuestions.technology = {
-            easy: [
-                {
-                    question: "Which company created the iPhone?",
-                    options: ["Samsung", "Apple", "Google", "Microsoft"],
-                    answer: 1,
-                    explanation: "Apple introduced the first iPhone in 2007, revolutionizing the smartphone industry."
-                },
-                {
-                    question: "What does 'www' stand for in websites?",
-                    options: ["World Wide Web", "Web World Wide", "World Web Wide", "Wide World Web"],
-                    answer: 0,
-                    explanation: "The World Wide Web was invented by Tim Berners-Lee in 1989 while working at CERN."
-                }
-            ],
-            medium: [
-                {
-                    question: "What is the main programming language of Android apps?",
-                    options: ["Swift", "Java", "Python", "C++"],
-                    answer: 1,
-                    explanation: "Android apps are primarily written in Java, though Kotlin is now also officially supported."
-                },
-                {
-                    question: "Which year was Facebook launched?",
-                    options: ["2002", "2004", "2006", "2008"],
-                    answer: 1,
-                    explanation: "Mark Zuckerberg launched Facebook in 2004 while at Harvard as 'Thefacebook'."
-                }
-            ],
-            hard: [
-                {
-                    question: "What does API stand for in programming?",
-                    options: ["Application Programming Interface", "Automated Program Interaction", "Advanced Programming Instruction", "Application Process Integration"],
-                    answer: 0,
-                    explanation: "An API is a set of protocols and tools for building software applications."
-                },
-                {
-                    question: "Which was the first cryptocurrency?",
-                    options: ["Ethereum", "Bitcoin", "Litecoin", "Ripple"],
-                    answer: 1,
-                    explanation: "Bitcoin, created by Satoshi Nakamoto in 2009, was the first decentralized cryptocurrency."
-                }
-            ]
-        };
-
-        // Update the categories HTML to include new categories
-        const categoriesContainer = document.querySelector('.categories');
-        categoriesContainer.innerHTML += `
-            <div class="category" data-category="history">
-                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                    <h3>History</h3>
-                </div>
-                <p>Journey through ancient civilizations and modern events</p>
-                <div class="category-stats">
-                    <span><i class="fas fa-question"></i> 20 questions</span>
-                    <span><i class="fas fa-users"></i> 950K players</span>
-                </div>
-            </div>
-            
-            <div class="category" data-category="technology">
-                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');">
-                    <h3>Technology</h3>
-                </div>
-                <p>Explore the digital world of computers and innovation</p>
-                <div class="category-stats">
-                    <span><i class="fas fa-question"></i> 25 questions</span>
-                    <span><i class="fas fa-users"></i> 1.5M players</span>
-                </div>
-            </div>
-        `;
-
-        // Add event listeners to new categories
-        document.querySelectorAll('.category').forEach(category => {
-            category.addEventListener('click', () => {
-                currentCategory = category.dataset.category;
-                questions = allQuestions[currentCategory][currentDifficulty];
-                
-                // Show quiz container
-                categorySelection.style.display = 'none';
-                quizContainer.classList.add('active');
-                scoreTracker.classList.add('active');
-                streakCounter.classList.add('active');
-                
-                // Set category name
-                categoryNameEl.textContent = category.querySelector('h3').textContent;
-                
-                // Initialize quiz
-                currentQuestion = 0;
-                score = 0;
-                selectedOption = null;
-                updateScoreTracker();
-                loadQuestion();
-                startTimer();
             });
         });
 
@@ -2287,4 +3083,3 @@
     </script>
 </body>
 </html>
-           

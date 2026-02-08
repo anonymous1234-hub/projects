@@ -5,8 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>To My Beautiful Best Friend 💖</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 <style>
-/* ---------------- GLOBAL ---------------- */
+/* ---------------- ENHANCED COLOR PALETTE ---------------- */
+:root {
+    --primary-color: #ff4f8b;
+    --secondary-color: #7a003c;
+    --accent-1: #ff9eb5;
+    --accent-2: #ff6b97;
+    --accent-3: #ffd1dc;
+    --accent-4: #ff85a2;
+    --gradient-1: linear-gradient(135deg, #ff4f8b, #ff6b97, #ff9eb5);
+    --gradient-2: linear-gradient(135deg, #7a003c, #9c0049, #be0056);
+    --gradient-3: linear-gradient(135deg, #ffdde1, #ffc0cb, #ffb6c1);
+    --gradient-rainbow: linear-gradient(90deg, 
+        #ff4f8b, #ff6b97, #ff85a2, 
+        #ff9eb5, #ffb6c1, #ffd1dc);
+    --shadow-glow: 0 0 30px rgba(255, 79, 139, 0.4);
+    --text-color: #333;
+    --light-text: #fff;
+    --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -14,206 +34,731 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-:root {
-    --primary-color: #ff4f8b;
-    --secondary-color: #7a003c;
-    --accent-color: #ffdde1;
-    --light-color: #fff9fa;
-    --dark-color: #5a002a;
-    --text-color: #333;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
-}
-
 body {
-    background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 50%, #ffb6c1 100%);
+    background: var(--gradient-3);
     min-height: 100vh;
     color: var(--text-color);
     overflow-x: hidden;
 }
 
-/* ---------------- LOADING ANIMATION ---------------- */
+/* ---------------- ENHANCED FLOATING HEARTS ---------------- */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.7;
+    animation: floatEnhanced 20s infinite linear;
+    filter: drop-shadow(0 0 10px currentColor);
+}
+
+.floating-heart:nth-child(3n) { color: var(--accent-1); }
+.floating-heart:nth-child(3n+1) { color: var(--primary-color); }
+.floating-heart:nth-child(3n+2) { color: var(--secondary-color); }
+
+@keyframes floatEnhanced {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+        transform: rotate(180deg) scale(1.2);
+    }
+    50% {
+        transform: rotate(360deg) scale(0.8);
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(720deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* ---------------- ENHANCED LOADER ---------------- */
 .loader {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    background: var(--gradient-1);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.8s ease;
 }
 
 .loader-content {
     text-align: center;
+    animation: pulse 2s infinite;
 }
 
 .loader-spinner {
-    width: 70px;
-    height: 70px;
-    border: 5px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: var(--primary-color);
-    animation: spin 1s ease-in-out infinite;
-    margin: 0 auto 20px;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: 0 auto 30px;
 }
 
-@keyframes spin {
+.loader-spinner::before,
+.loader-spinner::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation: loaderSpin 2s linear infinite;
+}
+
+.loader-spinner::before {
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(transparent, var(--secondary-color), transparent);
+}
+
+.loader-spinner::after {
+    width: 85%;
+    height: 85%;
+    background: var(--gradient-1);
+    top: 7.5%;
+    left: 7.5%;
+    animation-duration: 1.5s;
+    animation-direction: reverse;
+}
+
+@keyframes loaderSpin {
     to { transform: rotate(360deg); }
 }
 
-.loader h2 {
-    color: var(--secondary-color);
-    margin-bottom: 10px;
+/* ---------------- ENHANCED TITLE WITH FOLD EFFECT ---------------- */
+.title-container {
+    position: relative;
+    margin-bottom: 30px;
+    perspective: 1000px;
 }
 
-.loader p {
-    color: var(--dark-color);
-}
-
-/* ---------------- CONTAINER ---------------- */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 30px;
-    text-align: center;
-    opacity: 0;
-    animation: fadeIn 1s ease 0.5s forwards;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ---------------- HEADINGS ---------------- */
 h1 {
-    font-size: 3.5rem;
-    color: var(--secondary-color);
+    font-size: 4rem;
+    background: var(--gradient-rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: 10px;
-    position: relative;
     display: inline-block;
+    animation: titleFold 3s ease-in-out infinite alternate;
+    transform-style: preserve-3d;
+    text-shadow: 2px 2px 10px rgba(255, 79, 139, 0.3);
 }
 
-h1::after {
-    content: '';
+@keyframes titleFold {
+    0% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+        text-shadow: 2px 2px 10px rgba(255, 79, 139, 0.3);
+    }
+    50% {
+        transform: perspective(1000px) rotateX(10deg) rotateY(5deg);
+        text-shadow: 5px 5px 20px rgba(255, 79, 139, 0.6);
+    }
+    100% {
+        transform: perspective(1000px) rotateX(-10deg) rotateY(-5deg);
+        text-shadow: 2px 2px 10px rgba(255, 79, 139, 0.3);
+    }
+}
+
+/* ---------------- FLIP CARD GALLERY WITH PICTURES ---------------- */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+    perspective: 1000px;
+}
+
+.flip-card {
+    height: 350px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 20px;
+    cursor: pointer;
+    animation: cardAppear 0.6s ease both;
+    animation-delay: calc(var(--card-index) * 0.1s);
+}
+
+.flip-card:hover {
+    transform: rotateY(180deg) scale(1.05);
+    box-shadow: var(--shadow-glow);
+}
+
+.flip-card-front,
+.flip-card-back {
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: var(--primary-color);
-    border-radius: 2px;
-}
-
-h2 {
-    font-size: 2.2rem;
-    margin: 40px 0 20px;
-    color: var(--dark-color);
-    position: relative;
-    display: inline-block;
-}
-
-h2::before, h2::after {
-    content: '❧';
-    margin: 0 15px;
-    color: var(--primary-color);
-}
-
-/* ---------------- TEXT ---------------- */
-.intro {
-    font-size: 1.3rem;
-    line-height: 1.8;
-    margin: 30px auto 50px;
-    max-width: 900px;
-    padding: 25px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    position: relative;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
     overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
-.intro::before {
+.flip-card-front {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    position: relative;
+}
+
+.flip-card-front::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 8px;
-    height: 100%;
-    background: var(--primary-color);
+    right: 0;
+    bottom: 0;
+    background: rgba(122, 0, 60, 0.3);
+    z-index: 1;
 }
 
-.long-text {
-    font-size: 1.2rem;
-    line-height: 1.9;
-    margin: 20px auto;
-    max-width: 950px;
-    text-align: justify;
-    text-align-last: center;
-}
-
-/* ---------------- GALLERY ---------------- */
-.gallery-section {
+.flip-card-front i {
     position: relative;
-    margin: 50px 0;
+    z-index: 2;
+    font-size: 3rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.flip-card-back {
+    background: var(--gradient-2);
+    transform: rotateY(180deg);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.flip-card-back::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { transform: rotate(45deg) translateX(-100%); }
+    100% { transform: rotate(45deg) translateX(100%); }
+}
+
+.flip-card-back h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--accent-3);
+    position: relative;
+    z-index: 2;
+}
+
+.flip-card-back p {
+    position: relative;
+    z-index: 2;
+    line-height: 1.6;
+}
+
+/* ---------------- FOLDING QUOTE BOX ---------------- */
+.quote-box {
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    margin: 50px auto;
+    max-width: 800px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: foldQuote 6s ease-in-out infinite;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-box::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: var(--gradient-rainbow);
+    z-index: -1;
+    border-radius: 23px;
+    animation: borderRotate 4s linear infinite;
+}
+
+@keyframes foldQuote {
+    0%, 100% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    }
+    25% {
+        transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+    }
+    50% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(-5deg);
+    }
+    75% {
+        transform: perspective(1000px) rotateX(-5deg) rotateY(0deg);
+    }
+}
+
+@keyframes borderRotate {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* ---------------- RAINBOW BUTTONS ---------------- */
+.buttons {
+    display: flex;
+    justify-content: center;
     gap: 20px;
+    flex-wrap: wrap;
     margin: 40px 0;
 }
 
-.gallery-item {
-    position: relative;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-    transition: var(--transition);
+.btn {
+    padding: 18px 40px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
-    aspect-ratio: 1;
-}
-
-.gallery-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-}
-
-.gallery-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
     transition: var(--transition);
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
-.gallery-item:hover .gallery-img {
-    transform: scale(1.1);
-}
-
-.gallery-caption {
+.btn::before {
+    content: '';
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    padding: 15px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    color: white;
-    font-size: 0.9rem;
-    transform: translateY(100%);
+    height: 100%;
+    background: var(--gradient-rainbow);
+    background-size: 200% 100%;
+    z-index: -1;
     transition: var(--transition);
 }
 
-.gallery-item:hover .gallery-caption {
-    transform: translateY(0);
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    background: var(--gradient-2);
+    border-radius: 45px;
+    z-index: -1;
+    opacity: 0;
+    transition: var(--transition);
 }
 
-/* Lightbox */
+.btn:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: var(--shadow-glow);
+}
+
+.btn:hover::before {
+    background-position: 100% 0;
+    animation: rainbowMove 2s linear infinite;
+}
+
+.btn:hover::after {
+    opacity: 1;
+}
+
+@keyframes rainbowMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* ---------------- FOLDING MEMORY CARDS ---------------- */
+.memory-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 20px 0;
+    transform-style: preserve-3d;
+    animation: memoryFold 3s ease-in-out infinite alternate;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.memory-card:hover {
+    animation: none;
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px);
+    box-shadow: var(--shadow-glow);
+}
+
+@keyframes memoryFold {
+    0% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+    }
+}
+
+/* ---------------- COLORFUL SECTION HEADERS ---------------- */
+.section-header {
+    position: relative;
+    margin: 60px 0 30px;
+    text-align: center;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    display: inline-block;
+    padding: 15px 40px;
+    background: var(--gradient-rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    animation: headerShimmer 3s infinite alternate;
+}
+
+@keyframes headerShimmer {
+    0% {
+        text-shadow: 0 0 10px rgba(255, 79, 139, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(255, 79, 139, 0.8);
+    }
+}
+
+/* ---------------- ENHANCED FOOTER ---------------- */
+footer {
+    margin-top: 100px;
+    padding: 50px 30px;
+    background: var(--gradient-2);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.footer-heart {
+    position: absolute;
+    color: var(--accent-3);
+    font-size: 24px;
+    animation: footerHeartFloat 8s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes footerHeartFloat {
+    0% {
+        transform: translateY(100%) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100%) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ---------------- NEON GLOW TEXT EFFECT ---------------- */
+.neon-text {
+    color: #fff;
+    text-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px var(--primary-color),
+        0 0 40px var(--primary-color),
+        0 0 80px var(--primary-color);
+    animation: neonPulse 1.5s infinite alternate;
+}
+
+@keyframes neonPulse {
+    from {
+        text-shadow:
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 20px var(--primary-color),
+            0 0 40px var(--primary-color);
+    }
+    to {
+        text-shadow:
+            0 0 10px #fff,
+            0 0 20px var(--primary-color),
+            0 0 40px var(--primary-color),
+            0 0 80px var(--primary-color);
+    }
+}
+
+/* ---------------- COLORFUL TIMELINE ---------------- */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background: var(--gradient-rainbow);
+    animation: timelineGlow 3s infinite alternate;
+}
+
+.timeline-item {
+    position: relative;
+    margin: 40px 0;
+    width: 45%;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: timelineAppear 1s ease both;
+    transform-origin: left;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
+
+.timeline-item:nth-child(even) {
+    left: 55%;
+}
+
+@keyframes timelineGlow {
+    0% { box-shadow: 0 0 10px var(--primary-color); }
+    100% { box-shadow: 0 0 30px var(--secondary-color); }
+}
+
+@keyframes timelineAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ---------------- RESPONSIVE DESIGN ---------------- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .flip-card {
+        height: 300px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 90%;
+        margin: 10px 0;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        width: calc(100% - 60px);
+        left: 60px !important;
+    }
+}
+
+/* ---------------- CUSTOM SCROLLBAR ---------------- */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gradient-3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-rainbow);
+    border-radius: 6px;
+    animation: scrollbarGlow 2s infinite alternate;
+}
+
+@keyframes scrollbarGlow {
+    0% { box-shadow: inset 0 0 10px var(--primary-color); }
+    100% { box-shadow: inset 0 0 20px var(--secondary-color); }
+}
+
+/* ---------------- PARTICLE BACKGROUND ---------------- */
+.particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    animation: particleFloat 15s infinite linear;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ---------------- COLORFUL MODAL ---------------- */
+.colorful-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn 0.5s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; backdrop-filter: blur(0px); }
+    to { opacity: 1; backdrop-filter: blur(10px); }
+}
+
+.modal-content {
+    background: var(--gradient-1);
+    padding: 40px;
+    border-radius: 30px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: modalPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: var(--gradient-rainbow);
+    animation: modalRotate 10s linear infinite;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+@keyframes modalPop {
+    from { transform: scale(0) rotate(-180deg); }
+    to { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes modalRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ---------------- FLOATING ACTION BUTTON ---------------- */
+.fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-rainbow);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: var(--shadow-glow);
+    animation: fabPulse 2s infinite;
+    transition: var(--transition);
+}
+
+.fab:hover {
+    transform: scale(1.1) rotate(180deg);
+    animation: none;
+}
+
+@keyframes fabPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* ---------------- LIGHTBOX FOR PICTURES ---------------- */
 .lightbox {
     display: none;
     position: fixed;
@@ -221,16 +766,29 @@ h2::before, h2::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 1000;
     justify-content: center;
     align-items: center;
+    animation: lightboxFadeIn 0.3s ease;
 }
 
 .lightbox-content {
     max-width: 90%;
     max-height: 90%;
     border-radius: 10px;
+    animation: lightboxZoom 0.4s ease;
+    box-shadow: 0 0 50px rgba(255, 79, 139, 0.5);
+}
+
+@keyframes lightboxFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes lightboxZoom {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
 }
 
 .lightbox-close {
@@ -241,27 +799,37 @@ h2::before, h2::after {
     font-size: 40px;
     cursor: pointer;
     transition: var(--transition);
+    animation: lightboxCloseIn 0.5s ease 0.2s both;
 }
 
 .lightbox-close:hover {
     color: var(--primary-color);
+    transform: rotate(90deg) scale(1.2);
 }
 
 .lightbox-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.2);
+    background: var(--gradient-rainbow);
     color: white;
     border: none;
     padding: 15px;
     cursor: pointer;
     font-size: 24px;
     transition: var(--transition);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: lightboxNavIn 0.5s ease 0.3s both;
 }
 
 .lightbox-nav:hover {
-    background-color: var(--primary-color);
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: var(--shadow-glow);
 }
 
 .lightbox-prev {
@@ -272,252 +840,66 @@ h2::before, h2::after {
     right: 20px;
 }
 
-/* ---------------- QUOTE BOX ---------------- */
-.quote-section {
-    margin: 60px 0;
-}
-
-.quote-box {
-    background: white;
-    padding: 40px 30px;
-    border-radius: 20px;
-    font-size: 1.5rem;
-    margin: 40px auto;
-    max-width: 850px;
-    box-shadow: var(--shadow);
-    position: relative;
-    animation: pulse 2s infinite alternate;
-    border-left: 8px solid var(--primary-color);
-    border-right: 8px solid var(--primary-color);
-}
-
-@keyframes pulse {
-    from { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
-    to { box-shadow: 0 15px 35px rgba(255, 79, 139, 0.3); }
-}
-
-.quote-box i {
-    color: var(--primary-color);
-    margin: 0 10px;
-}
-
-.quote-author {
-    display: block;
-    margin-top: 20px;
-    font-size: 1.1rem;
-    color: var(--dark-color);
-    font-style: italic;
-}
-
-/* ---------------- BUTTONS ---------------- */
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin: 30px 0;
-}
-
-.btn {
-    padding: 15px 35px;
-    font-size: 1.1rem;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 5px 15px rgba(255, 79, 139, 0.4);
-}
-
-.btn:hover {
-    background: var(--secondary-color);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 79, 139, 0.5);
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-}
-
-.btn-secondary:hover {
-    background: var(--primary-color);
-    color: white;
-}
-
-/* ---------------- MEMORY SECTION ---------------- */
-.memory-section {
-    margin: 60px 0;
-}
-
-.memory-form {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 700px;
-    margin: 0 auto;
-    box-shadow: var(--shadow);
-}
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--dark-color);
-    font-weight: 600;
-}
-
-.form-control {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #eee;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: var(--transition);
-}
-
-.form-control:focus {
-    border-color: var(--primary-color);
-    outline: none;
-}
-
-textarea.form-control {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.memories-container {
+/* ---------------- IMAGE GALLERY STYLES ---------------- */
+.image-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    margin-top: 40px;
+    margin: 40px 0;
 }
 
-.memory-card {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    text-align: left;
+.gallery-item {
     position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: var(--transition);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: galleryItemAppear 0.6s ease both;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05) rotate(3deg);
+    box-shadow: var(--shadow-glow);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
     transition: var(--transition);
 }
 
-.memory-card:hover {
-    transform: translateY(-10px);
+.gallery-item:hover img {
+    transform: scale(1.1);
 }
 
-.memory-card h4 {
-    color: var(--secondary-color);
-    margin-bottom: 10px;
-    font-size: 1.3rem;
-}
-
-.memory-date {
-    font-size: 0.9rem;
-    color: #888;
-    margin-bottom: 15px;
-    display: block;
-}
-
-/* ---------------- FOOTER ---------------- */
-footer {
-    margin-top: 60px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 20px 20px 0 0;
-    position: relative;
-    overflow: hidden;
-}
-
-footer::before {
-    content: '';
+.gallery-caption {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    right: 0;
+    background: rgba(122, 0, 60, 0.8);
+    color: white;
+    padding: 15px;
+    transform: translateY(100%);
+    transition: var(--transition);
 }
 
-.heart-animation {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    font-size: 2rem;
-    color: var(--primary-color);
-    animation: heartbeat 1.5s infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-/* ---------------- RESPONSIVE ---------------- */
-@media (max-width: 900px) {
-    .gallery {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    h1 {
-        font-size: 2.8rem;
-    }
-    
-    .quote-box {
-        font-size: 1.3rem;
-        padding: 30px 20px;
-    }
-}
-
-@media (max-width: 600px) {
-    .gallery {
-        grid-template-columns: 1fr;
-    }
-    
-    h1 {
-        font-size: 2.2rem;
-    }
-    
-    h2 {
-        font-size: 1.8rem;
-    }
-    
-    .intro, .long-text {
-        font-size: 1.1rem;
-    }
-    
-    .buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn {
-        width: 100%;
-        max-width: 300px;
-    }
-}
-
-/* ---------------- SCROLL ANIMATION ---------------- */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
-}
-
-.reveal.active {
-    opacity: 1;
+.gallery-item:hover .gallery-caption {
     transform: translateY(0);
+}
+
+@keyframes galleryItemAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
 }
 
 /* ---------------- MUSIC PLAYER ---------------- */
@@ -525,18 +907,21 @@ footer::before {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 15px;
     border-radius: 50px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     z-index: 100;
     display: flex;
     align-items: center;
     gap: 15px;
+    backdrop-filter: blur(10px);
+    animation: musicPlayerIn 1s ease 1s both;
+    transform-origin: left bottom;
 }
 
 .music-btn {
-    background: var(--primary-color);
+    background: var(--gradient-rainbow);
     color: white;
     border: none;
     width: 50px;
@@ -548,28 +933,46 @@ footer::before {
     justify-content: center;
     font-size: 1.2rem;
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
 .music-btn:hover {
-    background: var(--secondary-color);
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(360deg);
+    box-shadow: var(--shadow-glow);
 }
 
 .music-info {
     font-size: 0.9rem;
     color: var(--dark-color);
     white-space: nowrap;
+    font-weight: 500;
+}
+
+@keyframes musicPlayerIn {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 </style>
 </head>
 
 <body>
+<!-- Enhanced Floating Elements -->
+<div class="floating-hearts" id="floatingHearts"></div>
+<div class="particle-container" id="particleContainer"></div>
+
 <!-- Loading Screen -->
 <div class="loader" id="loader">
     <div class="loader-content">
         <div class="loader-spinner"></div>
-        <h2>Loading Special Memories...</h2>
-        <p>This page is made with lots of love 💖</p>
+        <h2 class="neon-text">Loading Special Memories...</h2>
+        <p style="color: white; margin-top: 20px;">Made with infinite love 💖</p>
     </div>
 </div>
 
@@ -593,187 +996,242 @@ footer::before {
     </button>
 </div>
 
+<!-- Floating Action Button -->
+<div class="fab" onclick="showLoveModal()">
+    <i class="fas fa-heart"></i>
+</div>
+
+<!-- Colorful Modal -->
+<div class="colorful-modal" id="loveModal">
+    <div class="modal-content">
+        <h2>💝 Special Message 💝</h2>
+        <p style="margin: 20px 0;">You mean the world to me! Thank you for being the amazing friend you are.</p>
+        <button class="btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
 <div class="container">
-    <h1>To My Beautiful Best Friend 💖</h1>
-    
-    <p class="intro">
-        You are not just someone I talk to every day.<br>
-        You are someone who understands my silence,<br>
-        supports my dreams, and stays even when life gets hard.<br>
-        You are not just my best friend —<br>
-        you are my comfort, my strength, and my forever person.
-    </p>
-    
-    <h2 class="reveal">✨ Our Memories ✨</h2>
-    
-    <div class="gallery-section reveal">
-        <div class="gallery" id="gallery">
-            <!-- Gallery items will be generated by JavaScript -->
-        </div>
+    <!-- Enhanced Title -->
+    <div class="title-container">
+        <h1>To My Beautiful Best Friend 💖</h1>
     </div>
     
-    <h2 class="reveal">🌸 What You Mean To Me 🌸</h2>
-    
-    <p class="long-text reveal">
-        Some people enter our lives quietly and change everything without even trying.<br>
-        You are that person for me.<br>
-        Through laughter, chaos, sadness, and silence — you stayed.<br>
-        You never judged my flaws, never questioned my emotions,<br>
-        and never made me feel alone.
-        <br><br>
-        When the world feels heavy, you make it lighter.<br>
-        When I doubt myself, you remind me who I am.<br>
-        And when I smile for no reason, it's usually because of you.
-    </p>
-    
-    <div class="quote-section reveal">
-        <div class="quote-box" id="quote">
-            <i class="fas fa-quote-left"></i>
-            <span id="quoteText">Some souls are connected beyond time, distance, and words</span>
-            <i class="fas fa-quote-right"></i>
-            <span class="quote-author" id="quoteAuthor">— Unknown</span>
-        </div>
+    <!-- Rainbow Intro -->
+    <div class="intro rainbow-text" style="text-align: center; padding: 40px; background: rgba(255,255,255,0.9); border-radius: 20px; margin: 30px auto; max-width: 900px;">
+        <p style="font-size: 1.4rem; line-height: 1.8;">
+            ✨ You paint my world with colors I never knew existed ✨<br>
+            💫 With you, every moment becomes a beautiful memory 💫<br>
+            🌈 You are the rainbow in my cloudy days 🌈
+        </p>
     </div>
     
+    <!-- Picture Gallery Section -->
+    <div class="section-header">
+        <h2>📸 Our Picture Memories 📸</h2>
+    </div>
+    
+    <div class="image-gallery" id="imageGallery">
+        <!-- Images from your previous code will be added here by JavaScript -->
+    </div>
+    
+    <!-- Flip Card Gallery -->
+    <div class="section-header">
+        <h2>✨ Our Colorful Memories ✨</h2>
+    </div>
+    
+    <div class="gallery" id="gallery">
+        <!-- Flip cards will be generated by JavaScript -->
+    </div>
+    
+    <!-- Folding Quote Box -->
+    <div class="section-header">
+        <h2>🌸 Heartfelt Words 🌸</h2>
+    </div>
+    
+    <div class="quote-box">
+        <i class="fas fa-quote-left" style="color: var(--primary-color); font-size: 2rem; margin-bottom: 20px;"></i>
+        <p id="quoteText" style="font-size: 1.6rem; line-height: 1.6; margin-bottom: 20px;">
+            A true friend is the greatest of all blessings
+        </p>
+        <i class="fas fa-quote-right" style="color: var(--secondary-color); font-size: 2rem; margin-top: 20px;"></i>
+        <p id="quoteAuthor" style="margin-top: 20px; font-style: italic; color: var(--secondary-color);">
+            — Unknown
+        </p>
+    </div>
+    
+    <!-- Rainbow Timeline -->
+    <div class="section-header">
+        <h2>📅 Our Journey 📅</h2>
+    </div>
+    
+    <div class="timeline" id="timeline">
+        <!-- Timeline items will be added by JavaScript -->
+    </div>
+    
+    <!-- Enhanced Buttons -->
     <div class="buttons">
         <button class="btn" onclick="changeQuote()">
-            <i class="fas fa-heart"></i> New Quote
+            <i class="fas fa-magic"></i> Magical Quote
         </button>
-        <button class="btn btn-secondary" onclick="addMemory()">
-            <i class="fas fa-plus"></i> Add Memory
+        <button class="btn" onclick="showMemoryForm()">
+            <i class="fas fa-plus-circle"></i> Add Memory
         </button>
-        <button class="btn btn-secondary" onclick="toggleMusic()">
+        <button class="btn" onclick="toggleRainbowMode()">
+            <i class="fas fa-palette"></i> Rainbow Mode
+        </button>
+        <button class="btn" onclick="createFireworks()">
+            <i class="fas fa-fire"></i> Celebration!
+        </button>
+        <button class="btn" onclick="toggleMusic()">
             <i class="fas fa-music"></i> Toggle Music
+        </button>
+        <button class="btn" onclick="toggleFloatingHearts()">
+            <i class="fas fa-star"></i> Toggle Stars
         </button>
     </div>
     
-    <div class="memory-section reveal" id="memorySection" style="display: none;">
-        <h2>💌 Share a Memory</h2>
-        <div class="memory-form">
-            <div class="form-group">
-                <label for="memoryTitle">Memory Title</label>
-                <input type="text" id="memoryTitle" class="form-control" placeholder="E.g., Our Beach Day">
-            </div>
-            <div class="form-group">
-                <label for="memoryDate">Date</label>
-                <input type="date" id="memoryDate" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="memoryText">Memory Description</label>
-                <textarea id="memoryText" class="form-control" placeholder="Describe this special memory..."></textarea>
-            </div>
-            <button class="btn" onclick="saveMemory()">
+    <!-- Memory Section -->
+    <div class="memory-section" id="memorySection" style="display: none;">
+        <div class="section-header">
+            <h2>💌 Share a Memory</h2>
+        </div>
+        
+        <div class="memory-form" style="background: white; padding: 30px; border-radius: 20px; max-width: 600px; margin: 0 auto;">
+            <input type="text" id="memoryTitle" placeholder="Memory Title" 
+                   style="width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--accent-3); border-radius: 10px;">
+            <textarea id="memoryText" placeholder="Describe this beautiful memory..." 
+                     style="width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--accent-3); border-radius: 10px; min-height: 150px;"></textarea>
+            <button class="btn" onclick="saveMemory()" style="width: 100%; margin-top: 20px;">
                 <i class="fas fa-save"></i> Save Memory
             </button>
         </div>
         
-        <div class="memories-container" id="memoriesContainer">
+        <div id="memoriesContainer" style="margin-top: 50px;">
             <!-- Memory cards will be added here -->
         </div>
     </div>
     
-    <p class="long-text reveal">
-        No matter where life takes us,<br>
-        no matter how busy or distant things become,<br>
-        remember one thing —<br>
-        you will always have a place in my heart that no one else can replace.
-    </p>
-    
-    <footer class="reveal">
-        <h3>Forever thankful for you 🌷</h3>
-        <p>— Your Best Friend 💕</p>
-        <div class="heart-animation">
-            <i class="fas fa-heart"></i>
+    <!-- Enhanced Footer -->
+    <footer>
+        <div class="footer-hearts" id="footerHearts"></div>
+        <h2 class="neon-text" style="margin-bottom: 20px;">Forever Grateful</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 30px;">
+            You are not just a chapter in my life story,<br>
+            You are the entire beautiful book.
+        </p>
+        <div style="font-size: 3rem; margin: 30px 0;">
+            💖 🌸 ✨ 💫 🌈 🎀
         </div>
+        <p style="opacity: 0.8;">
+            Made with infinite love and colorful dreams<br>
+            — Your Best Friend Forever
+        </p>
     </footer>
 </div>
 
 <!-- Audio for background music -->
 <audio id="backgroundMusic" loop>
-    <source src="https://assets.mixkit.co/music/preview/mixkit-carefree-610.mp3" type="audio/mp3">
+    <source src="C:\Users\sharm\Downloads\Baar Baar Din Ye Aaye [128 Kbps]-(SongsPk.com.se) (1).mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
 
 <script>
-// ========== GLOBAL VARIABLES ==========
-const quotes = [
-    {text: "You are my favorite notification 💖", author: "— Unknown"},
-    {text: "A best friend like you is rare and priceless ✨", author: "— Unknown"},
-    {text: "With you, even ordinary moments feel special 🌸", author: "— Unknown"},
-    {text: "You are strong, beautiful, and incredibly kind 💕", author: "— Me"},
-    {text: "Life feels safer knowing you're by my side 🌍", author: "— Unknown"},
-    {text: "No matter what happens, I've got you 💫", author: "— Me"},
-    {text: "Some friendships are forever — ours is one of them 💞", author: "— Unknown"},
-    {text: "You're the peanut butter to my jelly 🥪", author: "— Unknown"},
-    {text: "Together is my favorite place to be 🏡", author: "— Unknown"}
-];
-
+// ========== PICTURES FROM PREVIOUS CODE ==========
 const galleryImages = [
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/Screenshot%202026-01-20%20224727-artguru.png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.03%20AM%20(1).png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.03%20AM%20(2).png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.03%20AM.png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.04%20AM%20(1).png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.04%20AM%20(2).png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.04%20AM.png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.05%20AM%20(1).png"},
-    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.05%20AM.png"}
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/Screenshot%202026-01-20%20224727-artguru.png", caption: "Memory 1"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.03%20AM%20(1).png", caption: "Memory 2"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.03%20AM%20(2).png", caption: "Memory 3"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.03%20AM.png", caption: "Memory 4"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.04%20AM%20(1).png", caption: "Memory 5"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.04%20AM%20(2).png", caption: "Memory 6"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.04%20AM.png", caption: "Memory 7"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.05%20AM%20(1).png", caption: "Memory 8"},
+    {src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/My%20besto%20friendo/WhatsApp%20Image%202025-06-26%20at%2011.29.05%20AM.png", caption: "Memory 9"}
 ];
 
-let currentQuoteIndex = 0;
-let currentImageIndex = 0;
-let memories = [];
-let isMusicPlaying = false;
+const flipCardData = [
+    {
+        front: galleryImages[0].src,
+        back: {
+            title: 'Special Memory',
+            description: 'A beautiful moment captured forever in our hearts'
+        }
+    },
+    {
+        front: galleryImages[1].src,
+        back: {
+            title: 'Joyful Times',
+            description: 'Laughter and happiness shared together'
+        }
+    },
+    {
+        front: galleryImages[2].src,
+        back: {
+            title: 'Unforgettable Day',
+            description: 'A day we\'ll always remember with smiles'
+        }
+    },
+    {
+        front: galleryImages[3].src,
+        back: {
+            title: 'Friendship Bond',
+            description: 'The bond that grows stronger every day'
+        }
+    },
+    {
+        front: galleryImages[4].src,
+        back: {
+            title: 'Beautiful Moments',
+            description: 'Every moment with you is precious'
+        }
+    },
+    {
+        front: galleryImages[5].src,
+        back: {
+            title: 'Together Forever',
+            description: 'Side by side through everything'
+        }
+    }
+];
 
-// ========== DOM ELEMENTS ==========
-const loader = document.getElementById('loader');
-const musicPlayer = document.getElementById('musicPlayer');
-const playBtn = document.getElementById('playBtn');
-const musicInfo = document.getElementById('musicInfo');
-const backgroundMusic = document.getElementById('backgroundMusic');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const closeLightbox = document.getElementById('closeLightbox');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const quoteText = document.getElementById('quoteText');
-const quoteAuthor = document.getElementById('quoteAuthor');
-const gallery = document.getElementById('gallery');
-const memorySection = document.getElementById('memorySection');
-const memoriesContainer = document.getElementById('memoriesContainer');
-
-// ========== INITIALIZATION ==========
+// ========== ENHANCED INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', function() {
-    // Hide loader after 1.5 seconds
+    // Enhanced loading experience
     setTimeout(() => {
         loader.style.opacity = '0';
         setTimeout(() => {
             loader.style.display = 'none';
+            createParticles();
+            createFooterHearts();
+            initializePictureGallery();
+            initializeFlipCards();
+            initializeTimeline();
+            startColorCycle();
         }, 500);
-    }, 1500);
+    }, 2000);
     
-    // Initialize gallery
-    initializeGallery();
-    
-    // Initialize scroll animations
-    initScrollAnimations();
-    
-    // Load saved memories from localStorage
-    loadMemories();
-    
-    // Set initial quote
+    // Initialize with random quote
     changeQuote();
+    
+    // Add floating hearts continuously
+    setInterval(createFloatingHeart, 500);
+    
+    // Initialize music
+    backgroundMusic.volume = 0.3;
 });
 
-// ========== GALLERY FUNCTIONS ==========
-function initializeGallery() {
+// ========== PICTURE GALLERY FUNCTIONS ==========
+function initializePictureGallery() {
+    const gallery = document.getElementById('imageGallery');
     gallery.innerHTML = '';
     
     galleryImages.forEach((image, index) => {
         const galleryItem = document.createElement('div');
         galleryItem.className = 'gallery-item';
+        galleryItem.style.animationDelay = `${index * 0.1}s`;
+        
         galleryItem.innerHTML = `
-            <img src="${image.src}" alt="Memory ${index + 1}" class="gallery-img" data-index="${index}">
+            <img src="${image.src}" alt="${image.caption}" data-index="${index}">
             <div class="gallery-caption">${image.caption}</div>
         `;
         
@@ -782,20 +1240,23 @@ function initializeGallery() {
     });
 }
 
+// ========== LIGHTBOX FUNCTIONS ==========
+let currentImageIndex = 0;
+
 function openLightbox(index) {
     currentImageIndex = index;
     updateLightboxImage();
-    lightbox.style.display = 'flex';
+    document.getElementById('lightbox').style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
-function closeLightboxFunc() {
-    lightbox.style.display = 'none';
+function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 
 function updateLightboxImage() {
-    lightboxImg.src = galleryImages[currentImageIndex].src;
+    document.getElementById('lightboxImg').src = galleryImages[currentImageIndex].src;
 }
 
 function prevImage() {
@@ -808,109 +1269,364 @@ function nextImage() {
     updateLightboxImage();
 }
 
-// ========== QUOTE FUNCTIONS ==========
-function changeQuote() {
-    // Get a random quote different from the current one
-    let newIndex;
-    do {
-        newIndex = Math.floor(Math.random() * quotes.length);
-    } while (newIndex === currentQuoteIndex && quotes.length > 1);
+// ========== FLIP CARD GALLERY ==========
+function initializeFlipCards() {
+    const gallery = document.getElementById('gallery');
+    gallery.innerHTML = '';
     
-    currentQuoteIndex = newIndex;
-    quoteText.textContent = quotes[currentQuoteIndex].text;
-    quoteAuthor.textContent = quotes[currentQuoteIndex].author;
-    
-    // Add animation effect
-    const quoteBox = document.getElementById('quote');
-    quoteBox.style.animation = 'none';
-    setTimeout(() => {
-        quoteBox.style.animation = 'pulse 2s infinite alternate';
-    }, 10);
+    flipCardData.forEach((card, index) => {
+        const flipCard = document.createElement('div');
+        flipCard.className = 'flip-card';
+        flipCard.style.setProperty('--card-index', index);
+        
+        flipCard.innerHTML = `
+            <div class="flip-card-front" style="background-image: url('${card.front}')">
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="flip-card-back">
+                <h3>${card.back.title}</h3>
+                <p>${card.back.description}</p>
+                <div style="margin-top: 20px; font-size: 2rem;">💫</div>
+            </div>
+        `;
+        
+        // Make flip card also open lightbox
+        flipCard.addEventListener('click', () => {
+            const imgIndex = galleryImages.findIndex(img => img.src === card.front);
+            if (imgIndex !== -1) {
+                openLightbox(imgIndex);
+            }
+        });
+        
+        gallery.appendChild(flipCard);
+    });
 }
 
-// ========== MEMORY FUNCTIONS ==========
-function addMemory() {
-    memorySection.style.display = 'block';
-    memorySection.scrollIntoView({ behavior: 'smooth' });
+// ========== TIMELINE ==========
+const timelineData = [
+    { date: 'Day 1', event: 'Our friendship began', emoji: '🎯' },
+    { date: 'Month 3', event: 'First adventure together', emoji: '🚀' },
+    { date: 'Month 6', event: 'Deep conversations started', emoji: '💭' },
+    { date: 'Year 1', event: 'Unbreakable bond formed', emoji: '🔗' },
+    { date: 'Present', event: 'Creating beautiful memories', emoji: '🎨' },
+    { date: 'Forever', event: 'Best friends for life', emoji: '💖' }
+];
+
+function initializeTimeline() {
+    const timeline = document.getElementById('timeline');
+    timeline.innerHTML = '';
+    
+    timelineData.forEach((item, index) => {
+        const timelineItem = document.createElement('div');
+        timelineItem.className = 'timeline-item';
+        timelineItem.style.animationDelay = `${index * 0.2}s`;
+        
+        timelineItem.innerHTML = `
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 2rem; margin-right: 15px;">${item.emoji}</span>
+                <h3 style="color: var(--secondary-color);">${item.date}</h3>
+            </div>
+            <p style="font-size: 1.1rem;">${item.event}</p>
+        `;
+        
+        timeline.appendChild(timelineItem);
+    });
+}
+
+// ========== ENHANCED QUOTE SYSTEM ==========
+const quotes = [
+    { text: "You're the sun in my morning, the moon in my night", author: "— Forever Friend" },
+    { text: "A true friend sees the pain in your eyes while everyone else believes the smile on your face", author: "— Unknown" },
+    { text: "Friendship is born at that moment when one person says to another: 'What! You too? I thought I was the only one'", author: "— C.S. Lewis" },
+    { text: "Side by side or miles apart, real friends are always close to the heart", author: "— Unknown" },
+    { text: "In the cookie of life, friends are the chocolate chips", author: "— Unknown" },
+    { text: "You're my person. I will always be your person", author: "— Grey's Anatomy" },
+    { text: "You are not just someone I talk to every day. You are someone who understands my silence", author: "— From Me" },
+    { text: "With you, even ordinary moments feel special", author: "— Unknown" },
+    { text: "You are strong, beautiful, and incredibly kind", author: "— Me" }
+];
+
+function changeQuote() {
+    const quoteText = document.getElementById('quoteText');
+    const quoteAuthor = document.getElementById('quoteAuthor');
+    
+    // Random quote with animation
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    
+    // Animate out
+    quoteText.style.animation = 'foldQuote 0.5s ease reverse';
+    quoteAuthor.style.animation = 'foldQuote 0.5s ease reverse';
+    
+    setTimeout(() => {
+        quoteText.textContent = quotes[randomIndex].text;
+        quoteAuthor.textContent = quotes[randomIndex].author;
+        
+        // Animate in
+        quoteText.style.animation = 'foldQuote 0.5s ease';
+        quoteAuthor.style.animation = 'foldQuote 0.5s ease 0.2s both';
+        
+        // Create celebration effect
+        createConfetti();
+    }, 500);
+}
+
+// ========== MODAL FUNCTIONS ==========
+function showLoveModal() {
+    document.getElementById('loveModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('loveModal').style.display = 'none';
+}
+
+// ========== ENHANCED MEMORY SYSTEM ==========
+function showMemoryForm() {
+    document.getElementById('memorySection').style.display = 'block';
+    document.getElementById('memorySection').scrollIntoView({ behavior: 'smooth' });
 }
 
 function saveMemory() {
-    const title = document.getElementById('memoryTitle').value.trim();
-    const date = document.getElementById('memoryDate').value;
-    const text = document.getElementById('memoryText').value.trim();
+    const title = document.getElementById('memoryTitle').value;
+    const text = document.getElementById('memoryText').value;
     
     if (!title || !text) {
-        alert('Please fill in both title and description');
+        alert('Please fill in both fields!');
         return;
     }
     
-    const memory = {
-        id: Date.now(),
-        title: title,
-        date: date || new Date().toISOString().split('T')[0],
-        text: text
-    };
-    
-    memories.push(memory);
-    saveMemoriesToStorage();
-    renderMemory(memory);
-    
-    // Clear form
-    document.getElementById('memoryTitle').value = '';
-    document.getElementById('memoryDate').value = '';
-    document.getElementById('memoryText').value = '';
-    
-    // Show success message
-    alert('Memory saved successfully! 💖');
-}
-
-function renderMemory(memory) {
     const memoryCard = document.createElement('div');
     memoryCard.className = 'memory-card';
     memoryCard.innerHTML = `
-        <h4>${memory.title}</h4>
-        <span class="memory-date">${formatDate(memory.date)}</span>
-        <p>${memory.text}</p>
-        <button class="btn btn-secondary" style="margin-top: 15px; padding: 8px 15px; font-size: 0.9rem;" onclick="deleteMemory(${memory.id})">
-            <i class="fas fa-trash"></i> Delete
-        </button>
+        <h3 style="color: var(--secondary-color); margin-bottom: 10px;">${title}</h3>
+        <p>${text}</p>
+        <div style="margin-top: 15px; color: var(--accent-2);">
+            ${new Date().toLocaleDateString()} ✨
+        </div>
     `;
     
-    memoriesContainer.prepend(memoryCard);
+    document.getElementById('memoriesContainer').prepend(memoryCard);
+    
+    // Clear form
+    document.getElementById('memoryTitle').value = '';
+    document.getElementById('memoryText').value = '';
+    
+    // Show success effect
+    showSuccessEffect();
 }
 
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+function showSuccessEffect() {
+    const success = document.createElement('div');
+    success.innerHTML = '💖 MEMORY SAVED! 💖';
+    success.style.position = 'fixed';
+    success.style.top = '50%';
+    success.style.left = '50%';
+    success.style.transform = 'translate(-50%, -50%)';
+    success.style.background = 'var(--gradient-rainbow)';
+    success.style.color = 'white';
+    success.style.padding = '25px 50px';
+    success.style.borderRadius = '60px';
+    success.style.fontSize = '1.8rem';
+    success.style.zIndex = '10000';
+    success.style.boxShadow = 'var(--shadow-glow)';
+    success.style.animation = 'modalPop 0.5s ease, modalFadeIn 0.5s ease 2s reverse forwards';
+    
+    document.body.appendChild(success);
+    
+    setTimeout(() => {
+        success.remove();
+    }, 2500);
 }
 
-function deleteMemory(id) {
-    if (confirm('Are you sure you want to delete this memory?')) {
-        memories = memories.filter(memory => memory.id !== id);
-        saveMemoriesToStorage();
-        loadMemories(); // Reload memories
+// ========== SPECIAL EFFECTS ==========
+function createConfetti() {
+    const colors = ['#ff4f8b', '#7a003c', '#ff9eb5', '#ff6b97', '#ffd1dc', '#ffffff'];
+    
+    for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'fixed';
+        confetti.style.width = '20px';
+        confetti.style.height = '20px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = '-30px';
+        confetti.style.zIndex = '9999';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        
+        if (Math.random() > 0.7) {
+            confetti.innerHTML = '💖';
+            confetti.style.fontSize = '16px';
+            confetti.style.backgroundColor = 'transparent';
+        }
+        
+        document.body.appendChild(confetti);
+        
+        const animation = confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+        ], {
+            duration: 2000 + Math.random() * 2000,
+            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        animation.onfinish = () => confetti.remove();
     }
 }
 
-function saveMemoriesToStorage() {
-    localStorage.setItem('friendshipMemories', JSON.stringify(memories));
+function createFireworks() {
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            createFirework();
+        }, i * 100);
+    }
 }
 
-function loadMemories() {
-    const savedMemories = localStorage.getItem('friendshipMemories');
-    if (savedMemories) {
-        memories = JSON.parse(savedMemories);
-        memoriesContainer.innerHTML = '';
-        memories.forEach(memory => renderMemory(memory));
+function createFirework() {
+    const firework = document.createElement('div');
+    firework.style.position = 'fixed';
+    firework.style.left = Math.random() * 100 + 'vw';
+    firework.style.top = Math.random() * 100 + 'vh';
+    firework.style.zIndex = '9999';
+    firework.style.pointerEvents = 'none';
+    firework.style.fontSize = '40px';
+    firework.innerHTML = ['✨', '🎇', '🎆', '💥', '🌟', '💫'][Math.floor(Math.random() * 6)];
+    
+    document.body.appendChild(firework);
+    
+    const animation = firework.animate([
+        { transform: 'scale(0.5)', opacity: 0 },
+        { transform: 'scale(1.5)', opacity: 1 },
+        { transform: 'scale(0.5)', opacity: 0 }
+    ], {
+        duration: 1000,
+        easing: 'ease-in-out'
+    });
+    
+    animation.onfinish = () => firework.remove();
+}
+
+// ========== RAINBOW MODE ==========
+let rainbowMode = false;
+function toggleRainbowMode() {
+    rainbowMode = !rainbowMode;
+    document.body.classList.toggle('rainbow-mode');
+    
+    if (rainbowMode) {
+        document.body.style.animation = 'rainbowBackground 10s linear infinite';
+        createFireworks();
+    } else {
+        document.body.style.animation = 'none';
+    }
+}
+
+// Add rainbow background animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes rainbowBackground {
+        0% { background: #ff4f8b; }
+        20% { background: #ff6b97; }
+        40% { background: #ff85a2; }
+        60% { background: #ff9eb5; }
+        80% { background: #ffb6c1; }
+        100% { background: #ff4f8b; }
+    }
+    
+    .rainbow-mode * {
+        transition: all 0.3s ease !important;
+    }
+`;
+document.head.appendChild(style);
+
+// ========== COLOR CYCLE EFFECT ==========
+function startColorCycle() {
+    const elements = document.querySelectorAll('h1, h2, .btn, .flip-card-front');
+    let hue = 0;
+    
+    setInterval(() => {
+        hue = (hue + 1) % 360;
+        elements.forEach(el => {
+            if (!rainbowMode) {
+                el.style.filter = `hue-rotate(${hue}deg)`;
+            }
+        });
+    }, 100);
+}
+
+// ========== ENHANCED FLOATING HEART CREATION ==========
+function createFloatingHeart() {
+    const container = document.getElementById('floatingHearts');
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    
+    const hearts = ['❤️', '💖', '💕', '💗', '💓', '💞', '💝'];
+    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+    
+    const size = Math.random() * 30 + 20;
+    heart.style.fontSize = `${size}px`;
+    heart.style.left = `${Math.random() * 100}vw`;
+    heart.style.animationDuration = `${Math.random() * 15 + 10}s`;
+    heart.style.animationDelay = `${Math.random() * 3}s`;
+    
+    container.appendChild(heart);
+    
+    setTimeout(() => {
+        heart.remove();
+    }, 20000);
+}
+
+function toggleFloatingHearts() {
+    const hearts = document.querySelectorAll('.floating-heart');
+    if (hearts.length > 0) {
+        hearts.forEach(heart => heart.remove());
+    } else {
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => createFloatingHeart(), i * 100);
+        }
+    }
+}
+
+// ========== PARTICLE BACKGROUND ==========
+function createParticles() {
+    const container = document.getElementById('particleContainer');
+    const colors = ['#ff4f8b', '#7a003c', '#ff9eb5', '#ff6b97', '#ffd1dc'];
+    
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.width = `${Math.random() * 20 + 5}px`;
+        particle.style.height = particle.style.width;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(particle);
+    }
+}
+
+function createFooterHearts() {
+    const container = document.getElementById('footerHearts');
+    for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'footer-heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        heart.style.fontSize = `${Math.random() * 20 + 15}px`;
+        container.appendChild(heart);
     }
 }
 
 // ========== MUSIC FUNCTIONS ==========
+let isMusicPlaying = false;
+const backgroundMusic = document.getElementById('backgroundMusic');
+
 function toggleMusic() {
     if (isMusicPlaying) {
         backgroundMusic.pause();
         playBtn.innerHTML = '<i class="fas fa-play"></i>';
         musicInfo.textContent = 'Music Paused';
+        playBtn.style.animation = 'none';
     } else {
         backgroundMusic.play().catch(e => {
             console.log("Audio playback failed:", e);
@@ -918,49 +1634,28 @@ function toggleMusic() {
         });
         playBtn.innerHTML = '<i class="fas fa-pause"></i>';
         musicInfo.textContent = 'Friendship Theme - Playing';
+        playBtn.style.animation = 'loaderSpin 3s infinite linear';
     }
     isMusicPlaying = !isMusicPlaying;
 }
 
-// ========== SCROLL ANIMATIONS ==========
-function initScrollAnimations() {
-    const revealElements = document.querySelectorAll('.reveal');
-    
-    const revealOnScroll = () => {
-        const windowHeight = window.innerHeight;
-        const revealPoint = 150;
-        
-        revealElements.forEach(element => {
-            const revealTop = element.getBoundingClientRect().top;
-            
-            if (revealTop < windowHeight - revealPoint) {
-                element.classList.add('active');
-            }
-        });
-    };
-    
-    window.addEventListener('scroll', revealOnScroll);
-    // Trigger once on load
-    revealOnScroll();
-}
-
 // ========== EVENT LISTENERS ==========
-closeLightbox.addEventListener('click', closeLightboxFunc);
-prevBtn.addEventListener('click', prevImage);
-nextBtn.addEventListener('click', nextImage);
-playBtn.addEventListener('click', toggleMusic);
+document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
+document.getElementById('prevBtn').addEventListener('click', prevImage);
+document.getElementById('nextBtn').addEventListener('click', nextImage);
+document.getElementById('playBtn').addEventListener('click', toggleMusic);
 
-// Close lightbox when clicking outside the image
-lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-        closeLightboxFunc();
+// Close lightbox when clicking outside
+document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('lightbox')) {
+        closeLightbox();
     }
 });
 
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
-    if (lightbox.style.display === 'flex') {
-        if (e.key === 'Escape') closeLightboxFunc();
+    if (document.getElementById('lightbox').style.display === 'flex') {
+        if (e.key === 'Escape') closeLightbox();
         if (e.key === 'ArrowLeft') prevImage();
         if (e.key === 'ArrowRight') nextImage();
     }
@@ -971,41 +1666,6 @@ document.addEventListener('keydown', (e) => {
         changeQuote();
     }
 });
-
-// Add confetti effect on button click
-const confettiBtn = document.querySelector('.btn:first-of-type');
-confettiBtn.addEventListener('click', () => {
-    createConfetti();
-});
-
-function createConfetti() {
-    const colors = ['#ff4f8b', '#7a003c', '#ffdde1', '#5a002a', '#ffb6c1'];
-    
-    for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.position = 'fixed';
-        confetti.style.width = '10px';
-        confetti.style.height = '10px';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.borderRadius = '50%';
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.top = '-20px';
-        confetti.style.zIndex = '9999';
-        confetti.style.pointerEvents = 'none';
-        
-        document.body.appendChild(confetti);
-        
-        const animation = confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-        ], {
-            duration: 1000 + Math.random() * 2000,
-            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
-        });
-        
-        animation.onfinish = () => confetti.remove();
-    }
-}
 </script>
 </body>
 </html>

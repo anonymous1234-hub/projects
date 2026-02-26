@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for what was · and what will never be</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ====== ROOT & GLOBAL ====== */
+        :root {
+            --primary-color: #b88a7a;        /* faded rose - nostalgia */
+            --secondary-color: #d4bcb2;       /* muted peach - disappointment */
+            --accent-color: #8f6b5c;          /* deeper taupe - the weight of trust */
+            --gold-color: #b88a5e;             /* tarnished gold - promises broken */
+            --text-color: #4a3a35;
+            --light-color: #faf3f0;
+            --dark-color: #5e4b44;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+            background-image: linear-gradient(135deg, #faf0e8 0%, #f0dfd5 100%);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--secondary-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        /* vintage overlay - now with a heavier feel */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjUiIG51bU9jdGF2ZXM9IjMiIC8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2YpIiBvcGFjaXR5PSIwLjA0IiAvPjwvc3ZnPg==');
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+            mix-blend-mode: multiply;
+        }
+
+        .floating-memories {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .memory-particle {
+            position: absolute;
+            font-size: 20px;
+            color: var(--primary-color);
+            opacity: 0.15;
+            animation: floatMemory 20s linear infinite;
+        }
+        @keyframes floatMemory {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        header {
+            text-align: center;
+            padding: 5rem 1rem 7rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #dbbeb0 0%, #c49a89 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 92%);
+            z-index: -1;
+            opacity: 0.85;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, var(--light-color), transparent);
+            z-index: -1;
+        }
+        h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            color: #4d362e;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.6);
+            animation: fadeInDown 1.2s ease-out;
+            font-family: 'Dancing Script', cursive;
+            position: relative;
+            letter-spacing: 1px;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: #7a5a4a;
+            border-radius: 2px;
+            opacity: 0.6;
+        }
+        .subtitle {
+            font-size: 2rem;
+            color: #5e3f35;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1.2s ease-out 0.3s both;
+            font-family: 'Dancing Script', cursive;
+            opacity: 0.9;
+        }
+        .date {
+            background-color: rgba(255, 255, 255, 0.85);
+            color: #6f4e40;
+            padding: 0.8rem 2.5rem;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 500;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-out 0.6s both;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(120, 80, 60, 0.3);
+        }
+
+        .time-capsule {
+            position: absolute;
+            top: 20%;
+            right: 5%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: 2px solid rgba(200, 170, 150, 0.4);
+            color: #5e3f35;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            letter-spacing: 2px;
+            transform: rotate(5deg);
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: rotate(5deg) translateY(0); }
+            50% { transform: rotate(5deg) translateY(-10px); }
+        }
+
+        .album-container {
+            max-width: 1300px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 3rem;
+        }
+        .photo-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            aspect-ratio: 1/1;
+            cursor: pointer;
+            transform: translateY(30px) scale(0.98);
+            opacity: 0;
+            animation: slideUp 0.7s ease-out forwards;
+            border: 4px solid white;
+            filter: sepia(40%) brightness(0.98) contrast(1.02);
+        }
+        @keyframes slideUp {
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .photo-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            filter: sepia(20%) brightness(1.02);
+        }
+        .photo-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(100, 70, 50, 0.5) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+        .photo-item:hover::before {
+            opacity: 1;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(to top, rgba(100, 70, 50, 0.9), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 2;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            font-style: italic;
+        }
+        .photo-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+        .photo-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #6f4e40;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            z-index: 2;
+            font-size: 0.9rem;
+            backdrop-filter: blur(2px);
+            border: 1px solid white;
+        }
+        .time-stamp {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(240, 225, 215, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+            text-align: center;
+        }
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(100, 70, 50, 0.3);
+            border: 6px solid white;
+            filter: sepia(20%);
+        }
+        .close-btn, .nav-btn {
+            position: absolute;
+            color: #6f4e40;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 2001;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid #8b6252;
+            font-size: 2rem;
+        }
+        .close-btn {
+            top: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+        }
+        .nav-btn {
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+        }
+        .nav-btn.prev { left: 30px; }
+        .nav-btn.next { right: 30px; }
+        .close-btn:hover, .nav-btn:hover {
+            background: #8b6252;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .close-btn:hover { transform: scale(1.1); }
+        .lightbox-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-color);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            border: 1px solid #8b6252;
+        }
+
+        footer {
+            text-align: center;
+            padding: 6rem 1rem 4rem;
+            background: linear-gradient(145deg, #dbbeb0 0%, #c49a89 100%);
+            color: #4d362e;
+            clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+            margin-top: 4rem;
+            position: relative;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.02) 0px, rgba(0, 0, 0, 0.02) 10px, transparent 10px, transparent 20px);
+            pointer-events: none;
+        }
+        .couple-name {
+            font-size: 3rem;
+            margin-bottom: 1.2rem;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 400;
+            opacity: 0.8;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        .couple-name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 2px;
+            background: #7a5a4a;
+        }
+        .heart-icon {
+            color: #7a5a4a;
+            font-size: 3rem;
+            margin: 1.5rem 0;
+            display: inline-block;
+            animation: gentlePulse 3s infinite;
+            opacity: 0.7;
+        }
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 0.9; }
+        }
+
+        .music-player {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 500;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px solid #8b6252;
+        }
+        .music-control {
+            background: #8b6252;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: 0.3s;
+            border: 2px solid white;
+        }
+        .music-control:hover {
+            background: #6f4e40;
+            transform: scale(1.1);
+        }
+        .progress-bar {
+            width: 90px;
+            height: 4px;
+            background: #d4bcb2;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .progress {
+            height: 100%;
+            background: #8b6252;
+            width: 0%;
+            transition: width 0.05s linear;
+        }
+        #song-title {
+            font-size: 0.9rem;
+            max-width: 130px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .story-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 3rem 2.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 25px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            border: 2px solid rgba(120, 80, 60, 0.2);
+        }
+        .story-section h2 {
+            font-size: 2.8rem;
+            color: #6f4e40;
+            margin-bottom: 2rem;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 500;
+        }
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+            text-align: left;
+            color: var(--text-color);
+            font-weight: 400;
+            border-left: 3px solid #7a5a4a;
+            padding-left: 1.8rem;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: #8b6252;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: 0.3s;
+            z-index: 500;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        .floating-button:hover {
+            background: #6f4e40;
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 700px) {
+            h1 { font-size: 3rem; }
+            .subtitle { font-size: 1.6rem; }
+            .photo-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+            .nav-btn, .close-btn { width: 45px; height: 45px; font-size: 1.5rem; }
+            .time-capsule { display: none; }
+        }
+
+        #hidden-audio { display: none; }
+
+        .sender-note {
+            text-align: center;
+            margin: 3rem auto;
+            max-width: 600px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            border-left: 6px solid #7a5a4a;
+            font-style: italic;
+            color: var(--text-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        .sender-note p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #6f4e40;
+            margin-top: 1.5rem;
+            opacity: 0.8;
+        }
+        .years-later {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #8b6252;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 2rem 0;
+        }
+        
+        .farewell-stamp {
+            position: fixed;
+            bottom: 100px;
+            left: 25px;
+            background: rgba(139, 98, 82, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            border: 1px dashed #8b6252;
+            color: #6f4e40;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transform: rotate(-5deg);
+            z-index: 400;
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden audio element -->
+    <audio id="hidden-audio" loop preload="auto">
+        <source src="https://raw.githubusercontent.com/anonymous1234-hub/projects/main/Din%20Shagna%20Da%20Phillauri%20320%20Kbps.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="floating-memories" id="floating-memories"></div>
+    
+    <div class="music-player">
+        <button class="music-control" id="play-btn"><i class="fas fa-play"></i></button>
+        <div class="progress-bar" id="progress-bar"><div class="progress" id="progress"></div></div>
+        <span id="song-title">Din Shagna Da</span>
+    </div>
+    
+    <div class="floating-button" id="back-to-top"><i class="fas fa-arrow-up"></i></div>
+    <div class="farewell-stamp"><i class="far fa-envelope"></i> this is goodbye</div>
+    
+    <header>
+        <div class="time-capsule"><i class="far fa-clock"></i> a gift i should have kept</div>
+        <h1>Ahmed & Navida</h1>
+        <p class="subtitle">the memory of what i thought you were</p>
+        <div class="date">engagement · 13 april 2025</div>
+    </header>
+    
+    <div class="sender-note">
+        <p><i class="fas fa-quote-left" style="color: #7a5a4a; opacity: 0.5; margin-right: 10px;"></i> 
+        I held onto this for a year, believing in the people I thought you were. But time reveals what celebration hides. I see now that the smiles in these photos were never for me, and the friendship I cherished was only ever one-sided. This isn't a gift anymore — it's evidence of my own blindness.
+        <i class="fas fa-quote-right" style="color: #7a5a4a; opacity: 0.5; margin-left: 10px;"></i>
+        </p>
+        <div class="signature">someone who finally sees clearly</div>
+        <div class="years-later"><i class="far fa-calendar-alt"></i> 2026 · the year i stopped believing in you</div>
+    </div>
+    
+    <section class="story-section">
+        <h2>the gift i should have burned</h2>
+        <div class="story-text">
+            <p>I spent weeks on this, thinking your joy mattered. I saved every photo, wrote every caption, believing I was preserving something beautiful. I was wrong — not about the photos, but about you.</p>
+            <p>You showed me what betrayal looks like. You made me understand that some people wear friendship like a mask, and some celebrations are built on foundations of sand. I don't know when you stopped being the people I thought I knew, or if you ever were them at all.</p>
+            <p>I'm sending this not as a gift, but as closure. I'm done carrying the weight of a friendship that only existed in my mind. These photos belong to your world now — the world I'm finally walking away from. Goodbye, Ahmed. Goodbye, Navida. May you never need a friend the way I needed you to be real.</p>
+        </div>
+    </section>
+    
+    <div class="album-container">
+        <h2 style="text-align: center; color: #6f4e40; margin-bottom: 2rem; font-size: 2.5rem; font-family: 'Dancing Script', cursive; font-weight: 400;">
+            memories i'm releasing
+        </h2>
+        
+        <div class="photo-grid" id="photo-grid"></div>
+        
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(139, 98, 82, 0.1); border-radius: 15px;">
+            <p style="font-style: italic; color: #6f4e40;">
+                "The hardest part wasn't losing the friendship —<br>it was realizing it was never really there."
+            </p>
+        </div>
+    </div>
+    
+    <div class="lightbox" id="lightbox">
+        <span class="close-btn" id="close-btn">&times;</span>
+        <span class="nav-btn prev" id="prev-btn"><i class="fas fa-chevron-left"></i></span>
+        <span class="nav-btn next" id="next-btn"><i class="fas fa-chevron-right"></i></span>
+        <div class="lightbox-content"><img id="lightbox-img" src="" alt=""></div>
+        <div class="lightbox-counter" id="lightbox-counter">1 / 10</div>
+    </div>
+    
+    <footer>
+        <div class="couple-name">Ahmed & Navida</div>
+        <div class="heart-icon"><i class="fas fa-heart-broken"></i></div>
+        <p style="font-size: 1.2rem; margin-bottom: 1rem;">may you find in each other what you couldn't be for me</p>
+        <p style="opacity: 0.7; max-width: 500px; margin: 0 auto;">"Some friendships are just chapters — and this one ends here."</p>
+        <div style="margin-top: 2.5rem; font-size: 0.85rem; opacity: 0.6;">· from someone who's finally letting go ·</div>
+        <div style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.4;">created in 2025 · delivered in 2026 · released forever</div>
+    </footer>
+
+    <script>
+        const photoData = [
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-13%20at%2010.03.23%20PM.jpeg", caption: 'the first photo i saved — before i knew who you really were' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-14%20at%204.27.51%20PM%20(1).jpeg", caption: 'rings that bound you — and freed me from illusion' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-13%20at%2010.03.24%20PM.jpeg", caption: 'family gathered — strangers smiling for strangers' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-13%20at%2010.03.25%20PM%20(1).jpeg", caption: 'laughter that never reached me — and now never will' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-14%20at%2010.59.04%20AM%20(1).jpeg", caption: 'celebration — for a love that cost me a friend' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-14%20at%204.27.43%20PM.jpeg", caption: 'two people, one future — built on ashes of trust' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-14%20at%204.27.45%20PM.jpeg", caption: 'a promise made — while another was being broken' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-14%20at%204.27.47%20PM.jpeg", caption: 'love — as complicated as your betrayal was simple' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202025-04-14%20at%204.27.48%20PM.jpeg", caption: 'the beginning of your journey — the end of my naivety' },
+            { src: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/Untitled-2025-04-14%2022%2002%2040(copy)-2025-04-15%2007%2059%2026(copy)-Thumbnail.jpg", caption: 'the last photo — the last time i believed in you' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingMemories();
+            loadPhotos();
+            initLightbox();
+            initMusicPlayer();
+            initBackToTop();
+        });
+
+        function createFloatingMemories() {
+            const container = document.getElementById('floating-memories');
+            const symbols = ['💔', '🥀', '🌑', '🕯️', '💧', '📜', '🕸️', '🖤', '⏳', '🌧️'];
+            for (let i = 0; i < 30; i++) {
+                const memory = document.createElement('div');
+                memory.className = 'memory-particle';
+                memory.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                memory.style.left = Math.random() * 100 + 'vw';
+                memory.style.fontSize = (Math.random() * 30 + 15) + 'px';
+                memory.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                memory.style.animationDelay = Math.random() * 10 + 's';
+                container.appendChild(memory);
+            }
+        }
+
+        function loadPhotos() {
+            const grid = document.getElementById('photo-grid');
+            photoData.forEach((p, idx) => {
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+                item.style.animationDelay = `${idx*0.1}s`;
+                item.setAttribute('data-index', idx);
+                item.innerHTML = `
+                    <div class="photo-number">${idx+1}</div>
+                    <div class="time-stamp"><i class="far fa-clock"></i> april 2025</div>
+                    <img src="${p.src}" alt="${p.caption}" loading="lazy">
+                    <div class="photo-caption">${p.caption}</div>
+                `;
+                item.addEventListener('click', () => openLightbox(idx));
+                grid.appendChild(item);
+            });
+        }
+
+        function initLightbox() {
+            const lb = document.getElementById('lightbox'), img = document.getElementById('lightbox-img');
+            const close = document.getElementById('close-btn'), prev = document.getElementById('prev-btn'), next = document.getElementById('next-btn');
+            const counter = document.getElementById('lightbox-counter');
+            let current = 0;
+
+            window.openLightbox = (idx) => { current = idx; update(); lb.classList.add('active'); document.body.style.overflow = 'hidden'; };
+            function update() { img.src = photoData[current].src; img.alt = photoData[current].caption; counter.textContent = `${current+1} / ${photoData.length}`; }
+            function closeLb() { lb.classList.remove('active'); document.body.style.overflow = 'auto'; }
+            function navigate(d) { current = (current + d + photoData.length) % photoData.length; update(); }
+
+            close.addEventListener('click', closeLb);
+            prev.addEventListener('click', () => navigate(-1));
+            next.addEventListener('click', () => navigate(1));
+            document.addEventListener('keydown', (e) => {
+                if (!lb.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLb();
+                if (e.key === 'ArrowLeft') navigate(-1);
+                if (e.key === 'ArrowRight') navigate(1);
+            });
+            lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+        }
+
+        function initMusicPlayer() {
+            const audio = document.getElementById('hidden-audio');
+            const playBtn = document.getElementById('play-btn');
+            const progress = document.getElementById('progress');
+            const bar = document.getElementById('progress-bar');
+
+            audio.volume = 0.15;
+
+            function updateBtn() {
+                playBtn.innerHTML = audio.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+            }
+
+            playBtn.addEventListener('click', () => {
+                if (audio.paused) audio.play().catch(() => {});
+                else audio.pause();
+                updateBtn();
+            });
+
+            audio.addEventListener('timeupdate', () => {
+                if (audio.duration) progress.style.width = (audio.currentTime / audio.duration)*100 + '%';
+            });
+            bar.addEventListener('click', (e) => {
+                const rect = bar.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                if (audio.duration) audio.currentTime = percent * audio.duration;
+            });
+            audio.addEventListener('ended', () => { progress.style.width = '0%'; updateBtn(); });
+            updateBtn();
+        }
+
+        function initBackToTop() {
+            const btn = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                btn.style.opacity = window.pageYOffset > 250 ? '1' : '0';
+                btn.style.visibility = window.pageYOffset > 250 ? 'visible' : 'hidden';
+            });
+            btn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+        }
+    </script>
+</body>
+</html>

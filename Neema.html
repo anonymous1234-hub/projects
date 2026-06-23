@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>✨ Brother's Eternal Vow ✨ | The Sacred Letter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at 20% 30%, #140e25 0%, #0a0818 50%, #15102e 100%);
+      min-height: 100vh;
+      color: #f5efff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* animated cosmic silk */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 30% 40%, rgba(255,180,100,0.1), transparent 55%),
+        radial-gradient(circle at 70% 65%, rgba(200,120,255,0.1), transparent 55%),
+        repeating-linear-gradient(45deg, rgba(255,215,150,0.02) 0px, rgba(255,215,150,0.02) 2px, transparent 2px, transparent 10px);
+      pointer-events: none;
+      z-index: 0;
+      animation: cosmicBreath 20s infinite alternate;
+    }
+
+    @keyframes cosmicBreath {
+      0% { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.06); }
+    }
+
+    /* floating light orbs */
+    .light-orb {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,210,140,0.2), rgba(180,130,255,0.08));
+      pointer-events: none;
+      z-index: 0;
+      animation: orbAscend 24s infinite alternate ease-in-out;
+      filter: blur(4px);
+    }
+
+    @keyframes orbAscend {
+      0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.25; }
+      100% { transform: translateY(-100px) translateX(60px) scale(1.25); opacity: 0.6; }
+    }
+
+    /* header */
+    header {
+      text-align: center;
+      padding: 65px 20px 35px;
+      position: relative;
+      z-index: 10;
+      animation: sacredEntrance 1.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    @keyframes sacredEntrance {
+      from { opacity: 0; transform: translateY(-70px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffda9e, #ffb7e6, #c7e9fb, #ffa07a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      transition: all 0.5s;
+      text-shadow: 0 0 35px rgba(255,200,150,0.4);
+    }
+
+    header h1:hover {
+      transform: scale(1.02);
+      text-shadow: 0 0 60px rgba(255,200,150,0.7);
+    }
+
+    header p {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      background: rgba(255,245,250,0.12);
+      backdrop-filter: blur(16px);
+      display: inline-block;
+      padding: 12px 34px;
+      border-radius: 80px;
+      border: 1px solid rgba(255,200,180,0.5);
+      transition: all 0.4s;
+    }
+
+    /* music sanctuary */
+    .music-temple {
+      width: 90%;
+      max-width: 760px;
+      margin: 22px auto 35px;
+      background: rgba(25, 20, 55, 0.75);
+      backdrop-filter: blur(20px);
+      border-radius: 100px;
+      padding: 14px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      border: 1px solid rgba(255,190,170,0.45);
+      z-index: 10;
+      position: relative;
+      transition: all 0.4s;
+    }
+
+    .music-temple:hover {
+      border-color: #ffbb8a;
+      box-shadow: 0 12px 40px rgba(255,120,100,0.25);
+      transform: scale(1.01);
+    }
+
+    .music-temple input {
+      background: rgba(10, 6, 35, 0.95);
+      border: 1px solid #e0a5ff;
+      padding: 12px 22px;
+      border-radius: 60px;
+      color: #fff5fc;
+      flex: 1;
+      min-width: 160px;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .music-temple input:focus {
+      border-color: #ff9f6e;
+      outline: none;
+      box-shadow: 0 0 18px rgba(255,140,100,0.5);
+    }
+
+    audio {
+      border-radius: 60px;
+      height: 46px;
+      flex: 2;
+      min-width: 210px;
+    }
+
+    /* gallery grid */
+    .sacred-gallery {
+      width: 92%;
+      max-width: 1500px;
+      margin: 35px auto 75px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 50px 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* memory card */
+    .memory-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(48, 38, 85, 0.6);
+      backdrop-filter: blur(16px);
+      border-radius: 70px;
+      padding: 32px 22px 28px;
+      cursor: pointer;
+      border: 1px solid rgba(255,200,190,0.35);
+      box-shadow: 0 25px 40px -14px rgba(0,0,0,0.5);
+      transition: all 0.6s cubic-bezier(0.2, 0.95, 0.4, 1.15);
+      animation: cardRise 0.8s ease backwards;
+    }
+
+    @keyframes cardRise {
+      from { opacity: 0; transform: translateY(70px) scale(0.94); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .memory-card:hover {
+      transform: translateY(-18px) scale(1.02);
+      background: rgba(78, 62, 135, 0.85);
+      border-color: #ffcfaa;
+      box-shadow: 0 35px 55px -16px rgba(0,0,0,0.6);
+    }
+
+    .circle-canvas {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.45), 0 0 0 6px rgba(255,190,140,0.65);
+      transition: all 0.5s ease;
+      background: #3d2f65;
+    }
+
+    .memory-card:hover .circle-canvas {
+      transform: scale(1.04);
+      box-shadow: 0 22px 44px rgba(0,0,0,0.55), 0 0 0 9px #ffddb0;
+    }
+
+    .card-label {
+      margin-top: 24px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: rgba(0,0,0,0.55);
+      padding: 8px 24px;
+      border-radius: 60px;
+      backdrop-filter: blur(6px);
+      transition: all 0.4s;
+      letter-spacing: 0.6px;
+    }
+
+    .memory-card.opened .card-label {
+      background: rgba(255,170,100,0.5);
+      color: #fff5e6;
+      box-shadow: 0 0 12px rgba(255,200,100,0.3);
+    }
+
+    /* progress indicator */
+    .progress-crystal {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(16px);
+      padding: 12px 26px;
+      border-radius: 70px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 100;
+      border: 1px solid rgba(255,200,120,0.7);
+      transition: all 0.3s;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    /* FINAL ENVELOPE - GRAND REVELATION WITH OPENING ANIMATION */
+    .final-legend-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 3, 20, 0.97);
+      backdrop-filter: blur(30px);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.3s, opacity 0.8s cubic-bezier(0.2, 0.95, 0.4, 1.25);
+    }
+
+    .final-legend-modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .envelope-legend {
+      perspective: 1700px;
+      width: 620px;
+      max-width: 94vw;
+      animation: legendRise 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.35);
+    }
+
+    @keyframes legendRise {
+      0% { opacity: 0; transform: translateY(120px) scale(0.8) rotateX(-18deg); }
+      60% { opacity: 0.9; transform: translateY(-10px) scale(1.02); }
+      100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0); }
+    }
+
+    .envelope-legend .envelope-gold {
+      position: relative;
+      background: linear-gradient(145deg, #fffbf0, #fff1e0);
+      border-radius: 68px;
+      box-shadow: 0 60px 95px rgba(0,0,0,0.65), 0 0 0 6px rgba(255,220,150,0.9);
+      transition: all 0.5s;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .envelope-flap-legend {
+      background: linear-gradient(145deg, #ffeada, #ffdead);
+      height: 180px;
+      width: 100%;
+      clip-path: polygon(0% 0%, 100% 0%, 50% 52%);
+      transition: transform 1.1s cubic-bezier(0.2, 1.05, 0.3, 1.4);
+      transform-origin: top;
+    }
+
+    .envelope-body-legend {
+      padding: 28px 34px 42px;
+      text-align: center;
+      background: #fffef8;
+    }
+
+    .teaser-legend {
+      font-family: 'Caveat', cursive;
+      font-size: 1.65rem;
+      color: #b84e1c;
+      margin-bottom: 22px;
+      transition: all 0.4s;
+    }
+
+    .letter-slide-legend {
+      max-height: 0;
+      opacity: 0;
+      overflow-y: auto;
+      transition: max-height 1.3s cubic-bezier(0.2, 0.95, 0.4, 1.3), opacity 1s ease;
+    }
+
+    .letter-slide-legend.open-letter {
+      max-height: 750px;
+      opacity: 1;
+    }
+
+    .brother-letter-full {
+      background: #fffef5;
+      padding: 36px 30px;
+      border-radius: 52px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.28rem;
+      line-height: 1.72;
+      color: #352418;
+      text-align: left;
+      max-height: 560px;
+      overflow-y: auto;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02), 0 18px 35px rgba(0,0,0,0.12);
+    }
+
+    .brother-letter-full p {
+      margin-bottom: 18px;
+    }
+
+    .close-legend {
+      background: linear-gradient(135deg, #ffaa66, #ff7740);
+      border: none;
+      padding: 14px 38px;
+      border-radius: 70px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: white;
+      margin-top: 28px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .close-legend:hover {
+      transform: scale(0.96);
+      background: linear-gradient(135deg, #ff9955, #ff5e2a);
+      box-shadow: 0 5px 25px rgba(255,100,50,0.5);
+    }
+
+    .envelope-gold.open .envelope-flap-legend {
+      transform: rotateX(180deg);
+    }
+
+    /* letter opening animation inner elements */
+    @keyframes letterGlow {
+      0% { text-shadow: 0 0 0px rgba(255,200,100,0); }
+      100% { text-shadow: 0 0 12px rgba(255,200,100,0.4); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (max-width: 700px) {
+      .circle-canvas { width: 160px; height: 160px; }
+      header h1 { font-size: 2.5rem; }
+      .sacred-gallery { gap: 32px; }
+      .brother-letter-full { font-size: 1.05rem; }
+      .teaser-legend { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="lightOrbsContainer"></div>
+
+  <header>
+    <h1>💖 Brother's Eternal Vow 💖</h1>
+    <p>🌟 8 sacred memories · open every one to unveil a letter written with eternal love 🌟</p>
+  </header>
+
+  <div class="music-temple">
+    <input type="text" id="sisterMelody" placeholder="🎵 a melody for my sister" value="Forever My Sister">
+    <audio id="sacredAudio" controls loop>
+      <source src="C:\Users\sharm\Downloads\Bruno_Mar_-_Count_On_Me_(mp3.pm).mp3", type="audio/mpeg">
+    </audio>
+  </div>
+
+  <div class="sacred-gallery" id="gallerySacred"></div>
+
+  <div class="progress-crystal" id="progressGem">💎 0 / 8 memories opened</div>
+
+  <!-- FINAL LEGENDARY LETTER MODAL WITH OPENING ANIMATION -->
+  <div id="finalLegendModal" class="final-legend-modal">
+    <div class="envelope-legend">
+      <div class="envelope-gold" id="legendEnvelope">
+        <div class="envelope-flap-legend"></div>
+        <div class="envelope-body-legend">
+          <div class="teaser-legend" id="legendTeaser">💌 A letter sealed with a brother's eternal soul... 💌</div>
+          <div class="letter-slide-legend" id="legendSlide">
+            <div class="brother-letter-full" id="fullBrotherLetter">
+              <p><i class="fas fa-heart" style="color:#e65c5c; font-size:1.4rem;"></i> <strong>My Dearest Sister,</strong></p>
+              <p>From the very first memory I have of you, I knew that God had gifted me something extraordinary. You are not just my sister — you are my confidant, my protector in disguise, my greatest cheerleader, and the keeper of my deepest secrets.</p>
+              <p>I don't think I say this enough, but having you in my life is one of the greatest blessings I could ever ask for. You are my safe place, my happiness, and one of the strongest reasons behind so many of my smiles.</p>
+              <p>No matter how much we fight, tease each other, or act crazy sometimes, deep inside I always know that our bond is something truly special. You have stood beside me in moments when I felt low, celebrated with me in my happiest times, and made even ordinary days feel beautiful just by being there.</p>
+              <p>You are one of the kindest, strongest, and most caring people I know. Sometimes I silently admire how you handle things with so much patience and love. I may not always express my emotions perfectly, but I hope you always remember this: I am incredibly proud to have you as my sister.</p>
+              <p>Thank you for the memories, the laughter, the support, and even the little moments that may seem small but mean so much to me. Life keeps changing, people come and go, but I know one thing will never change — my love and respect for you.</p>
+              <p>No matter where life takes us, I will always be there for you. In your happy moments, your difficult days, your dreams, your fears — you will never have to face anything alone. When the world feels heavy, just close your eyes and know that your brother is right there beside you in spirit, holding your hand even from afar.</p>
+              <p>You deserve all the happiness, success, peace, and love in this world. And whenever you doubt yourself, just remember that your brother will always believe in you endlessly — even on days when you forget your own strength. I see the fire in you, the resilience, the gentle grace that makes you who you are.</p>
+              <p>Through every season — spring's bloom, summer's warmth, autumn's change, and winter's quiet — I will remain your biggest fan. The bond we share is not just blood; it is a promise written in the stars, a vow that time, distance, or circumstance cannot fade.</p>
+              <p>Thank you for every late-night talk, for every silly joke, for every tear you've wiped from my eyes, and for every celebration we've shared. You have shaped me into a better person just by being yourself.</p>
+              <p>I pray that life gives you everything you've ever wished for and more. May you always find reasons to smile, shoulders to lean on, and light to guide your path. And on the days when the road seems dark, may you always remember that my love for you shines like a constant, unwavering star.</p>
+              <p>Thank you for being you.<br>Thank you for being my sister.</p>
+              <p><strong>With all my love, forever and always,<br>Your Brother ❤️</strong></p>
+              <p style="font-size:0.95rem; text-align:center; margin-top:16px;"><i class="fas fa-infinity"></i> This letter is yours to keep, for all the tomorrows to come. I love you more than words could ever capture.</p>
+            </div>
+          </div>
+          <button class="close-legend" id="closeLegendBtn"><i class="fas fa-envelope-open-heart"></i> Treasure Forever</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <i class="fas fa-feather-alt"></i> 8 circles of devotion · unlock the final sealed letter from your brother
+  </footer>
+
+  <script>
+    // ========== 1. LIGHT ORBS BACKGROUND ==========
+    function createLightOrbs() {
+      const container = document.getElementById('lightOrbsContainer');
+      for (let i = 0; i < 38; i++) {
+        const orb = document.createElement('div');
+        orb.classList.add('light-orb');
+        const size = Math.random() * 220 + 50;
+        orb.style.width = size + 'px';
+        orb.style.height = size + 'px';
+        orb.style.left = Math.random() * 100 + '%';
+        orb.style.top = Math.random() * 100 + '%';
+        orb.style.animationDuration = Math.random() * 28 + 18 + 's';
+        orb.style.animationDelay = Math.random() * 16 + 's';
+        container.appendChild(orb);
+      }
+    }
+    createLightOrbs();
+
+    // ========== 2. MEMORY DATA ==========
+    const memoryArchive = [
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.53%20PM.jpeg", caption: "Golden sisterhood" },
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.53%20PM%20(1).jpeg", caption: "Wildflower bond" },
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.52%20PM.jpeg", caption: "Joyful laughter" },
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.52%20PM%20(1).jpeg", caption: "Elegant soul" },
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.51%20PM.jpeg", caption: "Radiant smile" },
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.48%20PM.jpeg", caption: "Peaceful heart" },
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.48%20PM%20(1).jpeg", caption: "Ethereal grace" },
+      { img: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.47%20PM.jpeg", caption: "Crystal dreams" }
+    ];
+
+    let openedMemories = new Array(8).fill(false);
+    let totalUnlocked = 0;
+    let finalLetterShown = false;
+
+    function updateProgressDisplay() {
+      const progressDiv = document.getElementById('progressGem');
+      const openedCount = openedMemories.filter(v => v === true).length;
+      progressDiv.innerHTML = `💎 ${openedCount} / 8 memories opened 💎`;
+      if (openedCount === 8 && !finalLetterShown) {
+        finalLetterShown = true;
+        setTimeout(() => {
+          revealFinalBrotherLetter();
+        }, 550);
+      }
+    }
+
+    function drawCircularMemory(canvasEl, imgUrl) {
+      const ctx = canvasEl.getContext('2d');
+      const size = 300;
+      canvasEl.width = canvasEl.height = size;
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.onload = () => {
+        ctx.clearRect(0, 0, size, size);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+        ctx.clip();
+        const ratio = img.width / img.height;
+        let dw, dh, dx, dy;
+        if (ratio > 1) {
+          dh = size;
+          dw = ratio * dh;
+          dx = (size - dw) / 2;
+          dy = 0;
+        } else {
+          dw = size;
+          dh = dw / ratio;
+          dx = 0;
+          dy = (size - dh) / 2;
+        }
+        ctx.drawImage(img, dx, dy, dw, dh);
+        ctx.restore();
+        ctx.beginPath();
+        ctx.arc(size/2, size/2, size/2 - 3, 0, Math.PI * 2);
+        ctx.strokeStyle = '#ffd9a5';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+      };
+      img.src = imgUrl;
+    }
+
+    const galleryContainer = document.getElementById('gallerySacred');
+    function buildSacredGallery() {
+      memoryArchive.forEach((mem, idx) => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.style.animationDelay = `${idx * 0.07}s`;
+        if (openedMemories[idx]) card.classList.add('opened');
+        
+        const canvasWrap = document.createElement('div');
+        const canvas = document.createElement('canvas');
+        canvas.width = 300;
+        canvas.height = 300;
+        canvas.style.width = '210px';
+        canvas.style.height = '210px';
+        canvas.classList.add('circle-canvas');
+        canvasWrap.appendChild(canvas);
+        
+        const badge = document.createElement('div');
+        badge.className = 'card-label';
+        if (openedMemories[idx]) {
+          badge.innerHTML = `<i class="fas fa-crown"></i> memory ${idx+1} · unlocked with love`;
+        } else {
+          badge.innerHTML = `<i class="fas fa-envelope"></i> memory ${idx+1} · sealed`;
+        }
+        
+        card.appendChild(canvasWrap);
+        card.appendChild(badge);
+        galleryContainer.appendChild(card);
+        drawCircularMemory(canvas, mem.img);
+        
+        card.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (!openedMemories[idx]) {
+            openedMemories[idx] = true;
+            totalUnlocked = openedMemories.filter(v => v === true).length;
+            card.classList.add('opened');
+            badge.innerHTML = `<i class="fas fa-crown"></i> memory ${idx+1} · unlocked with love`;
+            updateProgressDisplay();
+            card.style.transform = 'scale(0.97)';
+            setTimeout(() => { card.style.transform = ''; }, 220);
+            createSparkleShower(card);
+          } else {
+            const prog = document.getElementById('progressGem');
+            prog.style.opacity = '0.5';
+            setTimeout(() => prog.style.opacity = '1', 500);
+          }
+        });
+      });
+    }
+
+    function createSparkleShower(element) {
+      const rect = element.getBoundingClientRect();
+      for (let i = 0; i < 22; i++) {
+        const spark = document.createElement('div');
+        spark.innerHTML = ['💖', '✨', '⭐', '🌸', '💫', '🌹', '🌟', '💗'][Math.floor(Math.random()*8)];
+        spark.style.position = 'fixed';
+        spark.style.left = rect.left + Math.random() * rect.width + 'px';
+        spark.style.top = rect.top + Math.random() * rect.height + 'px';
+        spark.style.fontSize = Math.random() * 22 + 12 + 'px';
+        spark.style.pointerEvents = 'none';
+        spark.style.zIndex = '9999';
+        spark.style.transition = 'all 1s ease';
+        document.body.appendChild(spark);
+        setTimeout(() => {
+          spark.style.opacity = '0';
+          spark.style.transform = 'translateY(-75px) rotate(25deg)';
+        }, 30);
+        setTimeout(() => spark.remove(), 1300);
+      }
+    }
+
+    // ========== FINAL LETTER WITH MAJESTIC OPENING ANIMATION ==========
+    const finalModal = document.getElementById('finalLegendModal');
+    const legendEnvelope = document.getElementById('legendEnvelope');
+    const legendSlideDiv = document.getElementById('legendSlide');
+    const legendTeaser = document.getElementById('legendTeaser');
+    const closeLegendBtn = document.getElementById('closeLegendBtn');
+    
+    let envelopeOpenFlag = false;
+    let currentLegendHandler = null;
+    
+    function resetLegendEnvelope() {
+      legendEnvelope.classList.remove('open');
+      legendSlideDiv.classList.remove('open-letter');
+      envelopeOpenFlag = false;
+      if (currentLegendHandler) {
+        legendEnvelope.removeEventListener('click', currentLegendHandler);
+        currentLegendHandler = null;
+      }
+    }
+    
+    function closeLegendModal() {
+      finalModal.classList.remove('active');
+      resetLegendEnvelope();
+    }
+    
+    function createEpicCelebration() {
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      container.style.pointerEvents = 'none';
+      container.style.zIndex = '2700';
+      document.body.appendChild(container);
+      
+      const icons = ['💖', '❤️', '🌸', '✨', '⭐', '💫', '🌙', '💌', '🌹', '🎀', '💗', '🌟', '🌺', '💐', '🕊️', '🌷', '💝', '🎉'];
+      const total = 380;
+      for (let i = 0; i < total; i++) {
+        const particle = document.createElement('div');
+        particle.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+        particle.style.position = 'absolute';
+        particle.style.fontSize = Math.random() * 30 + 10 + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = '55%';
+        particle.style.opacity = '0.95';
+        particle.style.filter = 'drop-shadow(0 0 7px gold)';
+        container.appendChild(particle);
+        
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 130 + Math.random() * 320;
+        const tx = Math.cos(angle) * distance * (Math.random() > 0.5 ? 1 : -1);
+        const ty = -Math.random() * 380 - 100;
+        
+        particle.animate([
+          { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+          { transform: `translate(${tx}px, ${ty}px) rotate(${Math.random() * 500}deg)`, opacity: 0 }
+        ], { duration: 1700 + Math.random() * 1400, easing: 'cubic-bezier(0.2, 0.8, 0.4, 1)' });
+        
+        setTimeout(() => particle.remove(), 2800);
+      }
+      
+      // extra golden hearts
+      for (let i = 0; i < 100; i++) {
+        const heartFly = document.createElement('div');
+        heartFly.innerHTML = '❤️';
+        heartFly.style.position = 'absolute';
+        heartFly.style.fontSize = Math.random() * 28 + 12 + 'px';
+        heartFly.style.left = Math.random() * 100 + '%';
+        heartFly.style.bottom = '-45px';
+        heartFly.style.opacity = '0.9';
+        heartFly.style.color = '#ffaa88';
+        heartFly.style.filter = 'drop-shadow(0 0 5px #ff9966)';
+        container.appendChild(heartFly);
+        heartFly.animate([
+          { transform: 'translateY(0) rotate(0deg)', opacity: 0.9 },
+          { transform: `translateY(-${window.innerHeight + 220}px) rotate(450deg)`, opacity: 0 }
+        ], { duration: 2800 + Math.random() * 2400, easing: 'ease-out' });
+        setTimeout(() => heartFly.remove(), 4200);
+      }
+      
+      // floating stars
+      for (let i = 0; i < 60; i++) {
+        const star = document.createElement('div');
+        star.innerHTML = '⭐';
+        star.style.position = 'absolute';
+        star.style.fontSize = Math.random() * 20 + 10 + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.opacity = '0.8';
+        container.appendChild(star);
+        star.animate([
+          { transform: 'scale(0) rotate(0deg)', opacity: 0 },
+          { transform: 'scale(1) rotate(180deg)', opacity: 0.9 },
+          { transform: 'scale(0) rotate(360deg)', opacity: 0 }
+        ], { duration: 2000 + Math.random() * 1500 });
+        setTimeout(() => star.remove(), 2500);
+      }
+      
+      setTimeout(() => container.remove(), 4500);
+    }
+    
+    function revealFinalBrotherLetter() {
+      if (finalModal.classList.contains('active')) return;
+      resetLegendEnvelope();
+      legendTeaser.innerHTML = "💌 A letter sealed with a brother's eternal soul... 💌";
+      legendSlideDiv.classList.remove('open-letter');
+      finalModal.classList.add('active');
+      
+      const openLegendHandler = () => {
+        if (!envelopeOpenFlag) {
+          legendEnvelope.classList.add('open');
+          envelopeOpenFlag = true;
+          // add opening animation class for letter glow
+          setTimeout(() => {
+            legendSlideDiv.classList.add('open-letter');
+            legendTeaser.innerHTML = "✨ The letter unfolds with infinite love... ✨";
+            // animate the letter content with subtle glow
+            const letterContent = document.getElementById('fullBrotherLetter');
+            if (letterContent) {
+              letterContent.style.animation = 'letterGlow 0.8s ease-in-out';
+              setTimeout(() => { letterContent.style.animation = ''; }, 800);
+            }
+            createEpicCelebration();
+          }, 620);
+          legendEnvelope.removeEventListener('click', openLegendHandler);
+          currentLegendHandler = null;
+        }
+      };
+      setTimeout(() => {
+  openLegendHandler();
+}, 500);
+    }
+    
+    closeLegendBtn.addEventListener('click', closeLegendModal);
+    finalModal.addEventListener('click', (e) => {
+      if (e.target === finalModal) closeLegendModal();
+    });
+    
+    finalModal.addEventListener('transitionend', (e) => {
+      if (!finalModal.classList.contains('active')) {
+        resetLegendEnvelope();
+      }
+    });
+    
+    // mouse glow effect
+    function addGracefulGlow() {
+      document.body.addEventListener('mousemove', (e) => {
+        const glow = document.createElement('div');
+        glow.style.position = 'fixed';
+        glow.style.left = e.clientX - 24 + 'px';
+        glow.style.top = e.clientY - 24 + 'px';
+        glow.style.width = '48px';
+        glow.style.height = '48px';
+        glow.style.borderRadius = '50%';
+        glow.style.background = 'radial-gradient(circle, rgba(255,190,170,0.28), transparent)';
+        glow.style.pointerEvents = 'none';
+        glow.style.zIndex = '9998';
+        document.body.appendChild(glow);
+        setTimeout(() => glow.remove(), 520);
+      });
+    }
+    
+    window.addEventListener('load', () => {
+      buildSacredGallery();
+      updateProgressDisplay();
+      addGracefulGlow();
+      const songField = document.getElementById('sisterMelody');
+      songField.addEventListener('change', () => {});
+    });
+  </script>
+</body>
+</html>

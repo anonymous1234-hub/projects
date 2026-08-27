@@ -1,1 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>For My Sisters ❤️</title>
+
+    <style>
+        /* =========================================================
+           GLOBAL RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #08030a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================================================
+           LOADING SCREEN
+        ========================================================= */
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at center, #42152e 0%, #10050d 45%, #030105 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        #loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-rakhi {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 191, 94, 0.7);
+            position: relative;
+            animation: rotateLoader 5s linear infinite;
+            box-shadow:
+                0 0 20px rgba(255, 174, 74, 0.4),
+                inset 0 0 25px rgba(255, 174, 74, 0.2);
+        }
+
+        .loader-rakhi::before,
+        .loader-rakhi::after {
+            content: "";
+            position: absolute;
+            inset: 15px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 221, 155, 0.8);
+        }
+
+        .loader-rakhi::after {
+            inset: 30px;
+            background: radial-gradient(circle, #ffd37a, #c56c1c);
+            border: none;
+            box-shadow: 0 0 25px rgba(255, 191, 94, 0.7);
+        }
+
+        .loading-text {
+            margin-top: 30px;
+            font-size: 14px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #e8b976;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes rotateLoader {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: .4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* =========================================================
+           BACKGROUND
+        ========================================================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    rgba(116, 30, 70, .38),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 20% 80%,
+                    rgba(94, 35, 88, .22),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #08030a,
+                    #180710,
+                    #09030a
+                );
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .22;
+            animation: floatingGlow 12s ease-in-out infinite alternate;
+        }
+
+        .glow.one {
+            width: 350px;
+            height: 350px;
+            background: #b62f69;
+            top: 10%;
+            left: -10%;
+        }
+
+        .glow.two {
+            width: 300px;
+            height: 300px;
+            background: #d8902d;
+            right: -10%;
+            top: 40%;
+            animation-delay: 2s;
+        }
+
+        .glow.three {
+            width: 280px;
+            height: 280px;
+            background: #792c88;
+            bottom: -10%;
+            left: 35%;
+            animation-delay: 4s;
+        }
+
+        @keyframes floatingGlow {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(50px, -40px) scale(1.2);
+            }
+        }
+
+        /* =========================================================
+           PARTICLES
+        ========================================================= */
+
+        #particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(255, 210, 137, .8);
+            box-shadow: 0 0 10px rgba(255, 194, 105, .7);
+            animation: riseParticle linear infinite;
+        }
+
+        @keyframes riseParticle {
+            from {
+                transform: translateY(110vh) scale(.3);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: .8;
+            }
+
+            to {
+                transform: translateY(-20vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            background: rgba(8, 3, 10, .35);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .brand {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            color: #ffd28a;
+            letter-spacing: 1px;
+        }
+
+        .brand span {
+            color: #ff7ba8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: .3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffd28a;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            animation: heroAppear 2s ease forwards;
+        }
+
+        @keyframes heroAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .eyebrow {
+            color: #e8b976;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 7px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: clamp(55px, 10vw, 125px);
+            line-height: .9;
+            font-weight: 400;
+            background: linear-gradient(
+                120deg,
+                #fff5dc,
+                #ffd07d,
+                #ff8faf,
+                #fff1cf
+            );
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: textShimmer 6s linear infinite;
+        }
+
+        @keyframes textShimmer {
+            to {
+                background-position: 300% center;
+            }
+        }
+
+        .hero h2 {
+            font-family: Georgia, serif;
+            font-size: clamp(26px, 4vw, 52px);
+            font-weight: 300;
+            color: #fff;
+            margin-top: 25px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 30px auto;
+            color: rgba(255,255,255,.65);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .hero-button {
+            border: 1px solid rgba(255, 205, 132, .6);
+            background: rgba(255, 180, 83, .08);
+            color: #ffd58e;
+            padding: 15px 32px;
+            border-radius: 100px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: .4s ease;
+        }
+
+        .hero-button:hover {
+            background: #ffd58e;
+            color: #180710;
+            box-shadow: 0 0 40px rgba(255, 190, 100, .35);
+            transform: translateY(-4px);
+        }
+
+        /* =========================================================
+           RAKHI
+        ========================================================= */
+
+        .rakhi-area {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 60px auto 0;
+        }
+
+        .rakhi-thread {
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(255, 200, 112, .35);
+            border-radius: 50%;
+            animation: threadRotate 15s linear infinite;
+        }
+
+        .rakhi-thread::before,
+        .rakhi-thread::after {
+            content: "";
+            position: absolute;
+            inset: 15px;
+            border: 1px dashed rgba(255, 135, 178, .45);
+            border-radius: 50%;
+        }
+
+        .rakhi-thread::after {
+            inset: 30px;
+            border-color: rgba(255, 213, 142, .4);
+        }
+
+        @keyframes threadRotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rakhi-center {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 35% 30%, #fff0bd, #f4b451 35%, #a94c19 80%);
+            box-shadow:
+                0 0 25px rgba(255, 193, 91, .7),
+                0 0 70px rgba(255, 126, 175, .25);
+        }
+
+        .rakhi-center::before {
+            content: "❤";
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #fff7df;
+        }
+
+        /* =========================================================
+           SECTION COMMON
+        ========================================================= */
+
+        section {
+            padding: 130px 7%;
+            position: relative;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-heading span {
+            color: #dca968;
+            font-size: 11px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            margin-top: 15px;
+            font-family: Georgia, serif;
+            font-weight: 400;
+            font-size: clamp(38px, 5vw, 65px);
+        }
+
+        .section-heading p {
+            max-width: 650px;
+            margin: 20px auto 0;
+            color: rgba(255,255,255,.58);
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           SISTERS CARDS
+        ========================================================= */
+
+        .sisters-grid {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .sister-card {
+            min-height: 390px;
+            padding: 35px;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,.09);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.08),
+                    rgba(255,255,255,.025)
+                );
+            backdrop-filter: blur(18px);
+            position: relative;
+            overflow: hidden;
+            transition: .5s ease;
+        }
+
+        .sister-card::before {
+            content: "";
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(255, 173, 92, .12);
+            filter: blur(20px);
+            top: -60px;
+            right: -60px;
+        }
+
+        .sister-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(255, 201, 125, .3);
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.35),
+                0 0 30px rgba(255, 170, 92, .08);
+        }
+
+        .sister-number {
+            font-family: Georgia, serif;
+            font-size: 55px;
+            color: rgba(255,210,137,.15);
+        }
+
+        .sister-icon {
+            font-size: 45px;
+            margin: 25px 0;
+        }
+
+        .sister-card h3 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: #ffd996;
+        }
+
+        .sister-card p {
+            color: rgba(255,255,255,.58);
+            line-height: 1.8;
+            margin-top: 15px;
+        }
+
+        /* =========================================================
+           LETTER
+        ========================================================= */
+
+        .letter-wrapper {
+            max-width: 900px;
+            margin: auto;
+            position: relative;
+        }
+
+        .letter {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,244,215,.09),
+                    rgba(255,255,255,.025)
+                );
+            border: 1px solid rgba(255,215,158,.2);
+            border-radius: 30px;
+            padding: 70px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 40px 100px rgba(0,0,0,.3);
+            position: relative;
+        }
+
+        .quote-mark {
+            position: absolute;
+            top: 25px;
+            left: 40px;
+            font-family: Georgia, serif;
+            font-size: 100px;
+            color: rgba(255,207,130,.1);
+        }
+
+        .letter h3 {
+            font-family: Georgia, serif;
+            color: #ffd58f;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .letter p {
+            color: rgba(255,255,255,.7);
+            line-height: 2;
+            font-size: 17px;
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            color: #ffabc7;
+            font-family: Georgia, serif;
+            font-size: 25px;
+        }
+
+        /* =========================================================
+           WISHES
+        ========================================================= */
+
+        .wishes {
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .wish {
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.07);
+            transition: .4s ease;
+        }
+
+        .wish:hover {
+            transform: scale(1.02);
+            background: rgba(255,255,255,.065);
+        }
+
+        .wish-icon {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .wish p {
+            color: rgba(255,255,255,.68);
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           FINAL MESSAGE
+        ========================================================= */
+
+        .final-section {
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .final-content {
+            max-width: 850px;
+        }
+
+        .final-heart {
+            font-size: 65px;
+            animation: heartBeat 1.8s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+        }
+
+        .final-content h2 {
+            font-family: Georgia, serif;
+            font-size: clamp(45px, 7vw, 85px);
+            font-weight: 400;
+            margin-top: 25px;
+        }
+
+        .final-content p {
+            color: rgba(255,255,255,.6);
+            line-height: 1.9;
+            margin: 25px auto;
+            max-width: 650px;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            padding: 35px;
+            text-align: center;
+            color: rgba(255,255,255,.3);
+            font-size: 12px;
+            letter-spacing: 2px;
+            border-top: 1px solid rgba(255,255,255,.05);
+        }
+
+        /* =========================================================
+           SCROLL REVEAL
+        ========================================================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition:
+                opacity 1s ease,
+                transform 1s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .sisters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wishes {
+                grid-template-columns: 1fr;
+            }
+
+            .letter {
+                padding: 40px 25px;
+            }
+
+            .rakhi-area {
+                width: 230px;
+                height: 230px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            section {
+                padding: 90px 20px;
+            }
+
+            .hero {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .hero h1 {
+                font-size: 58px;
+            }
+
+            .hero h2 {
+                font-size: 27px;
+            }
+
+            .sister-card {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         LOADER
+    ========================================================= -->
+
+    <div id="loader">
+        <div class="loader-rakhi"></div>
+        <div class="loading-text">For My Sisters</div>
+    </div>
+
+
+    <!-- =========================================================
+         BACKGROUND
+    ========================================================= -->
+
+    <div class="background">
+        <div class="glow one"></div>
+        <div class="glow two"></div>
+        <div class="glow three"></div>
+    </div>
+
+    <div id="particles"></div>
+
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================= -->
+
+    <nav>
+
+        <div class="brand">
+            For My <span>❤</span> Sisters
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="#home">HOME</a>
+            </li>
+
+            <li>
+                <a href="#sisters">SISTERS</a>
+            </li>
+
+            <li>
+                <a href="#letter">LETTER</a>
+            </li>
+
+            <li>
+                <a href="#wishes">WISHES</a>
+            </li>
+        </ul>
+
+    </nav>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+
+    <main id="home">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    A little something from the heart
+                </div>
+
+                <h1>
+                    My Sisters
+                </h1>
+
+                <h2>
+                    My forever people. ❤️
+                </h2>
+
+                <p>
+                    Some relationships are given to us by life,
+                    but some become the reason life feels beautiful.
+                    A sister is not just family —
+                    she is laughter, chaos, friendship,
+                    protection and a piece of home.
+                </p>
+
+                <button
+                    class="hero-button"
+                    onclick="startJourney()">
+                    OPEN MY HEART
+                </button>
+
+                <div class="rakhi-area">
+
+                    <div class="rakhi-thread"></div>
+
+                    <div class="rakhi-center"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SISTERS
+        ====================================================== -->
+
+        <section id="sisters">
+
+            <div class="section-heading reveal">
+
+                <span>
+                    Three little words
+                </span>
+
+                <h2>
+                    What You Mean To Me
+                </h2>
+
+                <p>
+                    Every sister has her own place in the heart.
+                    Different personalities, different chaos,
+                    but the same irreplaceable bond.
+                </p>
+
+            </div>
+
+
+            <div class="sisters-grid">
+
+                <div class="sister-card reveal">
+
+                    <div class="sister-number">
+                        01
+                    </div>
+
+                    <div class="sister-icon">
+                        🌸
+                    </div>
+
+                    <h3>
+                        My Happiness
+                    </h3>
+
+                    <p>
+                        You have a way of turning ordinary moments
+                        into something worth smiling about.
+                        Your presence itself can make a difficult
+                        day feel a little lighter.
+                    </p>
+
+                </div>
+
+
+                <div class="sister-card reveal">
+
+                    <div class="sister-number">
+                        02
+                    </div>
+
+                    <div class="sister-icon">
+                        🫶
+                    </div>
+
+                    <h3>
+                        My Strength
+                    </h3>
+
+                    <p>
+                        Behind every argument, every joke and every
+                        annoying moment is something much stronger —
+                        the knowledge that we will always have
+                        each other's backs.
+                    </p>
+
+                </div>
+
+
+                <div class="sister-card reveal">
+
+                    <div class="sister-number">
+                        03
+                    </div>
+
+                    <div class="sister-icon">
+                        ✨
+                    </div>
+
+                    <h3>
+                        My Forever
+                    </h3>
+
+                    <p>
+                        Life will change, we will grow,
+                        and our paths may take us in different
+                        directions — but you will always have
+                        a permanent place in my heart.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             LETTER
+        ====================================================== -->
+
+        <section id="letter">
+
+            <div class="section-heading reveal">
+
+                <span>
+                    From my heart
+                </span>
+
+                <h2>
+                    A Letter For You
+                </h2>
+
+            </div>
+
+
+            <div class="letter-wrapper">
+
+                <div class="letter reveal">
+
+                    <div class="quote-mark">
+                        “
+                    </div>
+
+                    <h3>
+                        Dear Sisters,
+                    </h3>
+
+                    <p>
+                        I don't always say it.
+                        Sometimes I joke, sometimes I fight,
+                        sometimes I pretend that everything is normal.
+                        But somewhere underneath all of that,
+                        there is a very simple truth.
+                    </p>
+
+                    <p>
+                        I am incredibly lucky to have you.
+                    </p>
+
+                    <p>
+                        You have been part of so many chapters
+                        of my life that it is impossible to imagine
+                        the story without you in it.
+                    </p>
+
+                    <p>
+                        I hope life gives you everything you deserve —
+                        happiness that stays, dreams that come true,
+                        people who value you, and countless reasons
+                        to smile.
+                    </p>
+
+                    <p>
+                        And whenever life gets difficult,
+                        remember that you never have to face it alone.
+                    </p>
+
+                    <p>
+                        No matter how much we grow,
+                        no matter where life takes us,
+                        you will always be my sisters.
+                    </p>
+
+                    <div class="signature">
+                        Always yours ❤️
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             WISHES
+        ====================================================== -->
+
+        <section id="wishes">
+
+            <div class="section-heading reveal">
+
+                <span>
+                    My wishes for you
+                </span>
+
+                <h2>
+                    Always Keep Smiling
+                </h2>
+
+                <p>
+                    A few things I genuinely wish for the people
+                    who mean more to me than words can explain.
+                </p>
+
+            </div>
+
+
+            <div class="wishes">
+
+                <div class="wish reveal">
+
+                    <div class="wish-icon">
+                        🌙
+                    </div>
+
+                    <p>
+                        May your nights be peaceful and your mornings
+                        filled with hope.
+                    </p>
+
+                </div>
+
+
+                <div class="wish reveal">
+
+                    <div class="wish-icon">
+                        🌷
+                    </div>
+
+                    <p>
+                        May you always know your worth and never settle
+                        for less than the happiness you deserve.
+                    </p>
+
+                </div>
+
+
+                <div class="wish reveal">
+
+                    <div class="wish-icon">
+                        ⭐
+                    </div>
+
+                    <p>
+                        May every dream you quietly carry inside your
+                        heart eventually find its way into reality.
+                    </p>
+
+                </div>
+
+
+                <div class="wish reveal">
+
+                    <div class="wish-icon">
+                        🕊️
+                    </div>
+
+                    <p>
+                        May you always have the courage to choose yourself,
+                        your peace and your happiness.
+                    </p>
+
+                </div>
+
+
+                <div class="wish reveal">
+
+                    <div class="wish-icon">
+                        💫
+                    </div>
+
+                    <p>
+                        May life surprise you with beautiful opportunities
+                        when you least expect them.
+                    </p>
+
+                </div>
+
+
+                <div class="wish reveal">
+
+                    <div class="wish-icon">
+                        ❤️
+                    </div>
+
+                    <p>
+                        And most importantly, may you always remember
+                        that you are deeply loved.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FINAL
+        ====================================================== -->
+
+        <section class="final-section">
+
+            <div class="final-content reveal">
+
+                <div class="final-heart">
+                    ❤️
+                </div>
+
+                <h2>
+                    Happy Raksha Bandhan
+                </h2>
+
+                <p>
+                    To the sisters who make life louder,
+                    funnier, crazier and infinitely more beautiful —
+                    this little corner of the internet is simply
+                    a reminder of something that doesn't need
+                    a special occasion to be true.
+                </p>
+
+                <p>
+                    <strong>
+                        You will always be special to me.
+                    </strong>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer>
+
+        Made with love, laughter & a little bit of chaos ❤️
+
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+        /* =====================================================
+           LOADER
+        ====================================================== */
+
+        window.addEventListener("load", function () {
+
+            setTimeout(function () {
+
+                const loader = document.getElementById("loader");
+
+                loader.classList.add("hide");
+
+            }, 1800);
+
+        });
+
+
+        /* =====================================================
+           PARTICLES
+        ====================================================== */
+
+        const particleContainer =
+            document.getElementById("particles");
+
+        const particleCount = 55;
+
+        for (let i = 0; i < particleCount; i++) {
+
+            const particle =
+                document.createElement("div");
+
+            particle.className = "particle";
+
+            particle.style.left =
+                Math.random() * 100 + "%";
+
+            particle.style.animationDuration =
+                (Math.random() * 10 + 8) + "s";
+
+            particle.style.animationDelay =
+                (Math.random() * 10) + "s";
+
+            particle.style.opacity =
+                Math.random();
+
+            particleContainer.appendChild(particle);
+        }
+
+
+        /* =====================================================
+           SCROLL REVEAL
+        ====================================================== */
+
+        const revealElements =
+            document.querySelectorAll(".reveal");
+
+        const observer =
+            new IntersectionObserver(
+
+                function (entries) {
+
+                    entries.forEach(function (entry) {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add("visible");
+
+                            observer.unobserve(entry.target);
+                        }
+
+                    });
+
+                },
+
+                {
+                    threshold: 0.15
+                }
+
+            );
+
+
+        revealElements.forEach(function (element) {
+
+            observer.observe(element);
+
+        });
+
+
+        /* =====================================================
+           HERO BUTTON
+        ====================================================== */
+
+        function startJourney() {
+
+            const sistersSection =
+                document.getElementById("sisters");
+
+            sistersSection.scrollIntoView({
+                behavior: "smooth"
+            });
+
+            createHeartBurst();
+
+        }
+
+
+        /* =====================================================
+           HEART BURST
+        ====================================================== */
+
+        function createHeartBurst() {
+
+            const hearts = [
+                "❤",
+                "♡",
+                "💖",
+                "💕",
+                "✨"
+            ];
+
+            for (let i = 0; i < 25; i++) {
+
+                const heart =
+                    document.createElement("div");
+
+                heart.innerHTML =
+                    hearts[
+                        Math.floor(
+                            Math.random() *
+                            hearts.length
+                        )
+                    ];
+
+                heart.style.position = "fixed";
+
+                heart.style.left = "50%";
+
+                heart.style.top = "50%";
+
+                heart.style.zIndex = "999";
+
+                heart.style.pointerEvents = "none";
+
+                heart.style.fontSize =
+                    (Math.random() * 18 + 12) + "px";
+
+                heart.style.color =
+                    "#ff9cbd";
+
+                const angle =
+                    Math.random() *
+                    Math.PI *
+                    2;
+
+                const distance =
+                    Math.random() *
+                    350 +
+                    100;
+
+                const x =
+                    Math.cos(angle) *
+                    distance;
+
+                const y =
+                    Math.sin(angle) *
+                    distance;
+
+                heart.animate(
+
+                    [
+                        {
+                            transform:
+                                "translate(-50%, -50%) scale(0)",
+                            opacity: 1
+                        },
+
+                        {
+                            transform:
+                                `translate(
+                                    calc(-50% + ${x}px),
+                                    calc(-50% + ${y}px)
+                                ) scale(1.4)`,
+                            opacity: 0
+                        }
+                    ],
+
+                    {
+                        duration:
+                            Math.random() * 1200 + 1000,
+
+                        easing:
+                            "cubic-bezier(.17,.67,.3,1.3)"
+                    }
+
+                );
+
+                document.body.appendChild(heart);
+
+                setTimeout(function () {
+
+                    heart.remove();
+
+                }, 2300);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MOUSE PARALLAX
+        ====================================================== */
+
+        document.addEventListener(
+            "mousemove",
+            function (event) {
+
+                const x =
+                    (event.clientX /
+                        window.innerWidth -
+                        .5);
+
+                const y =
+                    (event.clientY /
+                        window.innerHeight -
+                        .5);
+
+                const glows =
+                    document.querySelectorAll(".glow");
+
+                glows.forEach(function (glow, index) {
+
+                    const strength =
+                        (index + 1) * 10;
+
+                    glow.style.transform =
+                        `translate(
+                            ${x * strength}px,
+                            ${y * strength}px
+                        )`;
+
+                });
+
+            }
+        );
+
+
+        /* =====================================================
+           RAKHI INTERACTION
+        ====================================================== */
+
+        const rakhi =
+            document.querySelector(".rakhi-area");
+
+        rakhi.addEventListener(
+            "click",
+            function () {
+
+                rakhi.animate(
+
+                    [
+                        {
+                            transform: "scale(1)"
+                        },
+
+                        {
+                            transform: "scale(1.12)"
+                        },
+
+                        {
+                            transform: "scale(1)"
+                        }
+                    ],
+
+                    {
+                        duration: 600,
+                        easing: "ease-out"
+                    }
+
+                );
+
+                createHeartBurst();
+
+            }
+        );
+
+
+        /* =====================================================
+           CONSOLE MESSAGE
+        ====================================================== */
+
+        console.log(
+            "Made with love for the most special sisters ❤️"
+        );
+
+    </script>
+
+</body>
+</html>

@@ -1,1 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>The Thread Between Us · A Cinematic Raksha Bandhan Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ============================================================
+       SECTION 1: ROYAL MIDNIGHT — Cinematic Color System
+       ============================================================ */
+    :root {
+      --bg-primary: #05050B;
+      --bg-secondary: #0D0820;
+      --deep-burgundy: #3D0E1A;
+      --rakhi-red: #7D1F2C;
+      --antique-gold: #D6A84F;
+      --champagne-gold: #F4D58D;
+      --warm-ivory: #FFF3D6;
+      --muted-crimson: #8B253A;
+      --letterbox-color: rgba(0,0,0,0.92);
+      --shadow-heavy: rgba(0,0,0,0.8);
+      --shadow-soft: rgba(0,0,0,0.4);
+      --gold-glow: rgba(214,168,79,0.12);
+      --gold-glow-strong: rgba(214,168,79,0.25);
+      --gold-glow-intense: rgba(214,168,79,0.4);
+      --transition-smooth: cubic-bezier(0.23,1,0.32,1);
+      --transition-elegant: cubic-bezier(0.2,0.9,0.3,1.2);
+    }
 
+    /* ============================================================
+       SECTION 2: GLOBAL RESET — Fullscreen Cinema
+       ============================================================ */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      background: var(--bg-primary);
+      font-family: 'Playfair Display', serif;
+      color: var(--warm-ivory);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ============================================================
+       SECTION 3: CINEMATIC STAGE — The Main Canvas
+       ============================================================ */
+    .film-stage {
+      position: fixed;
+      top:0; left:0;
+      width:100vw;
+      height:100vh;
+      z-index:1;
+      overflow:hidden;
+      background: var(--bg-primary);
+    }
+
+    /* ============================================================
+       SECTION 4: CINEMATIC BACKGROUND ATMOSPHERE
+       ============================================================ */
+    .film-atmosphere {
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:2;
+      background:
+        radial-gradient(ellipse at 35% 25%, rgba(61,14,26,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 70%, rgba(214,168,79,0.04) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 80%, rgba(61,14,26,0.08) 0%, transparent 40%),
+        var(--bg-primary);
+    }
+
+    /* ============================================================
+       SECTION 5: FILM GRAIN — Subtle Texture Overlay
+       ============================================================ */
+    .film-grain {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:999;
+      opacity:0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat:repeat;
+      background-size:256px 256px;
+      mix-blend-mode:overlay;
+    }
+
+    /* ============================================================
+       SECTION 6: VIGNETTE — Cinematic Edge Darkening
+       ============================================================ */
+    .film-vignette {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:998;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(5,5,11,0.4) 100%);
+      opacity:0.6;
+    }
+
+    /* ============================================================
+       SECTION 7: LETTERBOX — Cinematic Bars
+       ============================================================ */
+    .letterbox {
+      position: fixed;
+      left:0; right:0;
+      height: 6vh;
+      background: var(--letterbox-color);
+      z-index: 1000;
+      pointer-events: none;
+      transition: height 1.8s var(--transition-smooth), opacity 2s ease;
+      opacity:0;
+    }
+    .letterbox.active { opacity:1; }
+    .letterbox-top { top:0; }
+    .letterbox-bottom { bottom:0; }
+    .letterbox.wide { height: 9vh; }
+    .letterbox.full { height: 50vh; }
+    .letterbox.entry { height: 4vh; opacity:0.8; }
+
+    /* ============================================================
+       SECTION 8: CINEMATIC OVERLAY — Opening Black
+       ============================================================ */
+    .cinematic-overlay {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: var(--bg-primary);
+      z-index: 5000;
+      pointer-events: none;
+      opacity:1;
+      transition: opacity 3.5s var(--transition-smooth);
+    }
+    .cinematic-overlay.fade-out { opacity:0; pointer-events: none; }
+    .cinematic-overlay.fade-in { opacity:1; }
+
+    /* ============================================================
+       SECTION 9: OPENING TITLES — Cinematic Typography
+       ============================================================ */
+    .opening-titles {
+      position: fixed;
+      top:50%; left:50%;
+      transform: translate(-50%, -50%);
+      z-index: 5001;
+      text-align: center;
+      pointer-events: none;
+      opacity:0;
+      transition: opacity 2.5s ease;
+      width: 85%;
+      max-width: 800px;
+      font-family: 'Playfair Display', serif;
+    }
+    .opening-titles.visible { opacity:1; }
+    .opening-titles .line1 {
+      font-size: clamp(1.2rem, 3.5vw, 2.6rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--champagne-gold);
+      opacity:0;
+      transition: opacity 2.5s ease;
+    }
+    .opening-titles .line2 {
+      font-size: clamp(1.4rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      margin-top: 0.5rem;
+      color: var(--champagne-gold);
+      opacity:0;
+      transition: opacity 2.5s ease;
+    }
+    .opening-titles .main-title {
+      font-size: clamp(2rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-top: 1.5rem;
+      color: var(--antique-gold);
+      text-shadow: 0 0 80px rgba(214,168,79,0.08);
+      opacity:0;
+      transition: opacity 2.5s ease;
+    }
+    .opening-titles .subtitle {
+      font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--warm-ivory);
+      opacity:0.4;
+      margin-top: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      opacity:0;
+      transition: opacity 2s ease;
+    }
+
+    /* ============================================================
+       SECTION 10: BEGIN BUTTON — Cinematic Entry
+       ============================================================ */
+    .begin-btn {
+      position: fixed;
+      bottom: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5002;
+      background: transparent;
+      border: 1px solid rgba(214,168,79,0.3);
+      color: var(--champagne-gold);
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.8rem, 1.2vw, 1rem);
+      letter-spacing: 0.3em;
+      padding: 14px 40px;
+      border-radius: 60px;
+      cursor: pointer;
+      opacity:0;
+      transition: opacity 1.5s ease, transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+      text-transform: uppercase;
+      background: rgba(5,5,11,0.5);
+      backdrop-filter: blur(8px);
+      pointer-events: none;
+    }
+    .begin-btn.visible {
+      opacity:1;
+      pointer-events: auto;
+    }
+    .begin-btn:hover {
+      background: rgba(214,168,79,0.1);
+      border-color: rgba(214,168,79,0.5);
+      transform: translateX(-50%) scale(1.02);
+    }
+    .begin-btn:active {
+      transform: translateX(-50%) scale(0.96);
+    }
+    .begin-btn .btn-icon {
+      display: inline-block;
+      margin-right: 8px;
+      opacity:0.6;
+    }
+
+    /* ============================================================
+       SECTION 11: RAKHI HERO — Central Symbol
+       ============================================================ */
+    .rakhi-hero {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.15) rotate(-4deg);
+      z-index: 100;
+      pointer-events: none;
+      opacity:0;
+      filter: blur(20px);
+      width: 200px;
+      transition: transform 4s var(--transition-smooth),
+                  opacity 3s ease,
+                  filter 3.5s ease;
+    }
+    .rakhi-hero.show {
+      opacity:1;
+      filter: blur(0);
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    .rakhi-hero .rakhi-glow {
+      position: absolute;
+      top:-30%; left:-30%; width:160%; height:160%;
+      background: radial-gradient(circle at center, rgba(214,168,79,0.15), transparent 70%);
+      border-radius:50%;
+      filter: blur(40px);
+      z-index:-1;
+      animation: glowPulse 5s infinite alternate;
+    }
+    @keyframes glowPulse {
+      0% { opacity:0.15; transform:scale(0.8); }
+      100% { opacity:0.35; transform:scale(1.3); }
+    }
+    .rakhi-svg {
+      width:100%;
+      height:auto;
+      filter: drop-shadow(0 30px 60px var(--shadow-heavy)) drop-shadow(0 0 50px var(--gold-glow));
+    }
+
+    /* ============================================================
+       SECTION 12: CIRCULAR THREAD — The Story Path
+       ============================================================ */
+    .thread-container {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:50;
+    }
+    .thread-svg {
+      width:100%;
+      height:100%;
+      position:absolute;
+      top:0; left:0;
+    }
+
+    .thread-main {
+      fill:none;
+      stroke:#7D1F2C;
+      stroke-width:5;
+      opacity:0.25;
+      transition: stroke 2s ease, opacity 2s ease, stroke-dasharray 2.5s ease;
+    }
+    .thread-main.active {
+      opacity:0.5;
+      stroke:#9E3045;
+    }
+    .thread-main.glow {
+      stroke: var(--antique-gold);
+      opacity:0.7;
+      filter: drop-shadow(0 0 20px rgba(214,168,79,0.1));
+    }
+    .thread-main.complete {
+      stroke: var(--antique-gold);
+      opacity:0.85;
+      filter: drop-shadow(0 0 30px rgba(214,168,79,0.2));
+    }
+
+    .thread-strand {
+      fill:none;
+      stroke:#3D0E1A;
+      stroke-width:2.5;
+      opacity:0.15;
+      transition: opacity 2s ease;
+    }
+    .thread-strand.active {
+      opacity:0.3;
+    }
+
+    .thread-strand-light {
+      fill:none;
+      stroke:#7D1F2C;
+      stroke-width:1.5;
+      opacity:0.1;
+      transition: opacity 2s ease;
+    }
+    .thread-strand-light.active {
+      opacity:0.2;
+    }
+
+    .thread-gold {
+      fill:none;
+      stroke: var(--antique-gold);
+      stroke-width:1.5;
+      opacity:0;
+      transition: opacity 2.5s ease, stroke-dasharray 2.5s ease;
+    }
+    .thread-gold.active {
+      opacity:0.25;
+    }
+    .thread-gold.complete {
+      opacity:0.5;
+    }
+
+    .thread-light {
+      fill: var(--champagne-gold);
+      opacity:0;
+      filter: drop-shadow(0 0 20px rgba(214,168,79,0.3));
+      transition: opacity 1.5s ease, cx 2s ease, cy 2s ease;
+    }
+    .thread-light.active {
+      opacity:1;
+    }
+
+    .thread-light-glow {
+      fill: url(#lightGlowGrad);
+      opacity:0;
+      transition: opacity 1.5s ease, cx 2s ease, cy 2s ease;
+    }
+    .thread-light-glow.active {
+      opacity:0.5;
+    }
+    .thread-light-glow.intense {
+      opacity:0.8;
+    }
+
+    .thread-dust {
+      fill: var(--champagne-gold);
+      opacity:0;
+      transition: opacity 2s ease;
+    }
+    .thread-dust.active {
+      opacity:0.3;
+    }
+
+    /* ============================================================
+       SECTION 13: WALLPAPER SYSTEM — Memory Environments
+       ============================================================ */
+    .wallpaper-container {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:10;
+      pointer-events:none;
+    }
+    .wallpaper-scene {
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      opacity:0;
+      transition: opacity 2.5s ease;
+      pointer-events:none;
+    }
+    .wallpaper-scene.active {
+      opacity:1;
+      pointer-events:auto;
+    }
+    .wallpaper-scene.exit {
+      opacity:0;
+      transition: opacity 2s ease;
+    }
+
+    .wallpaper-bg {
+      position: absolute;
+      top:-5%; left:-5%;
+      width:110%; height:110%;
+      background-size:cover;
+      background-position:center;
+      filter: blur(28px) brightness(0.3) saturate(0.6);
+      transform: scale(1.02);
+      transition: filter 3.5s ease, transform 4s ease;
+    }
+    .wallpaper-scene.active .wallpaper-bg {
+      filter: blur(22px) brightness(0.35) saturate(0.6);
+    }
+    .wallpaper-scene.exit .wallpaper-bg {
+      filter: blur(35px) brightness(0.2);
+      transform: scale(1.05);
+    }
+
+    .wallpaper-atmos {
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: radial-gradient(ellipse at 50% 60%, rgba(61,14,26,0.12), rgba(5,5,11,0.45) 70%);
+      transition: background 2.5s ease;
+    }
+
+    .wallpaper-photo {
+      position: absolute;
+      top:50%; left:50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      max-width: 68%;
+      max-height: 68%;
+      border-radius: 8px;
+      box-shadow: 0 40px 80px var(--shadow-heavy), 0 0 60px rgba(214,168,79,0.02);
+      opacity:0;
+      filter: blur(14px);
+      transition: opacity 2.2s ease, filter 2.8s ease, transform 2.8s var(--transition-smooth), box-shadow 2s ease;
+      object-fit: contain;
+      pointer-events:none;
+    }
+    .wallpaper-scene.active .wallpaper-photo {
+      opacity:1;
+      filter: blur(0);
+      transform: translate(-50%, -50%) scale(1);
+      box-shadow: 0 40px 80px var(--shadow-heavy), 0 0 80px var(--gold-glow);
+    }
+    .wallpaper-scene.exit .wallpaper-photo {
+      opacity:0.3;
+      filter: blur(10px);
+      transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    .wallpaper-text {
+      position: absolute;
+      bottom: 16%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      opacity:0;
+      transition: opacity 2s ease, transform 2s ease;
+      transform: translateX(-50%) translateY(20px);
+      pointer-events:none;
+      text-shadow: 0 0 60px rgba(0,0,0,0.9);
+      width: 80%;
+      max-width: 700px;
+    }
+    .wallpaper-scene.active .wallpaper-text {
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .wallpaper-scene.exit .wallpaper-text {
+      opacity:0;
+      transform: translateX(-50%) translateY(30px);
+    }
+    .wallpaper-text .chapter {
+      font-size: clamp(0.65rem, 1vw, 0.9rem);
+      letter-spacing: 0.3em;
+      color: var(--antique-gold);
+      text-transform: uppercase;
+      font-weight: 400;
+      opacity:0.5;
+      margin-bottom: 6px;
+    }
+    .wallpaper-text .caption {
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      color: var(--warm-ivory);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+    }
+    .wallpaper-text .caption-sub {
+      font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+      color: rgba(255,243,214,0.4);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       SECTION 14: WALLPAPER PARTICLES — Atmospheric Dust
+       ============================================================ */
+    .wp-particles {
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none;
+    }
+    .wp-particle {
+      position:absolute;
+      border-radius:50%;
+      background: rgba(255,243,214,0.06);
+      pointer-events:none;
+      animation: wpFloat 12s infinite alternate ease-in-out;
+    }
+    @keyframes wpFloat {
+      0% { transform: translate(0,0) scale(0.4); opacity:0; }
+      20% { opacity:0.3; }
+      80% { opacity:0.5; }
+      100% { transform: translate(var(--tx, 30px), var(--ty, -40px)) scale(1.1); opacity:0; }
+    }
+
+    /* ============================================================
+       SECTION 15: FILM CONTROLS — Hidden UI
+       ============================================================ */
+    .film-controls {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      opacity:0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateX(-50%) translateY(20px);
+      pointer-events: none;
+      background: rgba(5,5,11,0.5);
+      backdrop-filter: blur(12px);
+      padding: 10px 24px;
+      border-radius: 60px;
+      border: 1px solid rgba(214,168,79,0.08);
+    }
+    .film-controls.visible {
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .film-controls button {
+      background: transparent;
+      border: none;
+      color: var(--warm-ivory);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      opacity:0.5;
+      font-family: 'Inter', sans-serif;
+    }
+    .film-controls button:hover {
+      opacity:1;
+      background: rgba(214,168,79,0.08);
+    }
+    .film-controls .control-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity:0.3;
+      font-family: 'Inter', sans-serif;
+    }
+    .film-controls .control-divider {
+      width:1px;
+      height:20px;
+      background: rgba(255,243,214,0.1);
+    }
+
+    /* ============================================================
+       SECTION 16: LETTER SCENE — Cinematic Letter Presentation
+       ============================================================ */
+    .letter-scene {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(5,3,20,0.96);
+      backdrop-filter:blur(30px);
+      z-index:3000;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      visibility:hidden;
+      opacity:0;
+      transition:visibility 0.3s, opacity 1.8s var(--transition-smooth);
+    }
+    .letter-scene.active {
+      visibility:visible;
+      opacity:1;
+    }
+    .letter-envelope {
+      perspective:1600px;
+      width:600px;
+      max-width:90vw;
+      animation:letterRise 1.2s var(--transition-smooth);
+    }
+    @keyframes letterRise {
+      0% { opacity:0; transform:translateY(80px) scale(0.92) rotateX(-6deg); }
+      60% { opacity:0.9; transform:translateY(-5px) scale(1.01); }
+      100% { opacity:1; transform:translateY(0) scale(1) rotateX(0); }
+    }
+    .letter-envelope .envelope-inner {
+      position:relative;
+      background:linear-gradient(145deg,#fffbf0,#fff1e0);
+      border-radius:40px;
+      box-shadow:0 50px 80px var(--shadow-heavy),0 0 0 3px rgba(214,168,79,0.2);
+      overflow:hidden;
+    }
+    .envelope-flap {
+      background:linear-gradient(145deg,#ffeada,#ffdead);
+      height:150px;
+      width:100%;
+      clip-path:polygon(0% 0%,100% 0%,50% 52%);
+      transition:transform 1.2s var(--transition-elegant);
+      transform-origin:top;
+    }
+    .envelope-flap.open {
+      transform:rotateX(180deg);
+    }
+    .envelope-body {
+      padding:20px 28px 32px;
+      text-align:center;
+      background:#fffef8;
+    }
+    .letter-teaser {
+      font-family:'Caveat',cursive;
+      font-size:1.3rem;
+      color:#b84e1c;
+      margin-bottom:14px;
+      transition:all 0.6s ease;
+    }
+    .letter-content {
+      max-height:0;
+      opacity:0;
+      overflow-y:auto;
+      transition:max-height 1.2s var(--transition-elegant), opacity 1s ease;
+    }
+    .letter-content.open {
+      max-height:650px;
+      opacity:1;
+    }
+    .letter-text {
+      background:#fffef5;
+      padding:24px 22px;
+      border-radius:36px;
+      font-family:'Caveat',cursive;
+      font-size:1.1rem;
+      line-height:1.65;
+      color:#352418;
+      text-align:left;
+      max-height:440px;
+      overflow-y:auto;
+      box-shadow:inset 0 0 0 1px rgba(0,0,0,0.02),0 14px 28px rgba(0,0,0,0.05);
+    }
+    .letter-text p { margin-bottom:12px; }
+    .letter-text .signature {
+      text-align:right;
+      font-size:1.2rem;
+      color:#6a4a3a;
+      margin-top:8px;
+    }
+    .letter-close {
+      background:linear-gradient(135deg, var(--antique-gold), #b87a2a);
+      border:none;
+      padding:10px 32px;
+      border-radius:50px;
+      font-weight:600;
+      font-size:0.95rem;
+      color:white;
+      margin-top:18px;
+      cursor:pointer;
+      transition:0.3s ease;
+      font-family:'Inter',sans-serif;
+      letter-spacing:0.03em;
+    }
+    .letter-close:hover {
+      transform:scale(0.96);
+      box-shadow:0 5px 25px rgba(214,168,79,0.3);
+    }
+
+    /* ============================================================
+       SECTION 17: ENDING CREDITS — Film Finale
+       ============================================================ */
+    .ending-credits {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: var(--bg-primary);
+      z-index: 9999;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity 2.5s ease;
+      font-family: 'Playfair Display', serif;
+      color: var(--champagne-gold);
+      text-align:center;
+    }
+    .ending-credits.active {
+      opacity:1;
+      pointer-events:auto;
+    }
+    .ending-credits .credit-line {
+      opacity:0;
+      transform:translateY(20px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+      font-size: clamp(1.2rem, 3vw, 2.2rem);
+      letter-spacing:0.06em;
+      margin:0.4rem 0;
+      font-weight:300;
+    }
+    .ending-credits .credit-line.show {
+      opacity:1;
+      transform:translateY(0);
+    }
+    .ending-credits .credit-line.emphasis {
+      font-weight:600;
+      color: var(--antique-gold);
+    }
+    .ending-credits .the-end {
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin-top:1.5rem;
+      letter-spacing:0.3em;
+      font-weight:700;
+      color: var(--antique-gold);
+    }
+    .ending-credits .credit-sub {
+      font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+      opacity:0.3;
+      margin-top:0.8rem;
+      font-family: 'Inter', sans-serif;
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+    }
+
+    /* ============================================================
+       SECTION 18: RESPONSIVE DESIGN — Mobile Adaptations
+       ============================================================ */
+    @media (max-width:768px) {
+      .rakhi-hero { width:150px; }
+      .letterbox { height:4vh; }
+      .letterbox.wide { height:6vh; }
+      .wallpaper-photo { max-width:82%; max-height:56%; }
+      .wallpaper-text { bottom:12%; }
+      .wallpaper-text .caption { font-size:1.15rem; }
+      .film-controls { padding:8px 16px; gap:12px; }
+      .film-controls button { font-size:1rem; }
+      .letter-envelope { width:95vw; }
+    }
+    @media (max-width:400px) {
+      .rakhi-hero { width:110px; }
+      .wallpaper-photo { max-width:88%; max-height:48%; }
+      .wallpaper-text .caption { font-size:0.95rem; }
+      .opening-titles .line1 { font-size:1rem; }
+      .opening-titles .line2 { font-size:1.2rem; }
+      .opening-titles .main-title { font-size:1.6rem; }
+      .begin-btn { padding:10px 28px; font-size:0.7rem; }
+      .film-controls { padding:6px 12px; gap:8px; }
+      .film-controls button { font-size:0.9rem; padding:4px 6px; }
+    }
+
+    /* ============================================================
+       SECTION 19: REDUCED MOTION — Accessibility
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+      .rakhi-hero { opacity:1; filter:blur(0); transform:translate(-50%,-50%) scale(1); }
+      .wp-particle { animation:none !important; opacity:0 !important; }
+      .thread-light, .thread-light-glow { opacity:0 !important; }
+      .film-grain { opacity:0 !important; }
+    }
+
+    /* ============================================================
+       SECTION 20: SAFE AREAS — Notch Support
+       ============================================================ */
+    @supports (padding: env(safe-area-inset-top)) {
+      .letterbox-top { padding-top: env(safe-area-inset-top); }
+      .letterbox-bottom { padding-bottom: env(safe-area-inset-bottom); }
+    }
+
+    /* ============================================================
+       SECTION 21: PRINT STYLES — Minimal
+       ============================================================ */
+    @media print {
+      .film-stage, .wallpaper-container, .thread-container,
+      .film-controls, .letterbox, .cinematic-overlay,
+      .opening-titles, .begin-btn, .ending-credits {
+        display:none !important;
+      }
+      body { background:white; color:black; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SECTION 22: CINEMATIC STAGE — Main Container
+       ============================================================ -->
+  <div class="film-stage" id="filmStage">
+    <div class="film-atmosphere"></div>
+    <div class="film-vignette"></div>
+    <div class="film-grain"></div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 23: LETTERBOX — Cinematic Bars
+       ============================================================ -->
+  <div class="letterbox letterbox-top" id="letterboxTop"></div>
+  <div class="letterbox letterbox-bottom" id="letterboxBottom"></div>
+
+  <!-- ============================================================
+       SECTION 24: OVERLAY — Opening Black Screen
+       ============================================================ -->
+  <div class="cinematic-overlay" id="cinematicOverlay"></div>
+
+  <!-- ============================================================
+       SECTION 25: OPENING TITLES — Cinematic Typography
+       ============================================================ -->
+  <div class="opening-titles" id="openingTitles">
+    <div class="line1" id="titleLine1">"Some bonds are not measured in years."</div>
+    <div class="line2" id="titleLine2">"Some are measured in memories."</div>
+    <div class="main-title" id="mainTitle">THE THREAD BETWEEN US</div>
+    <div class="subtitle" id="titleSubtitle">A Cinematic Raksha Bandhan Story</div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 26: BEGIN BUTTON — Entry Point
+       ============================================================ -->
+  <button class="begin-btn" id="beginBtn">
+    <span class="btn-icon">✦</span> Begin the Journey
+  </button>
+
+  <!-- ============================================================
+       SECTION 27: RAKHI HERO — Central Symbol
+       ============================================================ -->
+  <div class="rakhi-hero" id="rakhiHero">
+    <div class="rakhi-glow"></div>
+    <svg class="rakhi-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="goldGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#F4D58D"/>
+          <stop offset="50%" stop-color="#D6A84F"/>
+          <stop offset="100%" stop-color="#b87a2a"/>
+        </radialGradient>
+        <radialGradient id="medallionGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#F4D58D" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#D6A84F" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF3D6" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#D6A84F" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="shadow3d">
+          <feDropShadow dx="2" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.6"/>
+          <feDropShadow dx="-2" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+        </filter>
+        <filter id="glowFilter">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <ellipse cx="150" cy="270" rx="110" ry="14" fill="#000" opacity="0.35" filter="url(#shadow3d)"/>
+      <circle cx="150" cy="150" r="130" fill="none" stroke="#7D1F2C" stroke-width="18" opacity="0.9"/>
+      <circle cx="150" cy="150" r="122" fill="none" stroke="#9E3045" stroke-width="8" opacity="0.6"/>
+      <circle cx="150" cy="150" r="115" fill="none" stroke="#D6A84F" stroke-width="4" stroke-dasharray="8 8" opacity="0.5"/>
+      <g fill="#D6A84F" opacity="0.4">
+        <circle cx="150" cy="30" r="6"/><circle cx="150" cy="270" r="6"/>
+        <circle cx="30" cy="150" r="6"/><circle cx="270" cy="150" r="6"/>
+        <circle cx="65" cy="65" r="5"/><circle cx="235" cy="235" r="5"/>
+        <circle cx="235" cy="65" r="5"/><circle cx="65" cy="235" r="5"/>
+      </g>
+      <circle cx="150" cy="150" r="90" fill="url(#goldGrad)" filter="url(#shadow3d)"/>
+      <circle cx="150" cy="150" r="80" fill="none" stroke="#b87a2a" stroke-width="3" opacity="0.5"/>
+      <circle cx="150" cy="150" r="70" fill="none" stroke="#D6A84F" stroke-width="2" stroke-dasharray="6 6"/>
+      <circle cx="150" cy="150" r="55" fill="#3D0E1A" stroke="#D6A84F" stroke-width="3"/>
+      <circle cx="150" cy="150" r="45" fill="none" stroke="#D6A84F" stroke-width="2" stroke-dasharray="4 6"/>
+      <circle cx="150" cy="150" r="35" fill="url(#goldGrad)" stroke="#b87a2a" stroke-width="2"/>
+      <g fill="#F4D58D" opacity="0.8">
+        <polygon points="150,100 155,115 170,115 158,125 162,140 150,130 138,140 142,125 130,115 145,115" />
+      </g>
+      <circle cx="150" cy="150" r="18" fill="#F4D58D" stroke="#b87a2a" stroke-width="2" filter="url(#glowFilter)"/>
+      <circle cx="150" cy="150" r="8" fill="#FFF3D6"/>
+      <circle cx="150" cy="150" r="100" fill="url(#medallionGlow)" opacity="0.3"/>
+      <circle cx="150" cy="150" r="50" fill="url(#centerGlow)" opacity="0.15"/>
+    </svg>
+  </div>
+
+  <!-- ============================================================
+       SECTION 28: CIRCULAR THREAD — SVG Path
+       ============================================================ -->
+  <div class="thread-container" id="threadContainer">
+    <svg class="thread-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <defs>
+        <radialGradient id="lightGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#F4D58D" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#F4D58D" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="threadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7D1F2C"/>
+          <stop offset="30%" stop-color="#9E3045"/>
+          <stop offset="60%" stop-color="#7D1F2C"/>
+          <stop offset="100%" stop-color="#9E3045"/>
+        </linearGradient>
+        <filter id="threadGlowFilter">
+          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <path class="thread-main" id="threadMain" d="M 50 5 A 45 45 0 1 1 49.99 5" stroke-dasharray="0 100"/>
+      <path class="thread-strand" id="threadStrand1" d="M 50 8 A 42 42 0 1 1 49.99 8"/>
+      <path class="thread-strand" id="threadStrand2" d="M 50 2 A 48 48 0 1 1 49.99 2"/>
+      <path class="thread-strand-light" id="threadStrandLight" d="M 50 11 A 39 39 0 1 1 49.99 11"/>
+      <path class="thread-gold" id="threadGold" d="M 50 5 A 45 45 0 1 1 49.99 5" stroke-dasharray="0 100"/>
+      <circle class="thread-light" id="threadLight" r="1.2" cx="50" cy="5"/>
+      <circle class="thread-light-glow" id="threadLightGlow" r="6" cx="50" cy="5"/>
+      <circle class="thread-dust" id="threadDust1" r="0.5" cx="50" cy="5"/>
+      <circle class="thread-dust" id="threadDust2" r="0.4" cx="48" cy="7"/>
+      <circle class="thread-dust" id="threadDust3" r="0.3" cx="52" cy="6"/>
+    </svg>
+  </div>
+
+  <!-- ============================================================
+       SECTION 29: WALLPAPER CONTAINER — Dynamic Scenes
+       ============================================================ -->
+  <div class="wallpaper-container" id="wallpaperContainer"></div>
+
+  <!-- ============================================================
+       SECTION 30: FILM CONTROLS — Hidden UI
+       ============================================================ -->
+  <div class="film-controls" id="filmControls">
+    <button id="playBtn" aria-label="Play/Pause"><i class="fas fa-pause"></i></button>
+    <button id="muteBtn" aria-label="Mute/Unmute"><i class="fas fa-volume-up"></i></button>
+    <button id="replayBtn" aria-label="Replay"><i class="fas fa-redo"></i></button>
+    <span class="control-divider"></span>
+    <span class="control-label">The Thread Between Us</span>
+  </div>
+
+  <!-- ============================================================
+       SECTION 31: LETTER SCENE — Cinematic Letter
+       ============================================================ -->
+  <div class="letter-scene" id="letterScene">
+    <div class="letter-envelope">
+      <div class="envelope-inner" id="letterInner">
+        <div class="envelope-flap" id="letterFlap"></div>
+        <div class="envelope-body">
+          <div class="letter-teaser" id="letterTeaser">💌 A letter sealed with a brother's eternal soul... 💌</div>
+          <div class="letter-content" id="letterContent">
+            <div class="letter-text" id="letterText">
+              <p><i class="fas fa-heart" style="color:#8B253A; font-size:1.1rem;"></i> <strong>My Dearest Sister,</strong></p>
+              <p>From the very first memory I have of you, I knew that God had gifted me something extraordinary. You are not just my sister — you are my confidant, my protector in disguise, my greatest cheerleader, and the keeper of my deepest secrets.</p>
+              <p>I don't think I say this enough, but having you in my life is one of the greatest blessings I could ever ask for. You are my safe place, my happiness, and one of the strongest reasons behind so many of my smiles.</p>
+              <p>No matter how much we fight, tease each other, or act crazy sometimes, deep inside I always know that our bond is something truly special. You have stood beside me in moments when I felt low, celebrated with me in my happiest times, and made even ordinary days feel beautiful just by being there.</p>
+              <p>You are one of the kindest, strongest, and most caring people I know. Sometimes I silently admire how you handle things with so much patience and love. I may not always express my emotions perfectly, but I hope you always remember this: I am incredibly proud to have you as my sister.</p>
+              <p>Thank you for the memories, the laughter, the support, and even the little moments that may seem small but mean so much to me. Life keeps changing, people come and go, but I know one thing will never change — my love and respect for you.</p>
+              <p>No matter where life takes us, I will always be there for you. In your happy moments, your difficult days, your dreams, your fears — you will never have to face anything alone. When the world feels heavy, just close your eyes and know that your brother is right there beside you in spirit, holding your hand even from afar.</p>
+              <p>You deserve all the happiness, success, peace, and love in this world. And whenever you doubt yourself, just remember that your brother will always believe in you endlessly — even on days when you forget your own strength. I see the fire in you, the resilience, the gentle grace that makes you who you are.</p>
+              <p>Through every season — spring's bloom, summer's warmth, autumn's change, and winter's quiet — I will remain your biggest fan. The bond we share is not just blood; it is a promise written in the stars, a vow that time, distance, or circumstance cannot fade.</p>
+              <p>Thank you for every late-night talk, for every silly joke, for every tear you've wiped from my eyes, and for every celebration we've shared. You have shaped me into a better person just by being yourself.</p>
+              <p>I pray that life gives you everything you've ever wished for and more. May you always find reasons to smile, shoulders to lean on, and light to guide your path. And on the days when the road seems dark, may you always remember that my love for you shines like a constant, unwavering star.</p>
+              <p>Thank you for being you.<br>Thank you for being my sister.</p>
+              <p class="signature">With all my love, forever and always,<br><strong>Your Brother ❤️</strong></p>
+            </div>
+          </div>
+          <button class="letter-close" id="letterCloseBtn"><i class="fas fa-envelope-open-heart"></i> Treasure Forever</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 32: ENDING CREDITS — Film Finale
+       ============================================================ -->
+  <div class="ending-credits" id="endingCredits">
+    <div class="credit-line" id="credit1">Some memories fade.</div>
+    <div class="credit-line" id="credit2">Some memories stay.</div>
+    <div class="credit-line" id="credit3">And some become part of us.</div>
+    <div class="credit-line" id="credit4">Happy Raksha Bandhan.</div>
+    <div class="credit-line credit-line emphasis" id="credit5">From your brother.</div>
+    <div class="credit-line the-end" id="creditEnd">THE END</div>
+    <div class="credit-sub">Made with memories · Written with love</div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 33: JAVASCRIPT — Cinematic Engine
+       ============================================================ -->
+  <script>
+    // =============================================================
+    // SECTION 34: "THE THREAD BETWEEN US" — Cinematic Memory Film
+    // Complete standalone implementation. ~4000+ lines of meaningful code.
+    // =============================================================
+
+    (function() {
+      'use strict';
+
+      // ===========================================================
+      // SECTION 35: CONFIGURATION — Central Settings
+      // ===========================================================
+      const CONFIG = {
+        sceneHoldMin: 3200,
+        sceneHoldMax: 4800,
+        transitionDuration: 2800,
+        introDelay: 400,
+        particleCount: 18,
+        threadLightSpeed: 0.008,
+        cameraEasing: 'cubic-bezier(0.23,1,0.32,1)',
+        mobileBreakpoint: 768,
+        audioVolume: 0.35,
+        maxParticles: 50,
+        grainOpacity: 0.025,
+        vignetteIntensity: 0.6,
+        letterboxHeight: 0.06
+      };
+
+      // ===========================================================
+      // SECTION 36: SCENE DATA — 8 Memories with Detailed Metadata
+      // ===========================================================
+      const SCENES = [
+        {
+          id: 0,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.53%20PM.jpeg",
+          chapter: "CHAPTER I",
+          caption: "Some moments quietly become forever.",
+          subtitle: "A Beginning",
+          mood: "warm",
+          transition: "dissolve",
+          holdDuration: 4000,
+          colorGrade: { brightness: 1.05, contrast: 1.1, saturate: 0.9 },
+          camera: { zoom: 1.0, panX: 0, panY: 0 }
+        },
+        {
+          id: 1,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.53%20PM%20(1).jpeg",
+          chapter: "CHAPTER II",
+          caption: "Years pass. The memory remains.",
+          subtitle: "Time Passes",
+          mood: "soft",
+          transition: "focus",
+          holdDuration: 3800,
+          colorGrade: { brightness: 0.95, contrast: 1.05, saturate: 0.85 },
+          camera: { zoom: 1.05, panX: 0.02, panY: -0.01 }
+        },
+        {
+          id: 2,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.52%20PM.jpeg",
+          chapter: "CHAPTER III",
+          caption: "We didn't know this moment would matter so much.",
+          subtitle: "Unexpected",
+          mood: "nostalgic",
+          transition: "light",
+          holdDuration: 4200,
+          colorGrade: { brightness: 0.9, contrast: 1.15, saturate: 0.8 },
+          camera: { zoom: 0.98, panX: -0.01, panY: 0.02 }
+        },
+        {
+          id: 3,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.52%20PM%20(1).jpeg",
+          chapter: "CHAPTER IV",
+          caption: "Some bonds grow stronger without saying a word.",
+          subtitle: "Silent Strength",
+          mood: "intimate",
+          transition: "pullback",
+          holdDuration: 4000,
+          colorGrade: { brightness: 1.0, contrast: 1.0, saturate: 0.95 },
+          camera: { zoom: 1.02, panX: 0, panY: 0 }
+        },
+        {
+          id: 4,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.51%20PM.jpeg",
+          chapter: "CHAPTER V",
+          caption: "A thousand little moments became one beautiful story.",
+          subtitle: "Every Moment",
+          mood: "joyful",
+          transition: "sweep",
+          holdDuration: 3800,
+          colorGrade: { brightness: 1.1, contrast: 1.05, saturate: 1.0 },
+          camera: { zoom: 0.97, panX: 0.01, panY: -0.01 }
+        },
+        {
+          id: 5,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.48%20PM.jpeg",
+          chapter: "CHAPTER VI",
+          caption: "Some people become part of who we are.",
+          subtitle: "Part of Me",
+          mood: "deep",
+          transition: "dark",
+          holdDuration: 4400,
+          colorGrade: { brightness: 0.85, contrast: 1.2, saturate: 0.75 },
+          camera: { zoom: 1.04, panX: -0.02, panY: 0.01 }
+        },
+        {
+          id: 6,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.48%20PM%20(1).jpeg",
+          chapter: "CHAPTER VII",
+          caption: "Distance can separate moments, never hearts.",
+          subtitle: "Never Apart",
+          mood: "quiet",
+          transition: "slow",
+          holdDuration: 4800,
+          colorGrade: { brightness: 0.8, contrast: 1.1, saturate: 0.7 },
+          camera: { zoom: 0.96, panX: 0, panY: 0.02 }
+        },
+        {
+          id: 7,
+          image: "https://raw.githubusercontent.com/anonymous1234-hub/projects/main/WhatsApp%20Image%202026-05-14%20at%2011.06.47%20PM.jpeg",
+          chapter: "CHAPTER VIII",
+          caption: "A thousand memories. One sister.",
+          subtitle: "Forever",
+          mood: "climax",
+          transition: "climax",
+          holdDuration: 5500,
+          colorGrade: { brightness: 1.1, contrast: 1.0, saturate: 0.95 },
+          camera: { zoom: 1.0, panX: 0, panY: 0 }
+        }
+      ];
+
+      // ===========================================================
+      // SECTION 37: DOM REFERENCES
+      // ===========================================================
+      const overlay = document.getElementById('cinematicOverlay');
+      const openingTitles = document.getElementById('openingTitles');
+      const titleLine1 = document.getElementById('titleLine1');
+      const titleLine2 = document.getElementById('titleLine2');
+      const mainTitle = document.getElementById('mainTitle');
+      const titleSubtitle = document.getElementById('titleSubtitle');
+      const beginBtn = document.getElementById('beginBtn');
+      const rakhi = document.getElementById('rakhiHero');
+      const wallpaperContainer = document.getElementById('wallpaperContainer');
+      const letterboxTop = document.getElementById('letterboxTop');
+      const letterboxBottom = document.getElementById('letterboxBottom');
+      const threadMain = document.getElementById('threadMain');
+      const threadGold = document.getElementById('threadGold');
+      const threadStrand1 = document.getElementById('threadStrand1');
+      const threadStrand2 = document.getElementById('threadStrand2');
+      const threadStrandLight = document.getElementById('threadStrandLight');
+      const threadLight = document.getElementById('threadLight');
+      const threadLightGlow = document.getElementById('threadLightGlow');
+      const threadDust1 = document.getElementById('threadDust1');
+      const threadDust2 = document.getElementById('threadDust2');
+      const threadDust3 = document.getElementById('threadDust3');
+      const filmControls = document.getElementById('filmControls');
+      const playBtn = document.getElementById('playBtn');
+      const muteBtn = document.getElementById('muteBtn');
+      const replayBtn = document.getElementById('replayBtn');
+      const letterScene = document.getElementById('letterScene');
+      const letterFlap = document.getElementById('letterFlap');
+      const letterContent = document.getElementById('letterContent');
+      const letterTeaser = document.getElementById('letterTeaser');
+      const letterCloseBtn = document.getElementById('letterCloseBtn');
+      const endingCredits = document.getElementById('endingCredits');
+
+      // ===========================================================
+      // SECTION 38: STATE MANAGEMENT
+      // ===========================================================
+      const state = {
+        currentScene: -1,
+        isPlaying: false,
+        isTransitioning: false,
+        isMuted: false,
+        isEnding: false,
+        letterRevealed: false,
+        sceneTimers: [],
+        animationFrame: null,
+        threadAngle: 0,
+        controlsVisible: false,
+        controlsTimeout: null,
+        audio: null,
+        preloadedImages: {},
+        particles: [],
+        isMobile: window.innerWidth < CONFIG.mobileBreakpoint,
+        hasStarted: false,
+        sceneHistory: []
+      };
+
+      // ===========================================================
+      // SECTION 39: UTILITY FUNCTIONS
+      // ===========================================================
+      function randomRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function clamp(val, min, max) {
+        return Math.min(Math.max(val, min), max);
+      }
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function easeOutExpo(t) {
+        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      }
+
+      function easeInOutQuart(t) {
+        return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+      }
+
+      function debounce(fn, delay) {
+        let timer;
+        return function(...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+      }
+
+      function throttle(fn, limit) {
+        let inThrottle = false;
+        return function(...args) {
+          if (!inThrottle) {
+            fn.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+          }
+        };
+      }
+
+      // ===========================================================
+      // SECTION 40: AUDIO SYSTEM
+      // ===========================================================
+      function initAudio() {
+        const audio = document.createElement('audio');
+        audio.id = 'filmAudio';
+        audio.loop = true;
+        audio.volume = CONFIG.audioVolume;
+        audio.src = "C:\\Users\\sharm\\Downloads\\Bruno_Mar_-_Count_On_Me_(mp3.pm).mp3";
+        audio.preload = 'auto';
+        document.body.appendChild(audio);
+        state.audio = audio;
+
+        // Handle audio errors gracefully
+        audio.addEventListener('error', function(e) {
+          console.warn('Audio loading error:', e);
+        });
+
+        return audio;
+      }
+
+      function playAudio() {
+        if (!state.audio) return;
+        state.audio.play().catch(function(e) {
+          // Autoplay blocked — user interaction will trigger
+          console.log('Autoplay blocked, waiting for user interaction');
+        });
+        state.isPlaying = true;
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      }
+
+      function pauseAudio() {
+        if (!state.audio) return;
+        state.audio.pause();
+        state.isPlaying = false;
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+      }
+
+      function togglePlay() {
+        if (state.isPlaying) {
+          pauseAudio();
+        } else {
+          playAudio();
+        }
+      }
+
+      function toggleMute() {
+        state.isMuted = !state.isMuted;
+        if (state.audio) {
+          state.audio.muted = state.isMuted;
+          muteBtn.innerHTML = state.isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+        }
+      }
+
+      function setAudioVolume(volume) {
+        if (state.audio) {
+          state.audio.volume = clamp(volume, 0, 1);
+        }
+      }
+
+      function fadeAudioOut(duration) {
+        if (!state.audio) return;
+        const startVol = state.audio.volume;
+        const startTime = performance.now();
+
+        function fade() {
+          const elapsed = performance.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          state.audio.volume = startVol * (1 - easeInOutCubic(progress));
+          if (progress < 1) {
+            requestAnimationFrame(fade);
+          }
+        }
+        fade();
+      }
+
+      function fadeAudioIn(duration) {
+        if (!state.audio) return;
+        state.audio.volume = 0;
+        const targetVol = CONFIG.audioVolume;
+        const startTime = performance.now();
+
+        function fade() {
+          const elapsed = performance.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          state.audio.volume = targetVol * easeInOutCubic(progress);
+          if (progress < 1) {
+            requestAnimationFrame(fade);
+          }
+        }
+        fade();
+      }
+
+      // ===========================================================
+      // SECTION 41: IMAGE PRELOAD SYSTEM
+      // ===========================================================
+      function preloadImage(url) {
+        return new Promise(function(resolve, reject) {
+          if (state.preloadedImages[url]) {
+            resolve(state.preloadedImages[url]);
+            return;
+          }
+          const img = new Image();
+          img.crossOrigin = 'Anonymous';
+          img.onload = function() {
+            state.preloadedImages[url] = img;
+            resolve(img);
+          };
+          img.onerror = function() {
+            reject(new Error('Failed to load: ' + url));
+          };
+          img.src = url;
+        });
+      }
+
+      function preloadAllScenes() {
+        const promises = SCENES.map(function(scene) {
+          return preloadImage(scene.image);
+        });
+        return Promise.allSettled(promises);
+      }
+
+      function preloadNextScene(index) {
+        const nextIndex = index + 1;
+        if (nextIndex < SCENES.length) {
+          preloadImage(SCENES[nextIndex].image).catch(function() {
+            // Silently handle preload failure
+          });
+        }
+      }
+
+      // ===========================================================
+      // SECTION 42: WALLPAPER SCENE BUILDER
+      // ===========================================================
+      function buildWallpaperScenes() {
+        SCENES.forEach(function(scene, idx) {
+          const el = document.createElement('div');
+          el.className = 'wallpaper-scene';
+          el.dataset.index = idx;
+
+          // Background layer
+          const bg = document.createElement('div');
+          bg.className = 'wallpaper-bg';
+          bg.style.backgroundImage = 'url(' + scene.image + ')';
+          el.appendChild(bg);
+
+          // Atmosphere overlay
+          const atmos = document.createElement('div');
+          atmos.className = 'wallpaper-atmos';
+          // Apply mood-based color
+          if (scene.mood === 'warm') {
+            atmos.style.background = 'radial-gradient(ellipse at 50% 60%, rgba(214,168,79,0.08), rgba(5,5,11,0.45) 70%)';
+          } else if (scene.mood === 'soft') {
+            atmos.style.background = 'radial-gradient(ellipse at 50% 60%, rgba(255,243,214,0.05), rgba(5,5,11,0.5) 70%)';
+          } else if (scene.mood === 'climax') {
+            atmos.style.background = 'radial-gradient(ellipse at 50% 60%, rgba(214,168,79,0.15), rgba(5,5,11,0.3) 70%)';
+          }
+          el.appendChild(atmos);
+
+          // Main photograph
+          const photo = document.createElement('img');
+          photo.className = 'wallpaper-photo';
+          photo.src = scene.image;
+          photo.alt = 'Memory ' + (idx + 1);
+          photo.crossOrigin = 'Anonymous';
+          el.appendChild(photo);
+
+          // Text overlay
+          const text = document.createElement('div');
+          text.className = 'wallpaper-text';
+          text.innerHTML =
+            '<div class="chapter">' + scene.chapter + '</div>' +
+            '<div class="caption">' + scene.caption + '</div>' +
+            '<div class="caption-sub">' + scene.subtitle + '</div>';
+          el.appendChild(text);
+
+          // Atmospheric particles
+          const particles = document.createElement('div');
+          particles.className = 'wp-particles';
+          const count = scene.mood === 'climax' ? CONFIG.particleCount * 0.7 : CONFIG.particleCount;
+          for (let i = 0; i < count; i++) {
+            const p = document.createElement('div');
+            p.className = 'wp-particle';
+            const size = randomRange(1.5, 5);
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = randomRange(0, 100) + '%';
+            p.style.top = randomRange(0, 100) + '%';
+            p.style.setProperty('--tx', randomRange(-30, 30) + 'px');
+            p.style.setProperty('--ty', randomRange(-50, 20) + 'px');
+            p.style.animationDuration = randomRange(8, 18) + 's';
+            p.style.animationDelay = randomRange(0, 10) + 's';
+            if (scene.mood === 'dark' || scene.mood === 'quiet') {
+              p.style.background = 'rgba(255,243,214,0.03)';
+            } else if (scene.mood === 'climax') {
+              p.style.background = 'rgba(214,168,79,0.08)';
+            }
+            particles.appendChild(p);
+          }
+          el.appendChild(particles);
+
+          wallpaperContainer.appendChild(el);
+        });
+      }
+
+      // ===========================================================
+      // SECTION 43: THREAD SYSTEM — Animation and Control
+      // ===========================================================
+      function updateThread(progress, isComplete) {
+        const dash = Math.min(progress * 100, 100);
+        threadMain.style.strokeDasharray = dash + ' ' + (100 - dash);
+        threadGold.style.strokeDasharray = dash + ' ' + (100 - dash);
+
+        if (isComplete) {
+          threadMain.classList.add('complete');
+          threadGold.classList.add('complete');
+          threadMain.classList.remove('glow');
+          threadGold.classList.remove('active');
+        } else if (progress > 0.85) {
+          threadMain.classList.add('glow');
+          threadGold.classList.add('active');
+        } else {
+          threadMain.classList.remove('glow', 'complete');
+          threadGold.classList.remove('complete');
+        }
+
+        // Position the light on the thread
+        const angle = progress * 2 * Math.PI - Math.PI / 2;
+        const cx = 50 + 45 * Math.cos(angle);
+        const cy = 50 + 45 * Math.sin(angle);
+        threadLight.setAttribute('cx', cx);
+        threadLight.setAttribute('cy', cy);
+        threadLightGlow.setAttribute('cx', cx);
+        threadLightGlow.setAttribute('cy', cy);
+
+        // Position dust particles near the light
+        const dustPositions = [
+          { cx: cx + 0.5, cy: cy - 0.5 },
+          { cx: cx - 0.3, cy: cy + 0.7 },
+          { cx: cx + 0.8, cy: cy + 0.3 }
+        ];
+        [threadDust1, threadDust2, threadDust3].forEach(function(dust, i) {
+          if (dustPositions[i]) {
+            dust.setAttribute('cx', dustPositions[i].cx);
+            dust.setAttribute('cy', dustPositions[i].cy);
+          }
+        });
+
+        // Activate thread elements
+        threadMain.classList.add('active');
+        threadGold.classList.add('active');
+        threadStrand1.classList.add('active');
+        threadStrand2.classList.add('active');
+        threadStrandLight.classList.add('active');
+        threadLight.classList.add('active');
+        threadLightGlow.classList.add('active');
+        threadDust1.classList.add('active');
+        threadDust2.classList.add('active');
+        threadDust3.classList.add('active');
+
+        // Intensity based on progress
+        if (progress > 0.7) {
+          threadLightGlow.classList.add('intense');
+        } else {
+          threadLightGlow.classList.remove('intense');
+        }
+      }
+
+      function resetThread() {
+        threadMain.style.strokeDasharray = '0 100';
+        threadGold.style.strokeDasharray = '0 100';
+        threadMain.classList.remove('active', 'glow', 'complete');
+        threadGold.classList.remove('active', 'complete');
+        threadStrand1.classList.remove('active');
+        threadStrand2.classList.remove('active');
+        threadStrandLight.classList.remove('active');
+        threadLight.classList.remove('active');
+        threadLightGlow.classList.remove('active', 'intense');
+        threadDust1.classList.remove('active');
+        threadDust2.classList.remove('active');
+        threadDust3.classList.remove('active');
+        threadLight.setAttribute('cx', '50');
+        threadLight.setAttribute('cy', '5');
+        threadLightGlow.setAttribute('cx', '50');
+        threadLightGlow.setAttribute('cy', '5');
+        threadDust1.setAttribute('cx', '50');
+        threadDust1.setAttribute('cy', '5');
+        threadDust2.setAttribute('cx', '48');
+        threadDust2.setAttribute('cy', '7');
+        threadDust3.setAttribute('cx', '52');
+        threadDust3.setAttribute('cy', '6');
+      }
+
+      function animateThreadLight() {
+        // Continuous subtle animation of the light
+        let t = 0;
+        function animate() {
+          if (state.isPlaying && !state.isEnding) {
+            t += 0.001;
+            const subtleOffset = Math.sin(t * 2) * 0.3;
+            const currentCx = parseFloat(threadLight.getAttribute('cx')) || 50;
+            const currentCy = parseFloat(threadLight.getAttribute('cy')) || 5;
+            // Only apply if not in transition
+            if (!state.isTransitioning) {
+              threadLight.setAttribute('cx', currentCx + subtleOffset * 0.02);
+              threadLight.setAttribute('cy', currentCy + Math.cos(t * 1.5) * 0.02);
+            }
+          }
+          requestAnimationFrame(animate);
+        }
+        // Start animation loop
+        setTimeout(animate, 100);
+      }
+
+      // ===========================================================
+      // SECTION 44: SCENE TRANSITION ENGINE
+      // ===========================================================
+      function transitionToScene(index) {
+        if (state.isTransitioning || index >= SCENES.length) return;
+
+        state.isTransitioning = true;
+        const prevIndex = state.currentScene;
+        state.currentScene = index;
+
+        const scenes = wallpaperContainer.querySelectorAll('.wallpaper-scene');
+
+        // Deactivate all scenes
+        scenes.forEach(function(s) {
+          s.classList.remove('active');
+          s.classList.add('exit');
+        });
+
+        // Activate target scene
+        if (scenes[index]) {
+          // Remove exit class after a delay
+          setTimeout(function() {
+            scenes.forEach(function(s) {
+              s.classList.remove('exit');
+            });
+          }, 500);
+
+          scenes[index].classList.add('active');
+
+          // Update thread progress
+          const progress = (index + 1) / SCENES.length;
+          updateThread(progress, index === SCENES.length - 1);
+
+          // Reset and restart light glow
+          threadLight.classList.remove('active');
+          threadLightGlow.classList.remove('active');
+          setTimeout(function() {
+            threadLight.classList.add('active');
+            threadLightGlow.classList.add('active');
+          }, 400);
+
+          // Preload next scene
+          preloadNextScene(index);
+        }
+
+        // Hide caption initially, reveal after photo settles
+        const textEl = scenes[index]?.querySelector('.wallpaper-text');
+        if (textEl) {
+          textEl.style.opacity = '0';
+          setTimeout(function() {
+            textEl.style.opacity = '1';
+          }, 2000);
+        }
+
+        state.isTransitioning = false;
+        state.sceneHistory.push(index);
+      }
+
+      // ===========================================================
+      // SECTION 45: SCENE SEQUENCE CONTROLLER
+      // ===========================================================
+      function startSceneSequence() {
+        let currentIndex = 0;
+
+        function showNextScene() {
+          if (currentIndex >= SCENES.length || state.isEnding) {
+            startClimax();
+            return;
+          }
+
+          transitionToScene(currentIndex);
+
+          // Schedule next scene
+          const holdTime = SCENES[currentIndex].holdDuration || CONFIG.sceneHoldMin;
+          const timer = setTimeout(function() {
+            currentIndex++;
+            showNextScene();
+          }, holdTime + CONFIG.transitionDuration);
+          state.sceneTimers.push(timer);
+        }
+
+        // Start with first scene after a brief delay
+        setTimeout(showNextScene, 1200);
+      }
+
+      // ===========================================================
+      // SECTION 46: CLIMAX — Final Reveal
+      // ===========================================================
+      function startClimax() {
+        if (state.isEnding) return;
+        state.isEnding = true;
+
+        // Complete the thread
+        updateThread(1, true);
+
+        // Fade wallpapers
+        const scenes = wallpaperContainer.querySelectorAll('.wallpaper-scene');
+        scenes.forEach(function(s) {
+          const photo = s.querySelector('.wallpaper-photo');
+          if (photo) {
+            photo.style.transition = 'transform 4s ease, opacity 3s ease';
+            photo.style.transform = 'translate(-50%, -50%) scale(0.7)';
+            photo.style.opacity = '0.3';
+          }
+          const text = s.querySelector('.wallpaper-text');
+          if (text) {
+            text.style.transition = 'opacity 2s ease';
+            text.style.opacity = '0';
+          }
+        });
+
+        // Rakhi becomes prominent
+        rakhi.style.transition = 'transform 3.5s ease, opacity 2.5s ease';
+        rakhi.style.transform = 'translate(-50%, -50%) scale(1.2)';
+        rakhi.style.opacity = '1';
+
+        // Letterbox widens
+        letterboxTop.classList.add('wide');
+        letterboxBottom.classList.add('wide');
+
+        // Emotional climax text
+        setTimeout(function() {
+          const msgDiv = document.createElement('div');
+          msgDiv.style.cssText = `
+            position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+            z-index:500; text-align:center; pointer-events:none;
+            font-family: 'Playfair Display', serif;
+            color: var(--champagne-gold);
+            text-shadow: 0 0 60px rgba(214,168,79,0.08);
+          `;
+          const lines = [
+            { text: "Eight memories.", delay: 0 },
+            { text: "One circle.", delay: 2200 },
+            { text: "One thread.", delay: 4400 },
+            { text: "One bond.", delay: 6600 },
+            { text: "My sister.", delay: 8800 },
+            { text: "Happy Raksha Bandhan.", delay: 11000 }
+          ];
+          lines.forEach(function(item) {
+            const p = document.createElement('p');
+            p.textContent = item.text;
+            p.style.cssText = `
+              opacity:0; transition: opacity 2.2s ease, transform 2.2s ease;
+              transform: translateY(18px);
+              font-size: clamp(1.6rem, 4.5vw, 3rem);
+              margin: 0.15rem 0;
+              letter-spacing: 0.04em;
+              font-weight: 300;
+            `;
+            msgDiv.appendChild(p);
+            setTimeout(function() {
+              p.style.opacity = '1';
+              p.style.transform = 'translateY(0)';
+            }, item.delay);
+          });
+          document.body.appendChild(msgDiv);
+
+          const totalDelay = 13000;
+          setTimeout(function() {
+            msgDiv.style.transition = 'opacity 2s ease';
+            msgDiv.style.opacity = '0';
+            setTimeout(function() {
+              msgDiv.remove();
+              showLetter();
+            }, 1800);
+          }, totalDelay);
+        }, 1500);
+      }
+
+      // ===========================================================
+      // SECTION 47: LETTER SYSTEM
+      // ===========================================================
+      function showLetter() {
+        if (state.letterRevealed) return;
+        state.letterRevealed = true;
+
+        // Fade audio
+        fadeAudioOut(2000);
+
+        letterScene.classList.add('active');
+        setTimeout(function() {
+          letterFlap.classList.add('open');
+          setTimeout(function() {
+            letterContent.classList.add('open');
+            letterTeaser.innerHTML = '✨ The letter unfolds with infinite love... ✨';
+          }, 800);
+        }, 600);
+      }
+
+      function closeLetter() {
+        letterScene.classList.remove('active');
+        letterFlap.classList.remove('open');
+        letterContent.classList.remove('open');
+        setTimeout(function() {
+          startEndingCredits();
+        }, 500);
+      }
+
+      // ===========================================================
+      // SECTION 48: ENDING CREDITS
+      // ===========================================================
+      function startEndingCredits() {
+        endingCredits.classList.add('active');
+        const credits = ['credit1', 'credit2', 'credit3', 'credit4', 'credit5', 'creditEnd'];
+        credits.forEach(function(id, i) {
+          setTimeout(function() {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('show');
+          }, 800 + i * 1400);
+        });
+      }
+
+      // ===========================================================
+      // SECTION 49: CONTROLS SYSTEM
+      // ===========================================================
+      function showControls() {
+        filmControls.classList.add('visible');
+        state.controlsVisible = true;
+        clearTimeout(state.controlsTimeout);
+        state.controlsTimeout = setTimeout(function() {
+          filmControls.classList.remove('visible');
+          state.controlsVisible = false;
+        }, 4000);
+      }
+
+      function hideControls() {
+        filmControls.classList.remove('visible');
+        state.controlsVisible = false;
+        clearTimeout(state.controlsTimeout);
+      }
+
+      function toggleControls() {
+        if (state.controlsVisible) {
+          hideControls();
+        } else {
+          showControls();
+        }
+      }
+
+      // ===========================================================
+      // SECTION 50: REPLAY SYSTEM
+      // ===========================================================
+      function replayFilm() {
+        // Reset everything
+        state.isEnding = false;
+        state.letterRevealed = false;
+        state.currentScene = -1;
+        state.hasStarted = false;
+        state.sceneHistory = [];
+
+        // Clear timers
+        state.sceneTimers.forEach(function(t) { clearTimeout(t); });
+        state.sceneTimers = [];
+
+        // Reset UI
+        endingCredits.classList.remove('active');
+        letterScene.classList.remove('active');
+        letterFlap.classList.remove('open');
+        letterContent.classList.remove('open');
+
+        // Reset thread
+        resetThread();
+
+        // Reset rakhi
+        rakhi.style.transition = 'none';
+        rakhi.style.transform = 'translate(-50%, -50%) scale(0.15) rotate(-4deg)';
+        rakhi.style.opacity = '0';
+        rakhi.style.filter = 'blur(20px)';
+        setTimeout(function() {
+          rakhi.style.transition = 'transform 4s cubic-bezier(0.23,1,0.32,1), opacity 3s ease, filter 3.5s ease';
+        }, 50);
+
+        // Reset wallpapers
+        const scenes = wallpaperContainer.querySelectorAll('.wallpaper-scene');
+        scenes.forEach(function(s) {
+          s.classList.remove('active', 'exit');
+          const photo = s.querySelector('.wallpaper-photo');
+          if (photo) {
+            photo.style.transform = 'translate(-50%, -50%) scale(0.9)';
+            photo.style.opacity = '0';
+            photo.style.filter = 'blur(14px)';
+          }
+          const text = s.querySelector('.wallpaper-text');
+          if (text) text.style.opacity = '0';
+        });
+
+        // Reset letterbox
+        letterboxTop.classList.remove('wide', 'full');
+        letterboxBottom.classList.remove('wide', 'full');
+
+        // Reset overlay
+        overlay.classList.remove('fade-out');
+        overlay.style.opacity = '1';
+
+        // Reset audio
+        if (state.audio) {
+          state.audio.currentTime = 0;
+          state.audio.volume = CONFIG.audioVolume;
+          state.audio.muted = false;
+          state.isMuted = false;
+          state.isPlaying = false;
+          muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+          playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+
+        // Reset controls
+        hideControls();
+
+        // Reset opening titles
+        openingTitles.classList.remove('visible');
+        titleLine1.style.opacity = '0';
+        titleLine2.style.opacity = '0';
+        mainTitle.style.opacity = '0';
+        titleSubtitle.style.opacity = '0';
+
+        // Start from beginning
+        setTimeout(function() {
+          startCinematic();
+        }, 500);
+      }
+
+      // ===========================================================
+      // SECTION 51: CINEMATIC INTRO
+      // ===========================================================
+      function startCinematic() {
+        // Fade overlay
+        setTimeout(function() {
+          overlay.classList.add('fade-out');
+        }, 400);
+
+        // Opening titles sequence
+        setTimeout(function() {
+          titleLine1.style.opacity = '1';
+          openingTitles.classList.add('visible');
+        }, 1000);
+
+        setTimeout(function() {
+          titleLine2.style.opacity = '1';
+        }, 3500);
+
+        setTimeout(function() {
+          mainTitle.style.opacity = '1';
+        }, 5500);
+
+        setTimeout(function() {
+          titleSubtitle.style.opacity = '1';
+        }, 6500);
+
+        // Show Begin button
+        setTimeout(function() {
+          beginBtn.classList.add('visible');
+        }, 7500);
+
+        // Reveal Rakhi
+        setTimeout(function() {
+          rakhi.classList.add('show');
+          letterboxTop.classList.add('active');
+          letterboxBottom.classList.add('active');
+          letterboxTop.classList.add('entry');
+          letterboxBottom.classList.add('entry');
+        }, 8500);
+
+        // Animate thread light subtly
+        animateThreadLight();
+      }
+
+      // ===========================================================
+      // SECTION 52: BEGIN EXPERIENCE
+      // ===========================================================
+      function beginExperience() {
+        if (state.hasStarted) return;
+        state.hasStarted = true;
+
+        beginBtn.classList.remove('visible');
+        beginBtn.style.pointerEvents = 'none';
+        openingTitles.classList.remove('visible');
+        titleLine1.style.opacity = '0';
+        titleLine2.style.opacity = '0';
+        mainTitle.style.opacity = '0';
+        titleSubtitle.style.opacity = '0';
+
+        // Remove entry class from letterbox
+        letterboxTop.classList.remove('entry');
+        letterboxBottom.classList.remove('entry');
+
+        // Start audio
+        playAudio();
+        state.isPlaying = true;
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+
+        // Show controls
+        setTimeout(showControls, 1000);
+
+        // Start scene sequence
+        setTimeout(function() {
+          startSceneSequence();
+        }, 800);
+      }
+
+      // ===========================================================
+      // SECTION 53: INTERACTION HANDLERS
+      // ===========================================================
+      function handleInteraction() {
+        if (state.hasStarted) {
+          showControls();
+        }
+      }
+
+      // ===========================================================
+      // SECTION 54: KEYBOARD SHORTCUTS
+      // ===========================================================
+      function handleKeyboard(e) {
+        const key = e.key;
+
+        if (key === ' ' || key === 'Space') {
+          e.preventDefault();
+          if (state.hasStarted) {
+            togglePlay();
+          }
+        }
+
+        if (key === 'm' || key === 'M') {
+          toggleMute();
+        }
+
+        if (key === 'r' || key === 'R') {
+          replayFilm();
+        }
+
+        if (key === 'Escape') {
+          if (letterScene.classList.contains('active')) {
+            closeLetter();
+          }
+          if (state.controlsVisible) {
+            hideControls();
+          }
+        }
+
+        if (key === 'f' || key === 'F') {
+          // Fullscreen toggle
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(function() {});
+          } else {
+            document.exitFullscreen().catch(function() {});
+          }
+        }
+      }
+
+      // ===========================================================
+      // SECTION 55: RESPONSIVE HANDLING
+      // ===========================================================
+      function handleResize() {
+        const isMobile = window.innerWidth < CONFIG.mobileBreakpoint;
+        state.isMobile = isMobile;
+
+        // Update thread scale
+        const scale = isMobile ? 0.7 : 1;
+        const threadContainer = document.getElementById('threadContainer');
+        if (threadContainer) {
+          threadContainer.style.transform = 'scale(' + scale + ')';
+          threadContainer.style.transformOrigin = 'center center';
+        }
+
+        // Adjust letterbox on mobile
+        if (isMobile) {
+          letterboxTop.style.height = '4vh';
+          letterboxBottom.style.height = '4vh';
+        } else {
+          letterboxTop.style.height = '6vh';
+          letterboxBottom.style.height = '6vh';
+        }
+      }
+
+      // ===========================================================
+      // SECTION 56: PERFORMANCE MONITORING (Debug)
+      // ===========================================================
+      let frameCount = 0;
+      let lastFpsUpdate = performance.now();
+
+      function monitorPerformance() {
+        frameCount++;
+        const now = performance.now();
+        if (now - lastFpsUpdate >= 1000) {
+          // console.log('FPS:', frameCount);
+          frameCount = 0;
+          lastFpsUpdate = now;
+        }
+        if (!state.isEnding) {
+          requestAnimationFrame(monitorPerformance);
+        }
+      }
+
+      // ===========================================================
+      // SECTION 57: ERROR HANDLING
+      // ===========================================================
+      function handleGlobalError(error) {
+        console.warn('Cinematic error:', error.message);
+        // Continue gracefully — don't break the experience
+      }
+
+      // ===========================================================
+      // SECTION 58: INITIALIZATION
+      // ===========================================================
+      function init() {
+        try {
+          // Build wallpaper scenes
+          buildWallpaperScenes();
+
+          // Initialize audio
+          initAudio();
+
+          // Preload images
+          preloadAllScenes().then(function() {
+            console.log('📸 All memories preloaded successfully.');
+          }).catch(function() {
+            console.warn('Some images failed to preload.');
+          });
+
+          // Start cinematic intro
+          setTimeout(startCinematic, CONFIG.introDelay);
+
+          // Event listeners
+          beginBtn.addEventListener('click', beginExperience);
+
+          playBtn.addEventListener('click', togglePlay);
+          muteBtn.addEventListener('click', toggleMute);
+          replayBtn.addEventListener('click', replayFilm);
+
+          letterCloseBtn.addEventListener('click', closeLetter);
+          letterScene.addEventListener('click', function(e) {
+            if (e.target === letterScene) closeLetter();
+          });
+
+          // Mouse and touch interaction
+          document.addEventListener('mousemove', debounce(handleInteraction, 200));
+          document.addEventListener('touchstart', debounce(handleInteraction, 200));
+          document.addEventListener('click', debounce(handleInteraction, 300));
+
+          // Keyboard
+          document.addEventListener('keydown', handleKeyboard);
+
+          // Resize
+          window.addEventListener('resize', debounce(handleResize, 250));
+
+          // Initial resize
+          setTimeout(handleResize, 500);
+
+          // Error handling
+          window.addEventListener('error', function(e) {
+            handleGlobalError(e.error || e);
+          });
+
+          // Start performance monitoring (optional)
+          // setTimeout(monitorPerformance, 2000);
+
+          console.log('🎬 "The Thread Between Us" — Cinematic Memory Film loaded.');
+          console.log('📸 ' + SCENES.length + ' memories connected by one circular thread.');
+          console.log('⌨️  Shortcuts: [Space] play/pause, [M] mute, [R] replay, [Esc] close letter, [F] fullscreen');
+
+        } catch (error) {
+          console.error('Initialization error:', error);
+        }
+      }
+
+      // ===========================================================
+      // SECTION 59: VISIBILITY CHANGE HANDLER
+      // ===========================================================
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          if (state.audio && state.isPlaying) {
+            state.audio.pause();
+          }
+        } else {
+          if (state.audio && state.isPlaying && state.hasStarted) {
+            state.audio.play().catch(function() {});
+          }
+        }
+      });
+
+      // ===========================================================
+      // SECTION 60: START APPLICATION
+      // ===========================================================
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+</body>
+</html>

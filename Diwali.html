@@ -1,1 +1,3188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>दिव्य अयोध्या | Divine Ayodhya – A Journey of Light</title>
+<meta name="description" content="A divine virtual Diwali celebration of Shri Ram's return to Ayodhya." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Tiro+Devanagari+Hindi&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
+<style>
+/* ============================================================
+   ROOT / THEME TOKENS
+   ============================================================ */
+:root {
+  --gold: #e8c26a;
+  --gold-bright: #ffd97a;
+  --saffron: #ff9933;
+  --deep-orange: #e8622b;
+  --midnight: #0b1026;
+  --midnight-2: #121a3a;
+  --temple-yellow: #f4c842;
+  --warm-white: #fff8e7;
+  --rose-gold: #d9a08a;
+  --text: #f6ecd2;
+  --text-dim: #cbbf9e;
+  --bg: #070a18;
+  --bg-2: #0e142e;
+  --card-bg: rgba(20, 26, 54, 0.55);
+  --border: rgba(232, 194, 106, 0.25);
+  --shadow: 0 20px 60px rgba(0,0,0,0.5);
+  --radius: 18px;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-hindi: 'Tiro Devanagari Hindi', serif;
+  --font-body: 'Poppins', system-ui, sans-serif;
+  --page-bg-image: none;
+}
+[data-theme="light"] {
+  --bg: #fdf7ea;
+  --bg-2: #fff2d9;
+  --text: #3a2a12;
+  --text-dim: #6b5636;
+  --card-bg: rgba(255, 248, 230, 0.85);
+  --border: rgba(180, 130, 40, 0.35);
+  --midnight: #f8ecd4;
+  --midnight-2: #fbe7bf;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--page-bg-image) center/cover fixed no-repeat,
+              radial-gradient(circle at 50% 0%, var(--bg-2), var(--bg) 70%);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+  transition: background 0.6s ease, color 0.4s ease;
+}
+img { max-width: 100%; display: block; }
+
+.skip-link {
+  position: absolute; top: -100px; left: 20px;
+  background: var(--gold); color: #1a1206;
+  padding: 10px 20px; border-radius: 8px;
+  z-index: 10000; text-decoration: none; font-weight: 600;
+}
+.skip-link:focus { top: 20px; }
+
+/* ============================================================
+   HEAVENLY DECOR — clouds + rays + mandala
+   ============================================================ */
+.heaven-bg {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.heaven-clouds {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 30% at 20% 10%, rgba(255,200,120,0.08), transparent 70%),
+    radial-gradient(ellipse 60% 35% at 80% 15%, rgba(255,180,90,0.06), transparent 70%),
+    radial-gradient(ellipse 40% 25% at 50% 5%, rgba(255,220,150,0.05), transparent 70%);
+  animation: cloudShift 30s ease-in-out infinite alternate;
+}
+@keyframes cloudShift {
+  0% { transform: translateX(-10px); }
+  100% { transform: translateX(10px); }
+}
+.heaven-rays {
+  position: absolute; top: -10%; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 700px;
+  background:
+    conic-gradient(from 180deg at 50% 0%,
+      transparent 0deg, rgba(255,200,100,.06) 10deg, transparent 20deg,
+      rgba(255,200,100,.05) 30deg, transparent 40deg,
+      rgba(255,200,100,.04) 55deg, transparent 65deg,
+      rgba(255,200,100,.05) 80deg, transparent 95deg,
+      rgba(255,200,100,.06) 110deg, transparent 125deg,
+      rgba(255,200,100,.05) 140deg, transparent 160deg);
+  filter: blur(6px);
+  opacity: 0.6;
+  animation: raysShift 20s ease-in-out infinite alternate;
+}
+@keyframes raysShift {
+  0% { transform: translateX(-50%) rotate(-3deg); opacity: 0.4; }
+  100% { transform: translateX(-50%) rotate(3deg); opacity: 0.7; }
+}
+.mandala-divider {
+  text-align: center;
+  color: var(--gold);
+  font-size: 1.6rem;
+  letter-spacing: 20px;
+  padding: 10px 0 30px;
+  opacity: 0.7;
+  font-family: var(--font-hindi);
+}
+.mandala-divider::before,
+.mandala-divider::after {
+  content: '';
+  display: inline-block;
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  vertical-align: middle;
+  margin: 0 14px;
+}
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+.loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #05070f;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 30px;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.loader.hidden { opacity: 0; visibility: hidden; }
+.loader-diya {
+  position: relative; width: 60px; height: 34px;
+  background: linear-gradient(180deg, #b8722e, #7a4418);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  box-shadow: 0 0 40px rgba(255, 180, 60, 0.6);
+}
+.loader-diya .flame {
+  position: absolute; left: 50%; bottom: 100%;
+  width: 16px; height: 26px;
+  background: radial-gradient(circle at 50% 70%, #fff6c4, #ffb347 40%, #ff6a00 75%, transparent);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: translateX(-50%);
+  animation: flameFlicker 0.5s infinite alternate ease-in-out;
+  filter: blur(0.4px);
+}
+@keyframes flameFlicker {
+  0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 0.9; }
+  100% { transform: translateX(-50%) scale(1.15) rotate(2deg); opacity: 1; }
+}
+.loader-text { color: var(--gold); font-family: var(--font-display); letter-spacing: 1px; }
+
+/* ============================================================
+   CINEMATIC INTRO
+   ============================================================ */
+.intro {
+  position: fixed; inset: 0; z-index: 9000;
+  background: radial-gradient(circle at 50% 60%, #1a1206 0%, #05070f 70%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 20px;
+  opacity: 1;
+  transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+.intro.hidden { opacity: 0; visibility: hidden; }
+.intro-diys { position: relative; margin-bottom: 40px; }
+.intro-diya {
+  position: relative;
+  width: 90px; height: 50px;
+  background: linear-gradient(180deg, #c07a30, #6a3a12);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  box-shadow: 0 0 80px rgba(255, 170, 50, 0.5);
+  animation: diyaRise 2s ease-out;
+}
+@keyframes diyaRise {
+  0% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.intro-diya .flame {
+  position: absolute; left: 50%; bottom: 100%;
+  width: 22px; height: 36px;
+  background: radial-gradient(circle at 50% 70%, #fff6c4, #ffb347 40%, #ff6a00 75%, transparent);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: translateX(-50%);
+  animation: flameFlicker 0.6s infinite alternate ease-in-out;
+  filter: blur(0.5px);
+}
+.intro-diya .glow {
+  position: absolute; left: 50%; top: 50%;
+  width: 260px; height: 260px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,170,60,0.35), transparent 70%);
+  border-radius: 50%;
+  animation: pulseGlow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes pulseGlow {
+  0%,100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%,-50%) scale(1.15); }
+}
+.intro-jai {
+  font-family: var(--font-hindi);
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  font-weight: 700;
+  background: linear-gradient(180deg, #fff6cf, #ffd97a 45%, #e8a63a 90%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  opacity: 0;
+  animation: fadeUp 2s ease 1s forwards;
+  text-shadow: 0 0 50px rgba(255,190,80,.4);
+}
+.intro-sub {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  margin-top: 16px;
+  opacity: 0;
+  animation: fadeUp 2s ease 2s forwards;
+}
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.skip-btn {
+  position: absolute; bottom: 30px; right: 30px;
+  background: transparent;
+  border: 1px solid rgba(232, 194, 106, 0.4);
+  color: var(--gold);
+  padding: 10px 22px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+.skip-btn:hover { background: rgba(232, 194, 106, 0.1); border-color: var(--gold); }
+
+/* ============================================================
+   PARTICLES CANVAS
+   ============================================================ */
+.particles-canvas {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 5vw;
+  background: rgba(7, 10, 24, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.4s ease;
+}
+[data-theme="light"] .topnav { background: rgba(255, 248, 230, 0.75); }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.2rem; color: var(--gold); font-weight: 600; }
+.brand-icon { font-size: 1.3rem; animation: flicker 2s infinite alternate; }
+@keyframes flicker { 0%{opacity:.85;} 100%{opacity:1;} }
+.nav-links { display: flex; gap: 22px; }
+.nav-links a {
+  color: var(--text-dim); text-decoration: none;
+  font-size: 0.9rem; font-weight: 400;
+  position: relative; padding: 4px 0;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover { color: var(--gold-bright); }
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -2px;
+  width: 0; height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transition: width 0.35s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-actions { display: flex; gap: 8px; }
+.icon-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--gold); border-radius: 10px;
+  width: 38px; height: 38px; cursor: pointer;
+  font-size: 1rem; transition: all 0.25s ease;
+}
+.icon-btn:hover { background: rgba(232, 194, 106, 0.12); border-color: var(--gold); }
+.menu-btn { display: none; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 6vw 80px;
+  overflow: hidden;
+  z-index: 2;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 180, 70, 0.18), transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(232, 98, 43, 0.15), transparent 60%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+.hero-eyebrow {
+  font-family: var(--font-hindi);
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-size: 1rem;
+  margin-bottom: 18px;
+  opacity: 0.9;
+  animation: fadeUp 1.2s ease 0.3s both;
+}
+.hero-title {
+  font-family: var(--font-hindi);
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 700;
+  line-height: 1.1;
+  background: linear-gradient(180deg, #fff6cf, #ffd97a 45%, #e8a63a 90%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 60px rgba(255, 190, 80, 0.35);
+  animation: titleGlow 4s ease-in-out infinite alternate, fadeUp 1.2s ease 0.5s both;
+}
+@keyframes titleGlow {
+  0% { filter: drop-shadow(0 0 12px rgba(255,200,100,.3)); }
+  100% { filter: drop-shadow(0 0 28px rgba(255,200,100,.6)); }
+}
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+  color: var(--gold-bright);
+  margin-top: 12px;
+  letter-spacing: 0.5px;
+  animation: fadeUp 1.2s ease 0.7s both;
+}
+.hero-message {
+  margin: 26px auto 34px;
+  max-width: 640px;
+  color: var(--text-dim);
+  font-weight: 300;
+  font-size: 1.02rem;
+  animation: fadeUp 1.2s ease 0.9s both;
+}
+.hero-buttons {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 1.2s ease 1.1s both;
+}
+.btn {
+  display: inline-block;
+  padding: 13px 30px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--deep-orange));
+  color: #1a1206;
+  box-shadow: 0 10px 30px rgba(232, 120, 40, 0.35);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(232, 120, 40, 0.55); }
+.btn-ghost {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: rgba(232, 194, 106, 0.1); transform: translateY(-2px); }
+.hero-scroll {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  color: var(--text-dim); font-size: 0.82rem; letter-spacing: 2px;
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob { 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,8px);} }
+
+/* ============================================================
+   SECTIONS BASE
+   ============================================================ */
+.section {
+  position: relative;
+  padding: 100px 6vw;
+  max-width: 1400px;
+  margin: 0 auto;
+  z-index: 2;
+}
+.section-head { text-align: center; margin-bottom: 60px; }
+.section-kicker {
+  font-family: var(--font-hindi);
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 600;
+  color: var(--warm-white);
+  margin-bottom: 14px;
+}
+[data-theme="light"] .section-title { color: #4a3510; }
+.section-desc { color: var(--text-dim); max-width: 620px; margin: 0 auto; font-weight: 300; }
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+.gallery-section { padding-top: 120px; }
+.featured-card {
+  position: relative;
+  text-align: center;
+  margin: 0 auto 90px;
+  max-width: 720px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.featured-card.in-view { opacity: 1; transform: translateY(0); }
+.featured-card .aura {
+  position: absolute;
+  top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130%; height: 130%;
+  background: radial-gradient(circle, rgba(255,190,80,0.22), transparent 60%);
+  filter: blur(40px);
+  pointer-events: none;
+  animation: auraPulse 6s ease-in-out infinite;
+}
+.featured-card .light-rays {
+  position: absolute;
+  top: 30%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%; height: 120%;
+  background: conic-gradient(from 0deg at 50% 50%,
+    transparent 0deg, rgba(255,210,130,.15) 15deg, transparent 30deg,
+    transparent 60deg, rgba(255,210,130,.12) 75deg, transparent 90deg,
+    transparent 120deg, rgba(255,210,130,.15) 135deg, transparent 150deg,
+    transparent 180deg, rgba(255,210,130,.12) 195deg, transparent 210deg,
+    transparent 240deg, rgba(255,210,130,.15) 255deg, transparent 270deg,
+    transparent 300deg, rgba(255,210,130,.12) 315deg, transparent 330deg,
+    transparent 360deg);
+  animation: raysRotate 60s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+@keyframes raysRotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes auraPulse {
+  0%,100% { opacity: .6; transform: translate(-50%,-50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
+}
+.featured-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 560px;
+  margin: 0 auto 28px;
+  border-radius: 24px;
+  padding: 12px;
+  background: linear-gradient(135deg, #e8c26a, #b8842c 30%, #f4d78a 50%, #a8762a 70%, #e8c26a);
+  box-shadow:
+    0 0 0 2px rgba(255,230,150,.4) inset,
+    0 30px 80px rgba(0,0,0,.6),
+    0 0 100px rgba(255,190,80,.15);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .4s ease;
+  cursor: pointer;
+  z-index: 1;
+}
+.featured-frame:hover { transform: scale(1.01); }
+.featured-frame::before {
+  content: '';
+  position: absolute; inset: 8px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,235,180,.35);
+  pointer-events: none;
+  z-index: 3;
+}
+.featured-frame::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 40%, transparent 55%, rgba(0,0,0,.35));
+  pointer-events: none;
+  z-index: 2;
+}
+#featuredImg {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #0a0a12;
+  z-index: 1;
+}
+.placeholder-art {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 18px;
+  background: radial-gradient(circle at 50% 30%, #2a1f0a, #0f0a04 70%);
+  border-radius: 14px;
+  color: var(--gold);
+}
+.ph-om {
+  font-family: var(--font-hindi);
+  font-size: clamp(4rem, 12vw, 8rem);
+  background: linear-gradient(180deg, #ffe9a8, #e8a63a);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 20px rgba(255,190,80,.5));
+}
+.ph-label {
+  font-family: var(--font-hindi);
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.featured-title {
+  font-family: var(--font-hindi);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--gold-bright);
+  margin-bottom: 8px;
+}
+.featured-sub {
+  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  margin-bottom: 22px;
+}
+.upload-btn {
+  display: inline-block;
+  padding: 11px 26px;
+  border-radius: 50px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--gold);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.upload-btn:hover { background: rgba(232,194,106,.1); border-color: var(--gold); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 26px;
+}
+.gallery-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.8s ease;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(20px);
+}
+.gallery-card.in-view { opacity: 1; transform: translateY(0); }
+.gallery-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 24px 60px rgba(255, 170, 60, 0.2);
+  border-color: var(--gold);
+}
+.card-inner {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: radial-gradient(circle at 50% 30%, #241a08, #0d0803 70%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.card-img { width: 100%; height: 100%; object-fit: contain; }
+.card-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+  font-size: 3rem;
+  color: var(--gold);
+  opacity: .85;
+}
+.card-placeholder span {
+  font-family: var(--font-hindi);
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+.card-footer {
+  padding: 14px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.card-footer h4 {
+  font-family: var(--font-display);
+  color: var(--warm-white);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+[data-theme="light"] .card-footer h4 { color: #4a3510; }
+.mini-upload {
+  font-size: 0.72rem;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.mini-upload:hover { background: rgba(232,194,106,.1); }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+.lightbox {
+  position: fixed; inset: 0; z-index: 8000;
+  background: rgba(2, 4, 10, 0.95);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.lightbox.open { opacity: 1; visibility: visible; }
+.lightbox img {
+  max-width: 92vw; max-height: 88vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 80px rgba(255, 190, 80, 0.35);
+  animation: lbZoom 0.5s ease;
+}
+@keyframes lbZoom {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.lb-close {
+  position: absolute; top: 24px; right: 24px;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--gold); font-size: 1.1rem;
+  cursor: pointer; transition: all 0.25s ease;
+}
+.lb-close:hover { background: rgba(232,194,106,.15); }
+
+/* ============================================================
+   EXPERIENCE (Parallax City + Temple Uploads)
+   ============================================================ */
+.experience-section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  margin: 40px auto;
+  padding: 90px 6vw 60px;
+  background: linear-gradient(180deg, #060a1a 0%, #1b1024 50%, #2a1408 100%);
+  border: 1px solid var(--border);
+}
+.parallax-layer {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,180,70,.15), transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(232,98,43,.15), transparent 50%);
+  pointer-events: none;
+}
+
+/* ---- Upload cards for temple / mandir / statue ---- */
+.temple-uploads {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  position: relative;
+  z-index: 2;
+}
+.temple-upload-card {
+  position: relative;
+  background: rgba(20, 26, 54, 0.55);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+.temple-upload-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(255, 170, 60, 0.2);
+}
+.temple-upload-preview {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: radial-gradient(circle at 50% 40%, #241a08, #0a0603 70%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.temple-upload-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: none;
+  transition: transform 0.5s ease;
+}
+.temple-upload-card:hover .temple-upload-preview img { transform: scale(1.05); }
+.temple-upload-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px;
+  color: var(--gold);
+  text-align: center;
+  padding: 16px;
+}
+.temple-upload-placeholder .icon {
+  font-size: 2.6rem;
+  filter: drop-shadow(0 0 14px rgba(255, 190, 80, 0.5));
+  animation: floatIcon 3.5s ease-in-out infinite;
+}
+.temple-upload-placeholder .label {
+  font-family: var(--font-hindi);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  color: var(--gold-bright);
+}
+.temple-upload-placeholder .hint {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.temple-upload-footer {
+  padding: 12px 14px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+}
+.temple-upload-footer h4 {
+  font-family: var(--font-display);
+  color: var(--warm-white);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+}
+[data-theme="light"] .temple-upload-footer h4 { color: #4a3510; }
+.temple-upload-footer .mini-upload {
+  font-size: 0.7rem;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.temple-upload-footer .mini-upload:hover { background: rgba(232,194,106,.12); }
+
+/* ---- Augmented scene (with uploaded photos) ---- */
+.experience-scene-augmented {
+  position: relative;
+  height: 420px;
+  margin: 0 auto 30px;
+  max-width: 1000px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255, 160, 60, 0.15), transparent 70%),
+    radial-gradient(ellipse at 50% 30%, #2a1550, #05070f 70%);
+}
+.exp-layer {
+  position: absolute;
+  transition: opacity 0.6s ease;
+}
+.exp-layer.sky {
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 200, 120, 0.15), transparent 50%),
+    radial-gradient(circle at 80% 10%, rgba(180, 140, 255, 0.15), transparent 45%),
+    linear-gradient(180deg, #1a0a30 0%, #05070f 100%);
+}
+.exp-layer.golden-temple {
+  inset: 0;
+  background: center / cover no-repeat;
+  opacity: 0;
+  filter: brightness(0.85) saturate(1.1);
+}
+.exp-layer.golden-temple.has-image { opacity: 0.55; }
+.exp-layer.ram-mandir {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55%;
+  max-width: 560px;
+  height: 78%;
+  background: center bottom / contain no-repeat;
+  opacity: 0;
+  filter: drop-shadow(0 0 40px rgba(255, 190, 80, 0.6));
+  transition: opacity 0.7s ease;
+}
+.exp-layer.ram-mandir.has-image { opacity: 1; }
+.exp-layer.ram-statue {
+  bottom: 8%;
+  right: 6%;
+  width: 22%;
+  max-width: 200px;
+  height: 58%;
+  background: center bottom / contain no-repeat;
+  opacity: 0;
+  filter: drop-shadow(0 0 30px rgba(255, 220, 150, 0.7))
+          drop-shadow(0 0 60px rgba(255, 190, 80, 0.4));
+  transition: opacity 0.7s ease;
+  animation: statueGlow 4s ease-in-out infinite alternate;
+}
+.exp-layer.ram-statue.has-image { opacity: 1; }
+@keyframes statueGlow {
+  0% { filter: drop-shadow(0 0 30px rgba(255, 220, 150, 0.7)) drop-shadow(0 0 60px rgba(255, 190, 80, 0.4)); }
+  100% { filter: drop-shadow(0 0 45px rgba(255, 220, 150, 0.9)) drop-shadow(0 0 90px rgba(255, 190, 80, 0.6)); }
+}
+.exp-layer.overlay {
+  inset: 0;
+  background: radial-gradient(circle at 50% 60%, transparent 40%, rgba(0,0,0,0.45));
+  pointer-events: none;
+}
+.exp-layer.street-row {
+  bottom: 0;
+  left: 0; right: 0;
+  height: 60px;
+  display: flex; align-items: flex-end; justify-content: space-around;
+  padding: 0 6% 14px;
+  background: linear-gradient(180deg, transparent, rgba(5, 7, 15, 0.85));
+}
+
+/* ---- Fallback silhouette scene ---- */
+.experience-scene-fallback {
+  position: relative;
+  height: 320px;
+  margin: 0 auto 30px;
+  max-width: 900px;
+  border-radius: 20px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, transparent 0%, transparent 40%, #0d0508 90%),
+    radial-gradient(circle at 50% 60%, #3a1e08, #05070f 70%);
+  border: 1px solid var(--border);
+}
+.experience-scene-fallback::before {
+  content: '';
+  position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 240px; height: 200px;
+  background: radial-gradient(ellipse at 50% 100%, #d9a24b 0%, #a86f28 30%, #3b230a 80%, transparent 100%);
+  clip-path: polygon(50% 0%, 58% 20%, 62% 35%, 65% 45%, 70% 45%, 72% 60%, 75% 100%, 25% 100%, 28% 60%, 30% 45%, 35% 45%, 38% 35%, 42% 20%);
+  filter: blur(1px);
+  box-shadow: 0 0 60px rgba(255,190,80,.4);
+}
+.scene-streets {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; justify-content: space-around;
+  padding: 0 8% 20px;
+}
+.street-diya {
+  width: 14px; height: 18px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  background: radial-gradient(circle at 50% 30%, #fff6c4, #ffb347 40%, #e8622b);
+  box-shadow: 0 0 20px rgba(255,180,60,.8);
+  animation: streetGlow 2s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+}
+@keyframes streetGlow {
+  0% { transform: translateY(0) scale(1); opacity: .8; }
+  100% { transform: translateY(-4px) scale(1.1); opacity: 1; }
+}
+.experience-caption {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--text-dim);
+  font-style: italic;
+  font-family: var(--font-display);
+}
+
+/* ============================================================
+   DIYA SECTION
+   ============================================================ */
+.diya-row {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 22px;
+  max-width: 900px; margin: 0 auto 36px;
+}
+.diya {
+  position: relative;
+  width: 70px; height: 44px;
+  background: transparent; border: none;
+  cursor: pointer; padding: 0;
+  transition: transform 0.25s ease;
+}
+.diya:hover { transform: translateY(-3px); }
+.diya-body {
+  position: absolute; inset: 0;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: linear-gradient(180deg, #3a2a14, #1c1208);
+  box-shadow: inset 0 3px 6px rgba(255,180,60,.15);
+  transition: background 0.4s ease;
+}
+.diya-body::before {
+  content: '';
+  position: absolute; top: -2px; left: 20%;
+  width: 60%; height: 3px;
+  background: linear-gradient(90deg, transparent, #b8722e, transparent);
+  border-radius: 50%;
+}
+.diya-flame {
+  position: absolute; left: 50%; bottom: 100%;
+  width: 14px; height: 22px;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 50% 70%, #fff6c4, #ffb347 40%, #ff6a00 75%, transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  filter: blur(0.3px);
+}
+.diya.lit .diya-flame {
+  opacity: 1;
+  animation: flameFlicker 0.5s infinite alternate ease-in-out;
+}
+.diya.lit .diya-body {
+  background: linear-gradient(180deg, #c07a30, #6a3a12);
+  box-shadow: 0 0 30px rgba(255,170,50,.6);
+}
+.sparkle {
+  position: absolute; top: -10px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6c4, #ffb347);
+  animation: sparkleUp 1.4s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes sparkleUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-60px) scale(0); opacity: 0; }
+}
+.diya-controls { text-align: center; }
+.diya-counter {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold-bright);
+  margin-bottom: 14px;
+}
+
+/* ============================================================
+   DEEPOTSAV (Sarayu River + Permanent Uploads)
+   ============================================================ */
+.deepotsav-section {
+  background: linear-gradient(180deg, #04060f 0%, #0a1128 50%, #1a0e05 100%);
+  border-radius: 24px;
+  margin: 60px auto;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.sarayu-scene {
+  position: relative;
+  height: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.river-sky {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 55%;
+  background: radial-gradient(circle at 50% 100%, #2a1550, #04060f 80%);
+  z-index: 0;
+}
+.river-sky::before {
+  content: '';
+  position: absolute; top: 20%; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6c4, #ffd97a 60%, transparent 80%);
+  box-shadow: 0 0 80px rgba(255,220,150,.5);
+  animation: moonGlow 4s ease-in-out infinite alternate;
+}
+@keyframes moonGlow {
+  0% { box-shadow: 0 0 60px rgba(255,220,150,.4); }
+  100% { box-shadow: 0 0 100px rgba(255,220,150,.7); }
+}
+.river-temples {
+  position: absolute;
+  bottom: 45%; left: 0; right: 0;
+  height: 120px;
+  background:
+    linear-gradient(180deg, transparent, #050810),
+    radial-gradient(ellipse at 20% 100%, #1a1408 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, #1a1408 0%, transparent 60%);
+  clip-path: polygon(0 100%, 0 60%, 8% 40%, 12% 55%, 18% 30%, 22% 50%, 30% 20%, 35% 45%, 42% 35%, 50% 10%, 58% 35%, 65% 45%, 70% 20%, 78% 50%, 82% 30%, 88% 55%, 92% 40%, 100% 60%, 100% 100%);
+  z-index: 2;
+}
+.river-water {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 50%;
+  background:
+    linear-gradient(180deg, rgba(20,15,40,.8), rgba(5,8,20,.95)),
+    repeating-linear-gradient(180deg, transparent 0 20px, rgba(255,190,80,.06) 20px 21px);
+  overflow: hidden;
+  z-index: 3;
+}
+.river-water::before {
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 100%;
+  background: linear-gradient(180deg, rgba(255,220,150,.25), transparent);
+  filter: blur(8px);
+}
+.float-diya {
+  position: absolute;
+  left: var(--x, 50%);
+  bottom: 30%;
+  width: 22px; height: 28px;
+  transform: scale(var(--s, 1));
+  animation: floatDown 12s linear infinite;
+  animation-delay: var(--d, 0s);
+  z-index: 4;
+}
+.float-diya::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  background: radial-gradient(circle at 50% 30%, #fff6c4, #ffb347 40%, #e8622b);
+  box-shadow: 0 0 20px rgba(255,180,60,.9);
+}
+.float-diya::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  width: 6px; height: 40px;
+  background: linear-gradient(180deg, rgba(255,190,80,.5), transparent);
+  filter: blur(2px);
+}
+@keyframes floatDown {
+  0% { bottom: 95%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { bottom: 5%; opacity: 0; }
+}
+
+/* Deepotsav upload cards */
+.deepotsav-uploads {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  position: relative;
+  z-index: 2;
+}
+.deepotsav-upload-card {
+  position: relative;
+  background: rgba(20, 26, 54, 0.55);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+.deepotsav-upload-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(255, 170, 60, 0.2);
+}
+.deepotsav-upload-preview {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: radial-gradient(circle at 50% 40%, #0f1230, #04060f 70%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.deepotsav-upload-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: none;
+  transition: transform 0.5s ease;
+}
+.deepotsav-upload-card:hover .deepotsav-upload-preview img { transform: scale(1.05); }
+.deepotsav-upload-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px;
+  color: var(--gold);
+  text-align: center;
+  padding: 16px;
+}
+.deepotsav-upload-placeholder .icon {
+  font-size: 2.6rem;
+  filter: drop-shadow(0 0 14px rgba(255, 190, 80, 0.5));
+  animation: floatIcon 3.5s ease-in-out infinite;
+}
+.deepotsav-upload-placeholder .label {
+  font-family: var(--font-hindi);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  color: var(--gold-bright);
+}
+.deepotsav-upload-placeholder .hint {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+.deepotsav-upload-footer {
+  padding: 12px 14px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+}
+.deepotsav-upload-footer h4 {
+  font-family: var(--font-display);
+  color: var(--warm-white);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+}
+[data-theme="light"] .deepotsav-upload-footer h4 { color: #4a3510; }
+.deepotsav-upload-footer .mini-upload {
+  font-size: 0.7rem;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.deepotsav-upload-footer .mini-upload:hover { background: rgba(232,194,106,.12); }
+.deepotsav-upload-footer .mini-remove {
+  font-size: 0.7rem;
+  color: #ff9b9b;
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-left: 6px;
+  display: none;
+  background: transparent;
+}
+.deepotsav-upload-card.has-photo .deepotsav-upload-footer .mini-remove { display: inline-block; }
+.deepotsav-upload-footer .mini-remove:hover {
+  background: rgba(255, 100, 100, 0.15);
+  border-color: #ff9b9b;
+}
+
+/* Uploaded layers inside the scene */
+.sarayu-custom-sky {
+  position: absolute;
+  inset: 0;
+  height: 55%;
+  background: center / cover no-repeat;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 1;
+  filter: brightness(0.85);
+}
+.sarayu-custom-sky.has-image { opacity: 1; }
+.sarayu-custom-temples {
+  position: absolute;
+  bottom: 45%; left: 0; right: 0;
+  height: 120px;
+  background: center bottom / contain no-repeat;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 2;
+  filter: drop-shadow(0 0 20px rgba(255, 180, 60, 0.4));
+}
+.sarayu-custom-temples.has-image { opacity: 1; }
+.sarayu-custom-river {
+  position: absolute;
+  inset: 0;
+  background: center / cover no-repeat;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 1;
+}
+.sarayu-custom-river.has-image { opacity: 1; }
+
+/* ============================================================
+   FIREWORKS
+   ============================================================ */
+.fireworks-section { text-align: center; }
+.fireworks-stage {
+  position: relative;
+  max-width: 1000px;
+  height: 460px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 100%, #1a1030, #05070f 70%);
+  border: 1px solid var(--border);
+  cursor: crosshair;
+}
+#fireworksCanvas { width: 100%; height: 100%; display: block; }
+.fireworks-hint {
+  position: absolute; bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  color: rgba(255, 220, 150, 0.65);
+  pointer-events: none;
+  letter-spacing: 1px;
+}
+.fireworks-controls { margin-top: 20px; display: flex; justify-content: center; }
+.toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--text-dim); font-size: 0.9rem;
+  cursor: pointer;
+}
+.toggle input { accent-color: var(--gold); transform: scale(1.15); }
+
+/* ============================================================
+   GREETING
+   ============================================================ */
+.greeting-section { text-align: center; }
+.greeting-form {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center;
+  max-width: 680px; margin: 0 auto 40px;
+}
+.greeting-form input,
+.greeting-form select {
+  padding: 13px 18px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.25s ease;
+}
+.greeting-form input { flex: 1; min-width: 180px; }
+.greeting-form input:focus,
+.greeting-form select:focus { border-color: var(--gold); }
+[data-theme="light"] .greeting-form input,
+[data-theme="light"] .greeting-form select { background: #fff; }
+.greeting-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 40px 30px;
+  position: relative;
+  overflow: hidden;
+}
+.greeting-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  padding: 2px;
+  background: linear-gradient(135deg, transparent, var(--gold), transparent, var(--deep-orange));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.greet-frame { min-height: 140px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.greet-line1 {
+  font-family: var(--font-hindi);
+  font-size: 1.8rem;
+  color: var(--gold-bright);
+  letter-spacing: 2px;
+}
+.greet-body {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+.greet-sign {
+  font-family: var(--font-hindi);
+  color: var(--gold);
+  font-size: 1rem;
+  display: none;
+  margin-top: 6px;
+}
+.greet-actions {
+  display: flex; gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+/* ============================================================
+   CELEBRATION MEMORIES — Photo Upload Section
+   ============================================================ */
+.memories-section { text-align: center; }
+.upload-zone {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto 40px;
+  padding: 44px 24px;
+  border: 2px dashed var(--border);
+  border-radius: 22px;
+  background: rgba(232, 194, 106, 0.03);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.upload-zone:hover,
+.upload-zone.dragover {
+  border-color: var(--gold);
+  background: rgba(232, 194, 106, 0.08);
+  transform: translateY(-2px);
+}
+.upload-zone.dragover::after {
+  content: 'Release to add photos ✨';
+  position: absolute;
+  inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(10, 14, 30, 0.85);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  z-index: 2;
+}
+.upload-zone-inner {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 12px;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+.upload-icon {
+  font-size: 2.6rem;
+  filter: drop-shadow(0 0 16px rgba(255, 190, 80, 0.5));
+  animation: floatIcon 3s ease-in-out infinite;
+}
+.upload-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+.upload-hint {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+.upload-zone input[type="file"] { display: none; }
+
+.memories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.memory-tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #241a08, #0a0603 70%);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  animation: memoryIn 0.6s ease forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.memory-tile:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--gold);
+  box-shadow: 0 18px 50px rgba(255, 170, 60, 0.25),
+              0 0 0 2px rgba(232, 194, 106, 0.15) inset;
+}
+@keyframes memoryIn {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.memory-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.memory-tile:hover img { transform: scale(1.08); }
+.memory-tile::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.6));
+  pointer-events: none;
+}
+.memory-remove {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.25s ease;
+  z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+}
+.memory-tile:hover .memory-remove { opacity: 1; }
+.memory-remove:hover {
+  background: rgba(220, 60, 60, 0.85);
+  transform: rotate(90deg);
+}
+.memories-empty {
+  max-width: 600px;
+  margin: 20px auto 0;
+  padding: 30px 20px;
+  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  opacity: 0.75;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.memories-empty span {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+.memories-counter {
+  margin-top: 24px;
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+/* ============================================================
+   STORY
+   ============================================================ */
+.story-section { text-align: center; }
+.lang-select {
+  margin-top: 12px;
+  padding: 9px 18px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--gold);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.story-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.story-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px 22px;
+  backdrop-filter: blur(10px);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: storyIn 0.7s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+.story-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.7;
+}
+@keyframes storyIn { to { opacity: 1; transform: translateY(0); } }
+.story-icon { font-size: 2.4rem; margin-bottom: 14px; }
+.story-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--gold-bright);
+  margin-bottom: 10px;
+}
+.story-content p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   AUDIO PANEL
+   ============================================================ */
+.audio-panel {
+  position: fixed; bottom: 22px; left: 22px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  background: rgba(10, 12, 26, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  z-index: 400;
+  flex-wrap: wrap;
+}
+[data-theme="light"] .audio-panel { background: rgba(255,248,230,.92); }
+.audio-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.25s ease;
+}
+.audio-btn.small { width: 34px; height: 34px; }
+.audio-btn:hover { background: rgba(232,194,106,.12); }
+.audio-btn.active { background: rgba(232,194,106,.2); border-color: var(--gold); }
+#volumeSlider { width: 90px; accent-color: var(--gold); }
+.audio-upload {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 1.15rem;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.25s;
+}
+.audio-upload:hover { background: rgba(232,194,106,.12); }
+.audio-divider {
+  width: 1px; height: 24px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+/* ============================================================
+   BACKGROUND PICKER (FAB)
+   ============================================================ */
+.bg-picker {
+  position: fixed; bottom: 22px; right: 90px;
+  z-index: 400;
+}
+.bg-picker input[type="file"] { display: none; }
+.bg-picker label {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 16px;
+  background: rgba(10, 12, 26, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.25s ease;
+}
+.bg-picker label:hover { background: rgba(232,194,106,.15); }
+
+/* ============================================================
+   FOOTER + BACK-TOP
+   ============================================================ */
+.footer {
+  text-align: center;
+  padding: 60px 6vw 50px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 2;
+}
+.footer-mantra {
+  font-family: var(--font-hindi);
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+.footer-note { margin-top: 10px; font-size: 0.82rem; opacity: 0.7; }
+.back-top {
+  position: fixed; right: 22px; bottom: 22px;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--deep-orange));
+  color: #1a1206; border: none; cursor: pointer;
+  font-size: 1.2rem; font-weight: 700;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.3s ease;
+  z-index: 400;
+  box-shadow: 0 10px 24px rgba(232,120,40,.4);
+}
+.back-top.show { opacity: 1; pointer-events: auto; }
+.back-top:hover { transform: translateY(-4px); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .nav-links {
+    position: fixed;
+    top: 66px; right: -100%;
+    flex-direction: column;
+    background: rgba(7,10,24,.96);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 26px;
+    gap: 16px;
+    width: 220px;
+    transition: right 0.4s ease;
+  }
+  [data-theme="light"] .nav-links { background: rgba(255,248,230,.98); }
+  .nav-links.open { right: 5vw; }
+  .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+  .section { padding: 70px 5vw; }
+  .hero { padding-top: 100px; }
+  .featured-frame { max-height: 440px; }
+}
+@media (max-width: 700px) {
+  .temple-uploads { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .temple-uploads .temple-upload-card:first-child { grid-column: span 2; }
+  .experience-scene-augmented { height: 340px; }
+  .exp-layer.ram-mandir { width: 70%; height: 70%; }
+  .exp-layer.ram-statue { width: 30%; height: 48%; right: 4%; bottom: 4%; }
+  .experience-scene-fallback { height: 240px; }
+  .deepotsav-uploads { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .deepotsav-uploads .deepotsav-upload-card:first-child { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .brand-text { display: none; }
+  .hero-title { font-size: clamp(2.4rem, 13vw, 4rem); }
+  .hero-subtitle { font-size: 1rem; }
+  .hero-message { font-size: 0.95rem; }
+  .btn { padding: 11px 22px; font-size: 0.85rem; }
+  .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+  .diya-row { gap: 14px; }
+  .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .featured-frame { max-height: 380px; }
+  .greeting-form { flex-direction: column; }
+  .greeting-form input, .greeting-form select, .greeting-form button { width: 100%; }
+  .lightbox { padding: 20px; }
+  .lb-close { top: 14px; right: 14px; width: 40px; height: 40px; }
+  .fireworks-stage { height: 320px; }
+  .sarayu-scene { height: 320px; }
+  .audio-panel { bottom: 14px; left: 14px; padding: 8px 10px; gap: 8px; }
+  #volumeSlider { width: 60px; }
+  .bg-picker { bottom: 14px; right: 78px; }
+  .bg-picker label { padding: 8px 12px; font-size: 0.75rem; }
+  .audio-divider { display: none; }
+  .upload-zone { padding: 32px 16px; }
+  .upload-title { font-size: 1.1rem; }
+  .upload-icon { font-size: 2rem; }
+  .memories-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .memory-remove { opacity: 1; }
+}
+@media (max-width: 420px) {
+  .temple-uploads { grid-template-columns: 1fr; }
+  .temple-uploads .temple-upload-card:first-child { grid-column: span 1; }
+  .deepotsav-uploads { grid-template-columns: 1fr; }
+  .deepotsav-uploads .deepotsav-upload-card:first-child { grid-column: span 1; }
+}
+@media (max-width: 380px) {
+  .hero-buttons { flex-direction: column; width: 100%; }
+  .hero-buttons .btn { width: 100%; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<a href="#home" class="skip-link">Skip to content</a>
+
+<div class="heaven-bg" aria-hidden="true">
+  <div class="heaven-clouds"></div>
+  <div class="heaven-rays"></div>
+</div>
+
+<div id="loader" class="loader">
+  <div class="loader-diya"><div class="flame"></div></div>
+  <p class="loader-text">Preparing the divine city of Ayodhya...</p>
+</div>
+
+<div id="intro" class="intro">
+  <div class="intro-diys">
+    <div class="intro-diya">
+      <div class="flame"></div>
+      <div class="glow"></div>
+    </div>
+  </div>
+  <h1 class="intro-jai">जय श्री राम</h1>
+  <p class="intro-sub">The light returns to Ayodhya</p>
+  <button id="skipIntro" class="skip-btn">Skip Intro →</button>
+</div>
+
+<canvas id="particles" class="particles-canvas"></canvas>
+
+<header class="topnav" id="topnav">
+  <div class="brand">
+    <span class="brand-icon">🪔</span>
+    <span class="brand-text">Divine Ayodhya</span>
+  </div>
+  <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+    <a href="#home">Home</a>
+    <a href="#gallery">Darbar</a>
+    <a href="#experience">Ayodhya</a>
+    <a href="#diyas">Light a Diya</a>
+    <a href="#deepotsav">Deepotsav</a>
+    <a href="#fireworks">Fireworks</a>
+    <a href="#greeting">Greetings</a>
+    <a href="#memories">Memories</a>
+    <a href="#story">Story</a>
+  </nav>
+  <div class="nav-actions">
+    <button id="themeToggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+    <button id="fullscreenBtn" class="icon-btn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
+    <button id="menuToggle" class="icon-btn menu-btn" title="Menu" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">॥ श्री राम जय राम जय जय राम ॥</p>
+    <h1 class="hero-title">शुभ दीपावली</h1>
+    <h2 class="hero-subtitle">A Divine Celebration of the Return of Shri Ram</h2>
+    <p class="hero-message">
+      Step into the sacred city of Ayodhya, where every diya tells a story of devotion,
+      every light celebrates hope, and every heart welcomes the return of Shri Ram.
+    </p>
+    <div class="hero-buttons">
+      <a href="#gallery" class="btn btn-primary">Enter the Darbar</a>
+      <a href="#diyas" class="btn btn-ghost">Light a Diya</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll to begin the journey ↓</div>
+</section>
+
+<section id="gallery" class="section gallery-section">
+  <div class="section-head">
+    <p class="section-kicker">॥ दिव्य दरबार ॥</p>
+    <h2 class="section-title">Divine Ram Darbar Gallery</h2>
+    <p class="section-desc">Upload your own devotional artwork to personalize this sacred space.</p>
+  </div>
+
+  <div class="featured-card" id="featuredCard">
+    <div class="aura"></div>
+    <div class="light-rays"></div>
+    <div class="featured-frame" id="featuredFrame">
+      <div class="placeholder-art" id="featuredPlaceholder">
+        <span class="ph-om">ॐ</span>
+        <span class="ph-label">श्री राम दरबार</span>
+      </div>
+      <img id="featuredImg" alt="Shri Ram Darbar" style="display:none" />
+    </div>
+    <h3 class="featured-title">श्री राम दरबार</h3>
+    <p class="featured-sub">Maryada, Prem, Dharma aur Bhakti ka Divya Swaroop</p>
+    <label class="upload-btn">
+      Upload Featured Artwork
+      <input type="file" accept="image/jpeg,image/png,image/webp" id="featuredUpload" hidden />
+    </label>
+  </div>
+
+  <div class="mandala-divider" aria-hidden="true">✦ ❁ ✦</div>
+
+  <div class="gallery-grid">
+    <div class="gallery-card" data-title="Lord Shri Ram" data-key="ram">
+      <div class="card-inner">
+        <div class="card-placeholder">🕉️<span>Shri Ram</span></div>
+        <img class="card-img" alt="Shri Ram" style="display:none" />
+      </div>
+      <div class="card-footer">
+        <h4>Lord Shri Ram</h4>
+        <label class="mini-upload">Replace<input type="file" accept="image/jpeg,image/png,image/webp" hidden /></label>
+      </div>
+    </div>
+    <div class="gallery-card" data-title="Mata Sita" data-key="sita">
+      <div class="card-inner">
+        <div class="card-placeholder">🌸<span>Mata Sita</span></div>
+        <img class="card-img" alt="Mata Sita" style="display:none" />
+      </div>
+      <div class="card-footer">
+        <h4>Mata Sita</h4>
+        <label class="mini-upload">Replace<input type="file" accept="image/jpeg,image/png,image/webp" hidden /></label>
+      </div>
+    </div>
+    <div class="gallery-card" data-title="Lakshman Ji" data-key="lakshman">
+      <div class="card-inner">
+        <div class="card-placeholder">🏹<span>Lakshman</span></div>
+        <img class="card-img" alt="Lakshman Ji" style="display:none" />
+      </div>
+      <div class="card-footer">
+        <h4>Lakshman Ji</h4>
+        <label class="mini-upload">Replace<input type="file" accept="image/jpeg,image/png,image/webp" hidden /></label>
+      </div>
+    </div>
+    <div class="gallery-card" data-title="Lord Hanuman Ji" data-key="hanuman">
+      <div class="card-inner">
+        <div class="card-placeholder">🙏<span>Hanuman</span></div>
+        <img class="card-img" alt="Lord Hanuman" style="display:none" />
+      </div>
+      <div class="card-footer">
+        <h4>Lord Hanuman Ji</h4>
+        <label class="mini-upload">Replace<input type="file" accept="image/jpeg,image/png,image/webp" hidden /></label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="section experience-section">
+  <div class="parallax-layer" data-speed="0.3"></div>
+  <div class="section-head">
+    <p class="section-kicker">॥ अयोध्या नगरी ॥</p>
+    <h2 class="section-title">The Divine City Awakens</h2>
+    <p class="section-desc">Golden temple spires, glowing streets, and a sky full of light welcome the Lord home.</p>
+  </div>
+
+  <div class="temple-uploads">
+    <div class="temple-upload-card" data-target="golden-temple">
+      <div class="temple-upload-preview">
+        <div class="temple-upload-placeholder">
+          <span class="icon">🏯</span>
+          <span class="label">Golden Temple</span>
+          <span class="hint">Click to upload</span>
+        </div>
+        <img alt="Golden Temple" />
+      </div>
+      <div class="temple-upload-footer">
+        <h4>Golden Temple</h4>
+        <label class="mini-upload">Upload
+          <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+        </label>
+      </div>
+    </div>
+
+    <div class="temple-upload-card" data-target="ram-mandir">
+      <div class="temple-upload-preview">
+        <div class="temple-upload-placeholder">
+          <span class="icon">🛕</span>
+          <span class="label">Ram Mandir</span>
+          <span class="hint">Click to upload</span>
+        </div>
+        <img alt="Ram Mandir" />
+      </div>
+      <div class="temple-upload-footer">
+        <h4>Ram Mandir</h4>
+        <label class="mini-upload">Upload
+          <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+        </label>
+      </div>
+    </div>
+
+    <div class="temple-upload-card" data-target="ram-statue">
+      <div class="temple-upload-preview">
+        <div class="temple-upload-placeholder">
+          <span class="icon">🕉️</span>
+          <span class="label">Shri Ram Statue</span>
+          <span class="hint">Click to upload</span>
+        </div>
+        <img alt="Shri Ram Statue" />
+      </div>
+      <div class="temple-upload-footer">
+        <h4>Shri Ram Statue</h4>
+        <label class="mini-upload">Upload
+          <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="experience-scene-augmented" id="experienceScene" style="display:none">
+    <div class="exp-layer sky"></div>
+    <div class="exp-layer golden-temple" id="layerGoldenTemple"></div>
+    <div class="exp-layer ram-mandir" id="layerRamMandir"></div>
+    <div class="exp-layer ram-statue" id="layerRamStatue"></div>
+    <div class="exp-layer overlay"></div>
+    <div class="exp-layer street-row">
+      <span class="street-diya" style="--d:0.1s"></span>
+      <span class="street-diya" style="--d:0.3s"></span>
+      <span class="street-diya" style="--d:0.5s"></span>
+      <span class="street-diya" style="--d:0.7s"></span>
+      <span class="street-diya" style="--d:0.9s"></span>
+      <span class="street-diya" style="--d:1.1s"></span>
+      <span class="street-diya" style="--d:1.3s"></span>
+      <span class="street-diya" style="--d:1.5s"></span>
+    </div>
+  </div>
+
+  <div class="experience-scene-fallback" id="experienceFallback">
+    <div class="scene-streets">
+      <span class="street-diya" style="--d:0.1s"></span>
+      <span class="street-diya" style="--d:0.3s"></span>
+      <span class="street-diya" style="--d:0.5s"></span>
+      <span class="street-diya" style="--d:0.7s"></span>
+      <span class="street-diya" style="--d:0.9s"></span>
+      <span class="street-diya" style="--d:1.1s"></span>
+      <span class="street-diya" style="--d:1.3s"></span>
+      <span class="street-diya" style="--d:1.5s"></span>
+    </div>
+  </div>
+
+  <div class="experience-caption">
+    <p>Every street, every balcony, every heart — illuminated by the joy of Shri Ram's return.</p>
+  </div>
+</section>
+
+<section id="diyas" class="section diya-section">
+  <div class="section-head">
+    <p class="section-kicker">॥ दीप ज्योति ॥</p>
+    <h2 class="section-title">Light a Diya</h2>
+    <p class="section-desc">Let every diya become a symbol of hope, kindness and positivity.</p>
+  </div>
+  <div class="diya-row" id="diyaRow"></div>
+  <div class="diya-controls">
+    <p class="diya-counter">Diyas lit: <span id="diyaCount">0</span> / <span id="diyaTotal">12</span></p>
+    <button id="resetDiyas" class="btn btn-ghost">Reset Diyas</button>
+  </div>
+</section>
+
+<!-- ============ DEEPOTSAV (with permanent uploads) ============ -->
+<section id="deepotsav" class="section deepotsav-section">
+  <div class="section-head">
+    <p class="section-kicker">॥ दीपोत्सव ॥</p>
+    <h2 class="section-title">Deepotsav on the Sarayu</h2>
+    <p class="section-desc">Thousands of diyas float upon the sacred river, their light reflecting devotion.</p>
+  </div>
+
+  <div class="deepotsav-uploads">
+    <div class="deepotsav-upload-card" data-target="sky" data-key="deepotsav-sky">
+      <div class="deepotsav-upload-preview">
+        <div class="deepotsav-upload-placeholder">
+          <span class="icon">🌌</span>
+          <span class="label">Sarayu Sky</span>
+          <span class="hint">Click to upload</span>
+        </div>
+        <img alt="Sarayu Sky" />
+      </div>
+      <div class="deepotsav-upload-footer">
+        <h4>Sarayu Sky</h4>
+        <span>
+          <label class="mini-upload">Upload
+            <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+          <button class="mini-remove" type="button">Reset</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="deepotsav-upload-card" data-target="temples" data-key="deepotsav-temples">
+      <div class="deepotsav-upload-preview">
+        <div class="deepotsav-upload-placeholder">
+          <span class="icon">🛕</span>
+          <span class="label">Temple Reflection</span>
+          <span class="hint">Click to upload</span>
+        </div>
+        <img alt="Temple Reflection" />
+      </div>
+      <div class="deepotsav-upload-footer">
+        <h4>Temple Reflection</h4>
+        <span>
+          <label class="mini-upload">Upload
+            <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+          <button class="mini-remove" type="button">Reset</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="deepotsav-upload-card" data-target="river" data-key="deepotsav-river">
+      <div class="deepotsav-upload-preview">
+        <div class="deepotsav-upload-placeholder">
+          <span class="icon">🪔</span>
+          <span class="label">Floating Diyas</span>
+          <span class="hint">Click to upload</span>
+        </div>
+        <img alt="Floating Diyas" />
+      </div>
+      <div class="deepotsav-upload-footer">
+        <h4>Floating Diyas</h4>
+        <span>
+          <label class="mini-upload">Upload
+            <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+          <button class="mini-remove" type="button">Reset</button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sarayu-scene">
+    <div class="river-sky"></div>
+    <div class="sarayu-custom-sky" id="sarayuCustomSky"></div>
+    <div class="river-temples"></div>
+    <div class="sarayu-custom-temples" id="sarayuCustomTemples"></div>
+    <div class="river-water">
+      <div class="sarayu-custom-river" id="sarayuCustomRiver"></div>
+      <div class="float-diya" style="--x:8%;--d:0s;--s:1.1"></div>
+      <div class="float-diya" style="--x:20%;--d:2s;--s:0.9"></div>
+      <div class="float-diya" style="--x:34%;--d:4s;--s:1.3"></div>
+      <div class="float-diya" style="--x:48%;--d:1s;--s:1"></div>
+      <div class="float-diya" style="--x:62%;--d:3s;--s:0.85"></div>
+      <div class="float-diya" style="--x:76%;--d:5s;--s:1.2"></div>
+      <div class="float-diya" style="--x:90%;--d:2.5s;--s:1"></div>
+    </div>
+  </div>
+</section>
+
+<section id="fireworks" class="section fireworks-section">
+  <div class="section-head">
+    <p class="section-kicker">॥ आतिशबाज़ी ॥</p>
+    <h2 class="section-title">Divine Fireworks</h2>
+    <p class="section-desc">Click anywhere in the sky below to launch a burst of light.</p>
+  </div>
+  <div class="fireworks-stage" id="fireworksStage">
+    <canvas id="fireworksCanvas"></canvas>
+    <p class="fireworks-hint">Tap or click to celebrate ✨</p>
+  </div>
+  <div class="fireworks-controls">
+    <label class="toggle">
+      <input type="checkbox" id="reducedMotion" />
+      <span>Reduced Motion</span>
+    </label>
+  </div>
+</section>
+
+<section id="greeting" class="section greeting-section">
+  <div class="section-head">
+    <p class="section-kicker">॥ शुभकामनाएँ ॥</p>
+    <h2 class="section-title">Create Your Diwali Greeting</h2>
+    <p class="section-desc">Personalize a divine message and share the light with your loved ones.</p>
+  </div>
+  <div class="greeting-form">
+    <input type="text" id="greetName" placeholder="Enter your name" maxlength="40" />
+    <select id="greetLang">
+      <option value="hi">हिन्दी</option>
+      <option value="en">English</option>
+    </select>
+    <button id="generateGreet" class="btn btn-primary">Generate Greeting</button>
+  </div>
+  <div class="greeting-card" id="greetingCard">
+    <div class="greet-frame">
+      <p class="greet-line1" id="greetLine1">🪔 शुभ दीपावली 🪔</p>
+      <p class="greet-body" id="greetBody">Enter your name and generate a greeting.</p>
+      <p class="greet-sign" id="greetSign"></p>
+    </div>
+    <div class="greet-actions">
+      <button id="copyGreet" class="btn btn-ghost">Copy</button>
+      <button id="shareGreet" class="btn btn-ghost">Share</button>
+    </div>
+  </div>
+</section>
+
+<section id="memories" class="section memories-section">
+  <div class="section-head">
+    <p class="section-kicker">॥ दीपावली की स्मृतियाँ ॥</p>
+    <h2 class="section-title">Celebration Memories</h2>
+    <p class="section-desc">
+      Capture the joy of your Diwali — upload photos of your own celebration
+      and share the light that lives in your home.
+    </p>
+  </div>
+
+  <label class="upload-zone" id="uploadZone" for="memoryInput">
+    <div class="upload-zone-inner">
+      <div class="upload-icon">📸</div>
+      <div class="upload-title">Add Your Diwali Photos</div>
+      <div class="upload-hint">Click to browse, or drag & drop images here · JPG, PNG, WebP</div>
+    </div>
+    <input
+      type="file"
+      id="memoryInput"
+      accept="image/jpeg,image/png,image/webp"
+      multiple
+      hidden
+    />
+  </label>
+
+  <div class="memories-grid" id="memoriesGrid" aria-live="polite"></div>
+
+  <div class="memories-empty" id="memoriesEmpty">
+    <span>🪔</span>
+    Your Diwali memories will appear here. Add your first photo above!
+  </div>
+
+  <p class="memories-counter" id="memoriesCounter"></p>
+</section>
+
+<section id="story" class="section story-section">
+  <div class="section-head">
+    <p class="section-kicker">॥ राम कथा ॥</p>
+    <h2 class="section-title">The Story of Diwali</h2>
+    <select id="storyLang" class="lang-select" aria-label="Story language">
+      <option value="en">English</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+  </div>
+  <div class="story-timeline" id="storyTimeline"></div>
+</section>
+
+<div class="audio-panel" id="audioPanel">
+  <button id="audioToggle" class="audio-btn" title="Play/Pause" aria-label="Play/Pause uploaded music">▶</button>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" aria-label="Volume" />
+  <button id="muteBtn" class="audio-btn small" title="Mute" aria-label="Mute">🔊</button>
+  <span class="audio-divider" aria-hidden="true"></span>
+  <button id="bellBtn" class="audio-btn small" title="Temple bell" aria-label="Ring temple bell">🔔</button>
+  <button id="fluteBtn" class="audio-btn small" title="Soft flute ambience" aria-label="Toggle flute ambience">🎶</button>
+  <label class="audio-upload" title="Upload local audio">
+    🎵<input type="file" accept="audio/*" id="audioUpload" hidden />
+  </label>
+</div>
+
+<div class="bg-picker">
+  <label title="Choose a background image from your desktop">
+    🌄 Background
+    <input type="file" accept="image/jpeg,image/png,image/webp" id="bgImageUpload" />
+  </label>
+</div>
+
+<footer class="footer">
+  <p class="footer-mantra">॥ जय श्री राम ॥</p>
+  <p>Divine Ayodhya – A Journey of Light, Love and Devotion</p>
+  <p class="footer-note">May this Diwali fill your life with light, peace, and prosperity.</p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <img id="lbImg" alt="Devotional artwork" />
+</div>
+
+<button id="backTop" class="back-top" title="Back to top" aria-label="Back to top">↑</button>
+
+<script>
+/* ============================================================
+   MAIN — Bootstrap, nav, fullscreen, back-to-top, smooth scroll
+   ============================================================ */
+(function () {
+  'use strict';
+
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => loader.classList.add('hidden'), 900);
+  });
+
+  const menuBtn = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn?.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  document.getElementById('fullscreenBtn')?.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => {
+    backTop.classList.toggle('show', window.scrollY > 600);
+  });
+  backTop?.addEventListener('click', () =>
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  );
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const hero = document.querySelector('.hero');
+  window.addEventListener('scroll', () => {
+    if (!hero) return;
+    const y = window.scrollY;
+    if (y < window.innerHeight) {
+      hero.style.backgroundPosition = `center ${y * 0.3}px`;
+    }
+  }, { passive: true });
+})();
+
+/* ============================================================
+   CINEMATIC INTRO
+   ============================================================ */
+(function () {
+  'use strict';
+  const intro = document.getElementById('intro');
+  const skip = document.getElementById('skipIntro');
+  if (!intro) return;
+
+  const timer = setTimeout(hideIntro, 7000);
+  skip?.addEventListener('click', () => {
+    clearTimeout(timer);
+    hideIntro();
+  });
+
+  function hideIntro() {
+    intro.classList.add('hidden');
+    setTimeout(() => {
+      const hero = document.getElementById('home');
+      hero?.setAttribute('tabindex', '-1');
+      hero?.focus({ preventScroll: true });
+    }, 800);
+  }
+})();
+
+/* ============================================================
+   FLOATING PARTICLES + PETALS
+   ============================================================ */
+(function () {
+  'use strict';
+  const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, particles = [], petals = [];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function createParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.6 + 0.4,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: -Math.random() * 0.35 - 0.05,
+      alpha: Math.random() * 0.5 + 0.2,
+      hue: Math.random() > 0.5 ? 45 : 35
+    };
+  }
+  function createPetal() {
+    return {
+      x: Math.random() * W,
+      y: -20 - Math.random() * 100,
+      size: Math.random() * 8 + 6,
+      vy: Math.random() * 0.6 + 0.4,
+      vx: (Math.random() - 0.5) * 0.4,
+      rot: Math.random() * Math.PI * 2,
+      vr: (Math.random() - 0.5) * 0.03,
+      hue: Math.random() > 0.5 ? 345 : 25,
+      alpha: Math.random() * 0.4 + 0.4
+    };
+  }
+
+  const particleCount = reduceMotion ? 20 : Math.min(70, Math.floor(W / 22));
+  for (let i = 0; i < particleCount; i++) particles.push(createParticle());
+  const petalCount = reduceMotion ? 0 : Math.min(16, Math.floor(W / 90));
+  for (let i = 0; i < petalCount; i++) petals.push(createPetal());
+
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.fillStyle = `hsla(${p.hue}, 85%, 70%, ${p.alpha})`;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.size / 2, p.size, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+      if (p.x < -10) p.x = W + 10;
+      if (p.x > W + 10) p.x = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, 100%, 65%, ${p.alpha})`;
+      ctx.shadowColor = `hsla(${p.hue}, 100%, 60%, .8)`;
+      ctx.shadowBlur = 6;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+    petals.forEach((p, i) => {
+      p.y += p.vy;
+      p.x += p.vx + Math.sin(p.y * 0.01) * 0.3;
+      p.rot += p.vr;
+      if (p.y > H + 30) petals[i] = createPetal();
+      drawPetal(p);
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ============================================================
+   SCROLL-IN ENTRANCE ANIMATIONS
+   ============================================================ */
+(function () {
+  'use strict';
+  const targets = document.querySelectorAll('.featured-card, .gallery-card, .story-card, .section-head');
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(t => t.classList.add('in-view'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  targets.forEach(t => io.observe(t));
+})();
+
+/* ============================================================
+   GALLERY — Upload + Lightbox
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const featuredImg = document.getElementById('featuredImg');
+  const featuredPlaceholder = document.getElementById('featuredPlaceholder');
+  const featuredUpload = document.getElementById('featuredUpload');
+  const featuredFrame = document.getElementById('featuredFrame');
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbClose = document.getElementById('lbClose');
+
+  function loadImageFile(file, onDone) {
+    if (!file || !file.type.startsWith('image/')) return;
+    if (!['image/jpeg','image/png','image/webp'].includes(file.type)) {
+      alert('Please choose a JPG, PNG or WebP image.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = e => onDone(e.target.result);
+    reader.readAsDataURL(file);
+  }
+
+  featuredUpload?.addEventListener('change', e => {
+    loadImageFile(e.target.files[0], dataUrl => {
+      featuredImg.src = dataUrl;
+      featuredImg.style.display = 'block';
+      featuredPlaceholder.style.display = 'none';
+    });
+  });
+
+  featuredFrame?.addEventListener('click', e => {
+    if (e.target.closest('.upload-btn')) return;
+    if (featuredImg.style.display === 'block') openLightbox(featuredImg.src);
+  });
+
+  document.querySelectorAll('.gallery-card').forEach(card => {
+    const input = card.querySelector('input[type="file"]');
+    const img = card.querySelector('.card-img');
+    const placeholder = card.querySelector('.card-placeholder');
+
+    input?.addEventListener('change', e => {
+      loadImageFile(e.target.files[0], dataUrl => {
+        img.src = dataUrl;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+        e.target.value = '';
+      });
+      e.stopPropagation();
+    });
+
+    card.addEventListener('click', e => {
+      if (e.target.closest('.mini-upload')) return;
+      if (img.style.display === 'block') openLightbox(img.src);
+    });
+  });
+
+  function openLightbox(src) {
+    lbImg.src = src;
+    lightbox.classList.add('open');
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    setTimeout(() => (lbImg.src = ''), 300);
+  }
+  lbClose?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+})();
+
+/* ============================================================
+   DIVINE AYODHYA EXPERIENCE — Temple / Statue uploads
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const cards = document.querySelectorAll('.temple-upload-card');
+  const sceneAugmented = document.getElementById('experienceScene');
+  const sceneFallback = document.getElementById('experienceFallback');
+  if (!cards.length || !sceneAugmented) return;
+
+  const layers = {
+    'golden-temple': document.getElementById('layerGoldenTemple'),
+    'ram-mandir':    document.getElementById('layerRamMandir'),
+    'ram-statue':    document.getElementById('layerRamStatue')
+  };
+
+  const VALID = ['image/jpeg', 'image/png', 'image/webp'];
+  const MAX = 10 * 1024 * 1024;
+  const uploaded = { 'golden-temple': false, 'ram-mandir': false, 'ram-statue': false };
+
+  function refreshSceneVisibility() {
+    const anyUploaded = Object.values(uploaded).some(Boolean);
+    sceneAugmented.style.display = anyUploaded ? 'block' : 'none';
+    sceneFallback.style.display = anyUploaded ? 'none' : 'block';
+  }
+
+  function readFile(file, cb) {
+    if (!file) return;
+    if (!VALID.includes(file.type)) { alert('Please choose a JPG, PNG or WebP image.'); return; }
+    if (file.size > MAX) { alert('Image is too large (max 10 MB).'); return; }
+    const reader = new FileReader();
+    reader.onload = e => cb(e.target.result);
+    reader.readAsDataURL(file);
+  }
+
+  cards.forEach(card => {
+    const target = card.dataset.target;
+    const input = card.querySelector('input[type="file"]');
+    const img = card.querySelector('.temple-upload-preview img');
+    const placeholder = card.querySelector('.temple-upload-placeholder');
+
+    input?.addEventListener('change', e => {
+      readFile(e.target.files[0], dataUrl => {
+        img.src = dataUrl;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+        input.value = '';
+
+        const layer = layers[target];
+        if (layer) {
+          layer.style.backgroundImage = `url("${dataUrl}")`;
+          layer.classList.add('has-image');
+          uploaded[target] = true;
+          refreshSceneVisibility();
+        }
+      });
+    });
+
+    card.querySelector('.temple-upload-preview')?.addEventListener('click', e => {
+      if (e.target.closest('label')) return;
+      input?.click();
+    });
+  });
+
+  refreshSceneVisibility();
+})();
+
+/* ============================================================
+   DEEPOTSAV — Permanent Upload with localStorage persistence
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const cards = document.querySelectorAll('.deepotsav-upload-card');
+  const layers = {
+    sky:     document.getElementById('sarayuCustomSky'),
+    temples: document.getElementById('sarayuCustomTemples'),
+    river:   document.getElementById('sarayuCustomRiver')
+  };
+  if (!cards.length || !layers.sky) return;
+
+  const VALID = ['image/jpeg', 'image/png', 'image/webp'];
+  const MAX = 12 * 1024 * 1024;
+
+  function applyImage(card, dataUrl) {
+    const target = card.dataset.target;
+    const img = card.querySelector('.deepotsav-upload-preview img');
+    const placeholder = card.querySelector('.deepotsav-upload-placeholder');
+
+    img.src = dataUrl;
+    img.style.display = 'block';
+    placeholder.style.display = 'none';
+    card.classList.add('has-photo');
+
+    const layer = layers[target];
+    if (layer) {
+      layer.style.backgroundImage = `url("${dataUrl}")`;
+      layer.classList.add('has-image');
+    }
+  }
+
+  function clearImage(card) {
+    const target = card.dataset.target;
+    const img = card.querySelector('.deepotsav-upload-preview img');
+    const placeholder = card.querySelector('.deepotsav-upload-placeholder');
+    const key = card.dataset.key;
+
+    img.src = '';
+    img.style.display = 'none';
+    placeholder.style.display = 'flex';
+    card.classList.remove('has-photo');
+
+    const layer = layers[target];
+    if (layer) {
+      layer.style.backgroundImage = '';
+      layer.classList.remove('has-image');
+    }
+
+    try { localStorage.removeItem(key); } catch {}
+  }
+
+  function readFile(file, cb) {
+    if (!file) return;
+    if (!VALID.includes(file.type)) {
+      alert('Please choose a JPG, PNG or WebP image.');
+      return;
+    }
+    if (file.size > MAX) {
+      alert('Image is too large (max 12 MB). Please pick a smaller photo.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = e => cb(e.target.result);
+    reader.onerror = () => alert('Could not read this image. Please try another.');
+    reader.readAsDataURL(file);
+  }
+
+  function compressAndSave(key, dataUrl, cb) {
+    const img = new Image();
+    img.onload = () => {
+      const MAX_DIM = 1200;
+      let { width, height } = img;
+      if (width > MAX_DIM || height > MAX_DIM) {
+        const ratio = Math.min(MAX_DIM / width, MAX_DIM / height);
+        width  = Math.round(width  * ratio);
+        height = Math.round(height * ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const cctx = canvas.getContext('2d');
+      cctx.drawImage(img, 0, 0, width, height);
+
+      let quality = 0.82;
+      let compressed = canvas.toDataURL('image/jpeg', quality);
+      let attempts = 0;
+      while (compressed.length > 1_500_000 && quality > 0.4 && attempts < 6) {
+        quality -= 0.1;
+        compressed = canvas.toDataURL('image/jpeg', quality);
+        attempts++;
+      }
+
+      try {
+        localStorage.setItem(key, compressed);
+        cb(compressed);
+      } catch (err) {
+        console.warn('localStorage save failed:', err);
+        alert('Image is too large to save permanently. It will be shown for this session only. Try a smaller photo for permanent storage.');
+        cb(compressed);
+      }
+    };
+    img.onerror = () => alert('Could not load this image.');
+    img.src = dataUrl;
+  }
+
+  cards.forEach(card => {
+    const input = card.querySelector('input[type="file"]');
+    const preview = card.querySelector('.deepotsav-upload-preview');
+    const removeBtn = card.querySelector('.mini-remove');
+    const storageKey = card.dataset.key;
+
+    input?.addEventListener('change', e => {
+      const file = e.target.files[0];
+      readFile(file, dataUrl => {
+        compressAndSave(storageKey, dataUrl, compressed => {
+          applyImage(card, compressed);
+        });
+      });
+      input.value = '';
+    });
+
+    preview?.addEventListener('click', e => {
+      if (e.target.closest('label')) return;
+      input?.click();
+    });
+
+    removeBtn?.addEventListener('click', e => {
+      e.stopPropagation();
+      if (confirm('Remove this picture? It will revert to the default decoration.')) {
+        clearImage(card);
+      }
+    });
+
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved && saved.startsWith('data:image')) {
+        applyImage(card, saved);
+      }
+    } catch {}
+  });
+})();
+
+/* ============================================================
+   INTERACTIVE DIYA LIGHTING
+   ============================================================ */
+(function () {
+  'use strict';
+  const row = document.getElementById('diyaRow');
+  const countEl = document.getElementById('diyaCount');
+  const totalEl = document.getElementById('diyaTotal');
+  const resetBtn = document.getElementById('resetDiyas');
+  if (!row) return;
+
+  const TOTAL = 12;
+  totalEl.textContent = TOTAL;
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'diya';
+    d.setAttribute('aria-label', `Diya ${i + 1} – click to light`);
+    d.innerHTML = `<span class="diya-body"><span class="diya-flame"></span></span>`;
+    d.addEventListener('click', () => lightDiya(d));
+    row.appendChild(d);
+  }
+
+  let lit = 0;
+  function updateCount() { countEl.textContent = lit; }
+
+  function lightDiya(el) {
+    if (el.classList.contains('lit')) {
+      el.classList.remove('lit');
+      lit = Math.max(0, lit - 1);
+    } else {
+      el.classList.add('lit');
+      lit++;
+      spawnSparkle(el);
+    }
+    updateCount();
+  }
+
+  function spawnSparkle(parent) {
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    s.style.left = `${20 + Math.random() * 60}%`;
+    s.style.animationDelay = `${Math.random() * 0.3}s`;
+    parent.appendChild(s);
+    setTimeout(() => s.remove(), 1400);
+  }
+
+  resetBtn?.addEventListener('click', () => {
+    row.querySelectorAll('.diya').forEach(d => d.classList.remove('lit'));
+    lit = 0;
+    updateCount();
+  });
+})();
+
+/* ============================================================
+   DIVINE FIREWORKS
+   ============================================================ */
+(function () {
+  'use strict';
+  const stage = document.getElementById('fireworksStage');
+  const canvas = document.getElementById('fireworksCanvas');
+  const reduceToggle = document.getElementById('reducedMotion');
+  if (!stage || !canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, particles = [];
+  let reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceToggle) {
+    reduceToggle.checked = reduced;
+    reduceToggle.addEventListener('change', () => { reduced = reduceToggle.checked; });
+  }
+
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+    W = canvas.width = r.width;
+    H = canvas.height = r.height;
+  }
+  window.addEventListener('resize', resize);
+  setTimeout(resize, 50);
+
+  const PALETTE = ['#ffd97a', '#ff9933', '#e8622b', '#ffb3c1', '#fff6c4', '#ffc470'];
+
+  function burst(x, y) {
+    const count = reduced ? 18 : 60;
+    const color = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count;
+      const speed = Math.random() * 3.5 + 1.5;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        alpha: 1,
+        radius: Math.random() * 2 + 0.8,
+        color,
+        decay: 0.012 + Math.random() * 0.01
+      });
+    }
+  }
+
+  stage.addEventListener('click', e => {
+    const r = canvas.getBoundingClientRect();
+    burst(e.clientX - r.left, e.clientY - r.top);
+  });
+  stage.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    const r = canvas.getBoundingClientRect();
+    burst(t.clientX - r.left, t.clientY - r.top);
+  }, { passive: true });
+
+  function loop() {
+    ctx.fillStyle = 'rgba(6, 8, 18, 0.25)';
+    ctx.fillRect(0, 0, W, H);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.06;
+      p.vx *= 0.985; p.vy *= 0.985;
+      p.alpha -= p.decay;
+      if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 12;
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ============================================================
+   DIWALI GREETING GENERATOR
+   ============================================================ */
+(function () {
+  'use strict';
+  const nameInput = document.getElementById('greetName');
+  const langSel = document.getElementById('greetLang');
+  const genBtn = document.getElementById('generateGreet');
+  const line1 = document.getElementById('greetLine1');
+  const body = document.getElementById('greetBody');
+  const sign = document.getElementById('greetSign');
+  const copyBtn = document.getElementById('copyGreet');
+  const shareBtn = document.getElementById('shareGreet');
+  if (!genBtn) return;
+
+  const MESSAGES_HI = [
+    'इस दिव्य दीपावली पर, प्रभु श्री राम का आशीर्वाद आपके जीवन में सुख, शांति और समृद्धि लाए।',
+    'हर दीया आपके जीवन में आनंद और उजाला भर दे। जय श्री राम!',
+    'श्री राम की कृपा से आपका घर सदा प्रकाशमय रहे। शुभ दीपावली!',
+    'दीपों का यह पावन पर्व आपके हृदय में प्रेम और करुणा जगाए।',
+    'अयोध्या की पावन भूमि से आपके परिवार को अनंत सुख की शुभकामनाएँ।'
+  ];
+  const MESSAGES_EN = [
+    'May the blessings of Shri Ram fill your life with joy, peace and prosperity this Diwali.',
+    'May every diya illuminate your path with hope and happiness. Jai Shri Ram!',
+    'May the divine light of Ayodhya bring warmth to your home and heart.',
+    'Wishing you a Diwali filled with devotion, love and endless light.',
+    'Sending you love, light and blessings from the sacred city of Ayodhya.'
+  ];
+
+  function generate() {
+    const name = (nameInput.value || 'Dear Friend').trim();
+    const lang = langSel.value;
+    const list = lang === 'hi' ? MESSAGES_HI : MESSAGES_EN;
+    const pick = list[Math.floor(Math.random() * list.length)];
+    if (lang === 'hi') {
+      line1.textContent = '🪔 शुभ दीपावली 🪔';
+      body.textContent = `${name}, ${pick}`;
+      sign.textContent = '— जय श्री राम';
+    } else {
+      line1.textContent = '🪔 Happy Diwali 🪔';
+      body.textContent = `${name}, ${pick}`;
+      sign.textContent = '— Jai Shri Ram';
+    }
+    sign.style.display = 'block';
+  }
+
+  genBtn.addEventListener('click', generate);
+  nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
+
+  copyBtn.addEventListener('click', async () => {
+    const text = `${line1.textContent}\n${body.textContent}\n${sign.textContent}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = '✓ Copied';
+      setTimeout(() => (copyBtn.textContent = 'Copy'), 1800);
+    } catch {
+      alert('Copy failed. Please select and copy manually.');
+    }
+  });
+
+  shareBtn.addEventListener('click', async () => {
+    const text = `${line1.textContent}\n${body.textContent}\n${sign.textContent}`;
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Happy Diwali', text }); } catch {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(text);
+        alert('Greeting copied — paste it anywhere to share!');
+      } catch {
+        alert('Sharing not available on this device.');
+      }
+    }
+  });
+})();
+
+/* ============================================================
+   CELEBRATION MEMORIES — Upload, grid, lightbox, remove
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const uploadZone = document.getElementById('uploadZone');
+  const input = document.getElementById('memoryInput');
+  const grid = document.getElementById('memoriesGrid');
+  const empty = document.getElementById('memoriesEmpty');
+  const counter = document.getElementById('memoriesCounter');
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  if (!uploadZone || !input || !grid) return;
+
+  const photos = [];
+  const VALID = ['image/jpeg', 'image/png', 'image/webp'];
+  const MAX_SIZE = 8 * 1024 * 1024;
+
+  function updateUI() {
+    empty.style.display = photos.length === 0 ? 'block' : 'none';
+    counter.textContent = photos.length
+      ? `${photos.length} ${photos.length === 1 ? 'memory' : 'memories'} captured 🪔`
+      : '';
+  }
+
+  function renderTile(photo) {
+    const tile = document.createElement('div');
+    tile.className = 'memory-tile';
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('aria-label', 'View photo');
+    tile.innerHTML = `
+      <img src="${photo.dataUrl}" alt="Diwali celebration memory" loading="lazy" />
+      <button class="memory-remove" aria-label="Remove photo" title="Remove">✕</button>
+    `;
+
+    const open = () => {
+      lbImg.src = photo.dataUrl;
+      lightbox.classList.add('open');
+    };
+    tile.addEventListener('click', e => {
+      if (e.target.closest('.memory-remove')) return;
+      open();
+    });
+    tile.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+
+    tile.querySelector('.memory-remove').addEventListener('click', e => {
+      e.stopPropagation();
+      const idx = photos.indexOf(photo);
+      if (idx !== -1) photos.splice(idx, 1);
+      tile.style.animation = 'none';
+      tile.style.opacity = '0';
+      tile.style.transform = 'scale(0.85)';
+      setTimeout(() => { tile.remove(); updateUI(); }, 250);
+    });
+
+    grid.appendChild(tile);
+  }
+
+  function handleFiles(fileList) {
+    const files = Array.from(fileList || []);
+    let rejected = 0;
+
+    files.forEach(file => {
+      if (!VALID.includes(file.type)) { rejected++; return; }
+      if (file.size > MAX_SIZE) { rejected++; return; }
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const photo = { dataUrl: e.target.result, name: file.name };
+        photos.push(photo);
+        renderTile(photo);
+        updateUI();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    if (rejected > 0) {
+      alert(`${rejected} file(s) skipped — only JPG, PNG or WebP under 8 MB are allowed.`);
+    }
+    input.value = '';
+  }
+
+  input.addEventListener('change', e => handleFiles(e.target.files));
+
+  ['dragenter', 'dragover'].forEach(ev =>
+    uploadZone.addEventListener(ev, e => {
+      e.preventDefault(); e.stopPropagation();
+      uploadZone.classList.add('dragover');
+    })
+  );
+  ['dragleave', 'drop'].forEach(ev =>
+    uploadZone.addEventListener(ev, e => {
+      e.preventDefault(); e.stopPropagation();
+      uploadZone.classList.remove('dragover');
+    })
+  );
+  uploadZone.addEventListener('drop', e => {
+    if (e.dataTransfer?.files?.length) handleFiles(e.dataTransfer.files);
+  });
+
+  updateUI();
+})();
+
+/* ============================================================
+   AUDIO CONTROLLER + SYNTH (temple bell + flute ambience)
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const toggleBtn = document.getElementById('audioToggle');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const muteBtn = document.getElementById('muteBtn');
+  const upload = document.getElementById('audioUpload');
+  const bellBtn = document.getElementById('bellBtn');
+  const fluteBtn = document.getElementById('fluteBtn');
+  if (!toggleBtn) return;
+
+  const audio = new Audio();
+  audio.loop = true;
+  audio.volume = parseFloat(localStorage.getItem('ayodhya-volume') || volumeSlider.value);
+  volumeSlider.value = audio.volume;
+  audio.preload = 'none';
+
+  let isPlaying = false;
+  let lastVolume = audio.volume;
+
+  function refreshUI() {
+    toggleBtn.textContent = isPlaying ? '❚❚' : '▶';
+    muteBtn.textContent = audio.muted || audio.volume === 0 ? '🔇' : '🔊';
+  }
+
+  toggleBtn.addEventListener('click', async () => {
+    if (!audio.src) {
+      alert('Please upload a devotional music file first (🎵 icon).');
+      return;
+    }
+    if (isPlaying) { audio.pause(); isPlaying = false; }
+    else { try { await audio.play(); isPlaying = true; } catch { alert('Playback failed.'); } }
+    refreshUI();
+  });
+
+  volumeSlider.addEventListener('input', () => {
+    audio.volume = parseFloat(volumeSlider.value);
+    if (audio.volume > 0) audio.muted = false;
+    localStorage.setItem('ayodhya-volume', audio.volume);
+    refreshUI();
+  });
+
+  muteBtn.addEventListener('click', () => {
+    if (audio.volume === 0 || audio.muted) {
+      audio.muted = false;
+      audio.volume = lastVolume || 0.5;
+      volumeSlider.value = audio.volume;
+    } else {
+      lastVolume = audio.volume;
+      audio.muted = true;
+    }
+    refreshUI();
+  });
+
+  upload?.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('audio/')) return;
+    const url = URL.createObjectURL(file);
+    audio.src = url;
+    audio.load();
+    isPlaying = false;
+    refreshUI();
+  });
+
+  let ctxAudio = null;
+  function getCtx() {
+    if (!ctxAudio) ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
+    return ctxAudio;
+  }
+  bellBtn?.addEventListener('click', () => {
+    try {
+      const ctx = getCtx();
+      const now = ctx.currentTime;
+      const freqs = [523.25, 1046.5, 1568, 2093, 2637];
+      freqs.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = f;
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.18 / (i + 1), now + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.5);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 3.6);
+      });
+      bellBtn.classList.add('active');
+      setTimeout(() => bellBtn.classList.remove('active'), 400);
+    } catch (e) { /* ignore */ }
+  });
+
+  let fluteOsc = null, fluteGain = null, fluteLfo = null;
+  let fluteOn = false;
+  fluteBtn?.addEventListener('click', () => {
+    try {
+      const ctx = getCtx();
+      if (!fluteOn) {
+        fluteOsc = ctx.createOscillator();
+        fluteGain = ctx.createGain();
+        fluteLfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        fluteOsc.type = 'sine';
+        fluteOsc.frequency.value = 392;
+        fluteGain.gain.value = 0.04;
+        fluteLfo.frequency.value = 4.5;
+        lfoGain.gain.value = 2;
+        fluteLfo.connect(lfoGain).connect(fluteOsc.frequency);
+        fluteOsc.connect(fluteGain).connect(ctx.destination);
+        fluteOsc.start();
+        fluteLfo.start();
+        fluteOn = true;
+        fluteBtn.classList.add('active');
+      } else {
+        fluteGain.gain.setTargetAtTime(0, ctxAudio.currentTime, 0.1);
+        setTimeout(() => {
+          try { fluteOsc.stop(); fluteLfo.stop(); } catch {}
+          fluteOsc = null; fluteGain = null; fluteLfo = null;
+        }, 400);
+        fluteOn = false;
+        fluteBtn.classList.remove('active');
+      }
+    } catch (e) { /* ignore */ }
+  });
+
+  refreshUI();
+})();
+
+/* ============================================================
+   BACKGROUND IMAGE PICKER
+   ============================================================ */
+(function () {
+  'use strict';
+  const input = document.getElementById('bgImageUpload');
+  if (!input) return;
+
+  const saved = localStorage.getItem('ayodhya-bg');
+  if (saved) document.documentElement.style.setProperty('--page-bg-image', `url(${saved})`);
+
+  input.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file || !['image/jpeg','image/png','image/webp'].includes(file.type)) {
+      alert('Please choose a JPG, PNG or WebP image.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const url = ev.target.result;
+      document.documentElement.style.setProperty('--page-bg-image', `url(${url})`);
+      try { localStorage.setItem('ayodhya-bg', url); } catch {}
+    };
+    reader.readAsDataURL(file);
+  });
+})();
+
+/* ============================================================
+   DIWALI STORY — Bilingual Timeline
+   ============================================================ */
+(function () {
+  'use strict';
+  const timeline = document.getElementById('storyTimeline');
+  const langSel = document.getElementById('storyLang');
+  if (!timeline) return;
+
+  const DATA = {
+    en: [
+      { icon: '🌳', title: 'The Fourteen-Year Exile',
+        text: 'Lord Shri Ram, along with Mata Sita and Lakshman Ji, left Ayodhya to honour a promise and live in the forest for fourteen years.' },
+      { icon: '⚔️', title: 'Victory of Good over Evil',
+        text: 'With courage, dharma and devotion, Shri Ram defeated the demon king Ravan, showing the world that truth and goodness always prevail.' },
+      { icon: '🪔', title: 'The Return to Ayodhya',
+        text: 'After fourteen long years, Shri Ram, Mata Sita and Lakshman Ji returned to Ayodhya on the blessed day of Diwali.' },
+      { icon: '✨', title: 'The Light of Devotion',
+        text: 'The people of Ayodhya lit thousands of diyas to welcome their Lord home. That joy is what we celebrate every Diwali.' }
+    ],
+    hi: [
+      { icon: '🌳', title: 'चौदह वर्ष का वनवास',
+        text: 'प्रभु श्री राम, माता सीता और लक्ष्मण जी ने वचन निभाने के लिए अयोध्या छोड़ी और चौदह वर्ष वन में रहे।' },
+      { icon: '⚔️', title: 'अधर्म पर धर्म की विजय',
+        text: 'साहस, धर्म और भक्ति से श्री राम ने रावण का वध किया — यह दिखाते हुए कि सत्य सदा जीतता है।' },
+      { icon: '🪔', title: 'अयोध्या वापसी',
+        text: 'चौदह वर्षों के बाद दीपावली के पावन दिन श्री राम, माता सीता और लक्ष्मण जी अयोध्या लौटे।' },
+      { icon: '✨', title: 'भक्ति का प्रकाश',
+        text: 'अयोध्या वासियों ने हज़ारों दीये जलाकर अपने प्रभु का स्वागत किया — यही आनंद हम हर दीपावली पर मनाते हैं।' }
+    ]
+  };
+
+  function render(lang) {
+    timeline.innerHTML = '';
+    DATA[lang].forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'story-card';
+      card.style.animationDelay = `${i * 0.12}s`;
+      card.innerHTML = `
+        <div class="story-icon">${item.icon}</div>
+        <div class="story-content">
+          <h3>${item.title}</h3>
+          <p>${item.text}</p>
+        </div>
+      `;
+      timeline.appendChild(card);
+    });
+  }
+
+  langSel?.addEventListener('change', e => render(e.target.value));
+  render('en');
+})();
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+(function () {
+  'use strict';
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const stored = localStorage.getItem('ayodhya-theme');
+  if (stored) html.setAttribute('data-theme', stored);
+
+  function refreshIcon() {
+    btn.textContent = html.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️';
+  }
+  refreshIcon();
+
+  btn?.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('ayodhya-theme', next);
+    refreshIcon();
+  });
+})();
+</script>
+</body>
+</html>

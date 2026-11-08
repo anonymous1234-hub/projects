@@ -72,7 +72,7 @@ img { max-width: 100%; display: block; }
 .skip-link:focus { top: 20px; }
 
 /* ============================================================
-   HEAVENLY DECOR — clouds + rays + mandala
+   HEAVENLY DECOR
    ============================================================ */
 .heaven-bg {
   position: fixed; inset: 0; z-index: 0;
@@ -682,8 +682,6 @@ img { max-width: 100%; display: block; }
     radial-gradient(circle at 70% 80%, rgba(232,98,43,.15), transparent 50%);
   pointer-events: none;
 }
-
-/* ---- Upload cards for temple / mandir / statue ---- */
 .temple-uploads {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -774,8 +772,24 @@ img { max-width: 100%; display: block; }
   transition: all 0.25s ease;
 }
 .temple-upload-footer .mini-upload:hover { background: rgba(232,194,106,.12); }
+.temple-upload-footer .mini-remove {
+  font-size: 0.7rem;
+  color: #ff9b9b;
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-left: 6px;
+  display: none;
+  background: transparent;
+}
+.temple-upload-card.has-photo .temple-upload-footer .mini-remove { display: inline-block; }
+.temple-upload-footer .mini-remove:hover {
+  background: rgba(255, 100, 100, 0.15);
+  border-color: #ff9b9b;
+}
 
-/* ---- Augmented scene (with uploaded photos) ---- */
 .experience-scene-augmented {
   position: relative;
   height: 420px;
@@ -850,8 +864,6 @@ img { max-width: 100%; display: block; }
   padding: 0 6% 14px;
   background: linear-gradient(180deg, transparent, rgba(5, 7, 15, 0.85));
 }
-
-/* ---- Fallback silhouette scene ---- */
 .experience-scene-fallback {
   position: relative;
   height: 320px;
@@ -969,7 +981,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
-   DEEPOTSAV (Sarayu River + Permanent Uploads)
+   DEEPOTSAV
    ============================================================ */
 .deepotsav-section {
   background: linear-gradient(180deg, #04060f 0%, #0a1128 50%, #1a0e05 100%);
@@ -1065,8 +1077,6 @@ img { max-width: 100%; display: block; }
   90% { opacity: 1; }
   100% { bottom: 5%; opacity: 0; }
 }
-
-/* Deepotsav upload cards */
 .deepotsav-uploads {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1170,8 +1180,6 @@ img { max-width: 100%; display: block; }
   background: rgba(255, 100, 100, 0.15);
   border-color: #ff9b9b;
 }
-
-/* Uploaded layers inside the scene */
 .sarayu-custom-sky {
   position: absolute;
   inset: 0;
@@ -1312,7 +1320,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
-   CELEBRATION MEMORIES — Photo Upload Section
+   CELEBRATION MEMORIES
    ============================================================ */
 .memories-section { text-align: center; }
 .upload-zone {
@@ -1558,7 +1566,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
-   BACKGROUND PICKER (FAB)
+   BACKGROUND PICKER
    ============================================================ */
 .bg-picker {
   position: fixed; bottom: 22px; right: 90px;
@@ -1843,7 +1851,7 @@ img { max-width: 100%; display: block; }
   </div>
 
   <div class="temple-uploads">
-    <div class="temple-upload-card" data-target="golden-temple">
+    <div class="temple-upload-card" data-target="golden-temple" data-key="golden-temple">
       <div class="temple-upload-preview">
         <div class="temple-upload-placeholder">
           <span class="icon">🏯</span>
@@ -1854,13 +1862,16 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="temple-upload-footer">
         <h4>Golden Temple</h4>
-        <label class="mini-upload">Upload
-          <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
-        </label>
+        <span>
+          <label class="mini-upload">Upload
+            <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+          <button class="mini-remove" type="button">Reset</button>
+        </span>
       </div>
     </div>
 
-    <div class="temple-upload-card" data-target="ram-mandir">
+    <div class="temple-upload-card" data-target="ram-mandir" data-key="ram-mandir">
       <div class="temple-upload-preview">
         <div class="temple-upload-placeholder">
           <span class="icon">🛕</span>
@@ -1871,13 +1882,16 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="temple-upload-footer">
         <h4>Ram Mandir</h4>
-        <label class="mini-upload">Upload
-          <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
-        </label>
+        <span>
+          <label class="mini-upload">Upload
+            <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+          <button class="mini-remove" type="button">Reset</button>
+        </span>
       </div>
     </div>
 
-    <div class="temple-upload-card" data-target="ram-statue">
+    <div class="temple-upload-card" data-target="ram-statue" data-key="ram-statue">
       <div class="temple-upload-preview">
         <div class="temple-upload-placeholder">
           <span class="icon">🕉️</span>
@@ -1888,9 +1902,12 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="temple-upload-footer">
         <h4>Shri Ram Statue</h4>
-        <label class="mini-upload">Upload
-          <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
-        </label>
+        <span>
+          <label class="mini-upload">Upload
+            <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+          <button class="mini-remove" type="button">Reset</button>
+        </span>
       </div>
     </div>
   </div>
@@ -1944,7 +1961,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ============ DEEPOTSAV (with permanent uploads) ============ -->
 <section id="deepotsav" class="section deepotsav-section">
   <div class="section-head">
     <p class="section-kicker">॥ दीपोत्सव ॥</p>
@@ -2083,7 +2099,7 @@ img { max-width: 100%; display: block; }
     <h2 class="section-title">Celebration Memories</h2>
     <p class="section-desc">
       Capture the joy of your Diwali — upload photos of your own celebration
-      and share the light that lives in your home.
+      and share the light that lives in your home. Your photos are saved permanently in this browser.
     </p>
   </div>
 
@@ -2110,6 +2126,10 @@ img { max-width: 100%; display: block; }
   </div>
 
   <p class="memories-counter" id="memoriesCounter"></p>
+
+  <div style="margin-top: 24px; text-align: center;">
+    <button id="clearAllMemories" class="btn btn-ghost" style="font-size: 0.8rem;">Clear All Memories</button>
+  </div>
 </section>
 
 <section id="story" class="section story-section">
@@ -2158,6 +2178,163 @@ img { max-width: 100%; display: block; }
 
 <script>
 /* ============================================================
+   ⚙️ CONFIGURATION — Default asset paths
+   ============================================================ */
+window.AYODHYA_CONFIG = {
+  images: {
+    'featured':       'assets/images/ram-darbar.jpg',
+    'ram':            'assets/images/ram.jpg',
+    'sita':           'assets/images/sita.jpg',
+    'lakshman':       'assets/images/lakshman.jpg',
+    'hanuman':        'assets/images/hanuman.jpg',
+    'golden-temple':  'assets/images/golden-temple.jpg',
+    'ram-mandir':     'assets/images/ram-mandir.jpg',
+    'ram-statue':     'assets/images/ram-statue.jpg',
+    'deepotsav-sky':     'assets/images/sarayu-sky.jpg',
+    'deepotsav-temples': 'assets/images/sarayu-temples.jpg',
+    'deepotsav-river':   'assets/images/sarayu-river.jpg'
+  },
+  audio: {
+    defaultMusic: 'assets/audio/devotional.mp3'
+  }
+};
+
+/* ============================================================
+   💾 PERMANENT STORAGE — IndexedDB wrapper
+   IndexedDB can store ~50+ MB (vs localStorage ~5 MB),
+   so ALL photos + music stay permanently across browser restarts.
+   ============================================================ */
+window.AyodhyaDB = (function () {
+  'use strict';
+  const DB_NAME = 'ayodhya-permanent-db';
+  const DB_VERSION = 1;
+  const STORE = 'assets';
+  let dbPromise = null;
+
+  function openDB() {
+    if (dbPromise) return dbPromise;
+    dbPromise = new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE)) {
+          db.createObjectStore(STORE);
+        }
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+    return dbPromise;
+  }
+
+  async function put(key, value) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).put(value, key);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  async function get(key) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readonly');
+      const req = tx.objectStore(STORE).get(key);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function del(key) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).delete(key);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  async function keys() {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readonly');
+      const req = tx.objectStore(STORE).getAllKeys();
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  return { put, get, del, keys };
+})();
+
+/* ============================================================
+   🖼 IMAGE HELPER — Compress & persist (any image)
+   Returns a base64 data URL ready to display AND saves to IndexedDB
+   ============================================================ */
+window.AyodhyaImages = (function () {
+  'use strict';
+
+  const VALID = ['image/jpeg', 'image/png', 'image/webp'];
+
+  function readFile(file) {
+    return new Promise((resolve, reject) => {
+      if (!file) return reject(new Error('No file'));
+      if (!VALID.includes(file.type)) return reject(new Error('Invalid format'));
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /** Compress a data URL to a max dimension + quality */
+  function compress(dataUrl, maxDim = 1400, quality = 0.85) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          const ratio = Math.min(maxDim / width, maxDim / height);
+          width  = Math.round(width  * ratio);
+          height = Math.round(height * ratio);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = dataUrl;
+    });
+  }
+
+  /** Save an image file permanently under `key` (after compression) */
+  async function save(key, file) {
+    const rawDataUrl = await readFile(file);
+    const compressed = await compress(rawDataUrl);
+    await AyodhyaDB.put(key, compressed);
+    return compressed;
+  }
+
+  /** Load a saved image by key (returns data URL or null) */
+  async function load(key) {
+    try { return await AyodhyaDB.get(key); }
+    catch { return null; }
+  }
+
+  /** Remove a saved image */
+  async function remove(key) {
+    try { await AyodhyaDB.del(key); } catch {}
+  }
+
+  return { save, load, remove, compress, readFile };
+})();
+
+/* ============================================================
    MAIN — Bootstrap, nav, fullscreen, back-to-top, smooth scroll
    ============================================================ */
 (function () {
@@ -2200,15 +2377,6 @@ img { max-width: 100%; display: block; }
       }
     });
   });
-
-  const hero = document.querySelector('.hero');
-  window.addEventListener('scroll', () => {
-    if (!hero) return;
-    const y = window.scrollY;
-    if (y < window.innerHeight) {
-      hero.style.backgroundPosition = `center ${y * 0.3}px`;
-    }
-  }, { passive: true });
 })();
 
 /* ============================================================
@@ -2345,7 +2513,118 @@ img { max-width: 100%; display: block; }
 })();
 
 /* ============================================================
-   GALLERY — Upload + Lightbox
+   DEFAULT IMAGES — Load bundled images on page open
+   ============================================================ */
+(function () {
+  'use strict';
+  const DEFAULTS = window.AYODHYA_CONFIG.images;
+
+  function preload(src, cb) {
+    if (!src) return;
+    const img = new Image();
+    img.onload = () => cb(true);
+    img.onerror = () => cb(false);
+    img.src = src;
+  }
+
+  (function loadGalleryDefaults() {
+    preload(DEFAULTS['featured'], ok => {
+      if (!ok) return;
+      const featuredImg = document.getElementById('featuredImg');
+      const featuredPlaceholder = document.getElementById('featuredPlaceholder');
+      if (!featuredImg || !featuredPlaceholder) return;
+      if (featuredImg.style.display === 'block') return;
+      featuredImg.src = DEFAULTS['featured'];
+      featuredImg.style.display = 'block';
+      featuredPlaceholder.style.display = 'none';
+    });
+
+    document.querySelectorAll('.gallery-card').forEach(card => {
+      const key = card.dataset.key;
+      const src = DEFAULTS[key];
+      if (!src) return;
+      preload(src, ok => {
+        if (!ok) return;
+        const img = card.querySelector('.card-img');
+        const placeholder = card.querySelector('.card-placeholder');
+        if (!img || !placeholder) return;
+        if (img.style.display === 'block') return;
+        img.src = src;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+      });
+    });
+  })();
+
+  (function loadTempleDefaults() {
+    const layers = {
+      'golden-temple': document.getElementById('layerGoldenTemple'),
+      'ram-mandir':    document.getElementById('layerRamMandir'),
+      'ram-statue':    document.getElementById('layerRamStatue')
+    };
+    const sceneAugmented = document.getElementById('experienceScene');
+    const sceneFallback = document.getElementById('experienceFallback');
+    if (!sceneAugmented) return;
+
+    document.querySelectorAll('.temple-upload-card').forEach(card => {
+      const target = card.dataset.target;
+      const src = DEFAULTS[target];
+      if (!src) return;
+      preload(src, ok => {
+        if (!ok) return;
+        const img = card.querySelector('.temple-upload-preview img');
+        const placeholder = card.querySelector('.temple-upload-placeholder');
+        if (img && placeholder) {
+          img.src = src;
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+        }
+        const layer = layers[target];
+        if (layer) {
+          layer.style.backgroundImage = `url("${src}")`;
+          layer.classList.add('has-image');
+        }
+        sceneAugmented.style.display = 'block';
+        if (sceneFallback) sceneFallback.style.display = 'none';
+      });
+    });
+  })();
+
+  (function loadDeepotsavDefaults() {
+    const layerMap = {
+      'sky':     document.getElementById('sarayuCustomSky'),
+      'temples': document.getElementById('sarayuCustomTemples'),
+      'river':   document.getElementById('sarayuCustomRiver')
+    };
+
+    document.querySelectorAll('.deepotsav-upload-card').forEach(card => {
+      const target = card.dataset.target;
+      const key = card.dataset.key;
+      const src = DEFAULTS[key];
+      if (!src) return;
+
+      preload(src, ok => {
+        if (!ok) return;
+        const img = card.querySelector('.deepotsav-upload-preview img');
+        const placeholder = card.querySelector('.deepotsav-upload-placeholder');
+        if (img && placeholder) {
+          img.src = src;
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+          card.classList.add('has-photo');
+        }
+        const layer = layerMap[target];
+        if (layer) {
+          layer.style.backgroundImage = `url("${src}")`;
+          layer.classList.add('has-image');
+        }
+      });
+    });
+  })();
+})();
+
+/* ============================================================
+   GALLERY — Permanent Uploads (featured + 4 cards)
    ============================================================ */
 (function () {
   'use strict';
@@ -2358,23 +2637,26 @@ img { max-width: 100%; display: block; }
   const lbImg = document.getElementById('lbImg');
   const lbClose = document.getElementById('lbClose');
 
-  function loadImageFile(file, onDone) {
-    if (!file || !file.type.startsWith('image/')) return;
-    if (!['image/jpeg','image/png','image/webp'].includes(file.type)) {
-      alert('Please choose a JPG, PNG or WebP image.');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = e => onDone(e.target.result);
-    reader.readAsDataURL(file);
-  }
-
-  featuredUpload?.addEventListener('change', e => {
-    loadImageFile(e.target.files[0], dataUrl => {
-      featuredImg.src = dataUrl;
+  /* --- Featured (permanent) --- */
+  (async function restoreFeatured() {
+    const saved = await AyodhyaImages.load('gallery-featured');
+    if (saved && featuredImg && featuredPlaceholder) {
+      featuredImg.src = saved;
       featuredImg.style.display = 'block';
       featuredPlaceholder.style.display = 'none';
-    });
+    }
+  })();
+
+  featuredUpload?.addEventListener('change', async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const compressed = await AyodhyaImages.save('gallery-featured', file);
+      featuredImg.src = compressed;
+      featuredImg.style.display = 'block';
+      featuredPlaceholder.style.display = 'none';
+    } catch (err) { alert(err.message || 'Upload failed.'); }
+    e.target.value = '';
   });
 
   featuredFrame?.addEventListener('click', e => {
@@ -2382,18 +2664,34 @@ img { max-width: 100%; display: block; }
     if (featuredImg.style.display === 'block') openLightbox(featuredImg.src);
   });
 
+  /* --- 4 individual cards (permanent) --- */
   document.querySelectorAll('.gallery-card').forEach(card => {
+    const key = card.dataset.key;
     const input = card.querySelector('input[type="file"]');
     const img = card.querySelector('.card-img');
     const placeholder = card.querySelector('.card-placeholder');
+    const storageKey = 'gallery-' + key;
 
-    input?.addEventListener('change', e => {
-      loadImageFile(e.target.files[0], dataUrl => {
-        img.src = dataUrl;
+    // Restore saved
+    (async function restore() {
+      const saved = await AyodhyaImages.load(storageKey);
+      if (saved && img && placeholder) {
+        img.src = saved;
         img.style.display = 'block';
         placeholder.style.display = 'none';
-        e.target.value = '';
-      });
+      }
+    })();
+
+    input?.addEventListener('change', async e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const compressed = await AyodhyaImages.save(storageKey, file);
+        img.src = compressed;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+      } catch (err) { alert(err.message || 'Upload failed.'); }
+      e.target.value = '';
       e.stopPropagation();
     });
 
@@ -2421,7 +2719,7 @@ img { max-width: 100%; display: block; }
 })();
 
 /* ============================================================
-   DIVINE AYODHYA EXPERIENCE — Temple / Statue uploads
+   DIVINE AYODHYA EXPERIENCE — Temple / Statue PERMANENT uploads
    ============================================================ */
 (function () {
   'use strict';
@@ -2437,59 +2735,101 @@ img { max-width: 100%; display: block; }
     'ram-statue':    document.getElementById('layerRamStatue')
   };
 
-  const VALID = ['image/jpeg', 'image/png', 'image/webp'];
-  const MAX = 10 * 1024 * 1024;
-  const uploaded = { 'golden-temple': false, 'ram-mandir': false, 'ram-statue': false };
-
-  function refreshSceneVisibility() {
-    const anyUploaded = Object.values(uploaded).some(Boolean);
-    sceneAugmented.style.display = anyUploaded ? 'block' : 'none';
-    sceneFallback.style.display = anyUploaded ? 'none' : 'block';
-  }
-
-  function readFile(file, cb) {
-    if (!file) return;
-    if (!VALID.includes(file.type)) { alert('Please choose a JPG, PNG or WebP image.'); return; }
-    if (file.size > MAX) { alert('Image is too large (max 10 MB).'); return; }
-    const reader = new FileReader();
-    reader.onload = e => cb(e.target.result);
-    reader.readAsDataURL(file);
-  }
-
   cards.forEach(card => {
     const target = card.dataset.target;
+    const key = card.dataset.key || target;
     const input = card.querySelector('input[type="file"]');
     const img = card.querySelector('.temple-upload-preview img');
     const placeholder = card.querySelector('.temple-upload-placeholder');
+    const removeBtn = card.querySelector('.mini-remove');
+    const storageKey = 'temple-' + key;
 
-    input?.addEventListener('change', e => {
-      readFile(e.target.files[0], dataUrl => {
-        img.src = dataUrl;
+    // Restore saved
+    (async function restore() {
+      const saved = await AyodhyaImages.load(storageKey);
+      if (!saved) return;
+      if (img && placeholder) {
+        img.src = saved;
         img.style.display = 'block';
         placeholder.style.display = 'none';
-        input.value = '';
+        card.classList.add('has-photo');
+      }
+      const layer = layers[target];
+      if (layer) {
+        layer.style.backgroundImage = `url("${saved}")`;
+        layer.classList.add('has-image');
+      }
+      sceneAugmented.style.display = 'block';
+      if (sceneFallback) sceneFallback.style.display = 'none';
+    })();
+
+    input?.addEventListener('change', async e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const compressed = await AyodhyaImages.save(storageKey, file);
+        img.src = compressed;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+        card.classList.add('has-photo');
 
         const layer = layers[target];
         if (layer) {
-          layer.style.backgroundImage = `url("${dataUrl}")`;
+          layer.style.backgroundImage = `url("${compressed}")`;
           layer.classList.add('has-image');
-          uploaded[target] = true;
-          refreshSceneVisibility();
         }
-      });
+        sceneAugmented.style.display = 'block';
+        if (sceneFallback) sceneFallback.style.display = 'none';
+      } catch (err) { alert(err.message || 'Upload failed.'); }
+      e.target.value = '';
     });
 
     card.querySelector('.temple-upload-preview')?.addEventListener('click', e => {
       if (e.target.closest('label')) return;
       input?.click();
     });
-  });
 
-  refreshSceneVisibility();
+    removeBtn?.addEventListener('click', async e => {
+      e.stopPropagation();
+      if (!confirm('Remove this photo? It will revert to the default.')) return;
+      await AyodhyaImages.remove(storageKey);
+
+      if (img && placeholder) {
+        img.style.display = 'none';
+        img.src = '';
+        placeholder.style.display = 'flex';
+        card.classList.remove('has-photo');
+      }
+      const layer = layers[target];
+      if (layer) {
+        layer.style.backgroundImage = '';
+        layer.classList.remove('has-image');
+      }
+
+      // Try to reload the bundled default
+      const defaultSrc = window.AYODHYA_CONFIG.images[key];
+      if (defaultSrc) {
+        const probe = new Image();
+        probe.onload = () => {
+          if (img && placeholder) {
+            img.src = defaultSrc;
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+            card.classList.add('has-photo');
+          }
+          if (layer) {
+            layer.style.backgroundImage = `url("${defaultSrc}")`;
+            layer.classList.add('has-image');
+          }
+        };
+        probe.src = defaultSrc;
+      }
+    });
+  });
 })();
 
 /* ============================================================
-   DEEPOTSAV — Permanent Upload with localStorage persistence
+   DEEPOTSAV — Permanent Upload (upgraded to IndexedDB)
    ============================================================ */
 (function () {
   'use strict';
@@ -2502,113 +2842,41 @@ img { max-width: 100%; display: block; }
   };
   if (!cards.length || !layers.sky) return;
 
-  const VALID = ['image/jpeg', 'image/png', 'image/webp'];
-  const MAX = 12 * 1024 * 1024;
-
-  function applyImage(card, dataUrl) {
-    const target = card.dataset.target;
-    const img = card.querySelector('.deepotsav-upload-preview img');
-    const placeholder = card.querySelector('.deepotsav-upload-placeholder');
-
-    img.src = dataUrl;
-    img.style.display = 'block';
-    placeholder.style.display = 'none';
-    card.classList.add('has-photo');
-
-    const layer = layers[target];
-    if (layer) {
-      layer.style.backgroundImage = `url("${dataUrl}")`;
-      layer.classList.add('has-image');
-    }
-  }
-
-  function clearImage(card) {
-    const target = card.dataset.target;
-    const img = card.querySelector('.deepotsav-upload-preview img');
-    const placeholder = card.querySelector('.deepotsav-upload-placeholder');
-    const key = card.dataset.key;
-
-    img.src = '';
-    img.style.display = 'none';
-    placeholder.style.display = 'flex';
-    card.classList.remove('has-photo');
-
-    const layer = layers[target];
-    if (layer) {
-      layer.style.backgroundImage = '';
-      layer.classList.remove('has-image');
-    }
-
-    try { localStorage.removeItem(key); } catch {}
-  }
-
-  function readFile(file, cb) {
-    if (!file) return;
-    if (!VALID.includes(file.type)) {
-      alert('Please choose a JPG, PNG or WebP image.');
-      return;
-    }
-    if (file.size > MAX) {
-      alert('Image is too large (max 12 MB). Please pick a smaller photo.');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = e => cb(e.target.result);
-    reader.onerror = () => alert('Could not read this image. Please try another.');
-    reader.readAsDataURL(file);
-  }
-
-  function compressAndSave(key, dataUrl, cb) {
-    const img = new Image();
-    img.onload = () => {
-      const MAX_DIM = 1200;
-      let { width, height } = img;
-      if (width > MAX_DIM || height > MAX_DIM) {
-        const ratio = Math.min(MAX_DIM / width, MAX_DIM / height);
-        width  = Math.round(width  * ratio);
-        height = Math.round(height * ratio);
-      }
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const cctx = canvas.getContext('2d');
-      cctx.drawImage(img, 0, 0, width, height);
-
-      let quality = 0.82;
-      let compressed = canvas.toDataURL('image/jpeg', quality);
-      let attempts = 0;
-      while (compressed.length > 1_500_000 && quality > 0.4 && attempts < 6) {
-        quality -= 0.1;
-        compressed = canvas.toDataURL('image/jpeg', quality);
-        attempts++;
-      }
-
-      try {
-        localStorage.setItem(key, compressed);
-        cb(compressed);
-      } catch (err) {
-        console.warn('localStorage save failed:', err);
-        alert('Image is too large to save permanently. It will be shown for this session only. Try a smaller photo for permanent storage.');
-        cb(compressed);
-      }
-    };
-    img.onerror = () => alert('Could not load this image.');
-    img.src = dataUrl;
-  }
-
   cards.forEach(card => {
+    const target = card.dataset.target;
+    const key = card.dataset.key;
     const input = card.querySelector('input[type="file"]');
     const preview = card.querySelector('.deepotsav-upload-preview');
+    const img = card.querySelector('.deepotsav-upload-preview img');
+    const placeholder = card.querySelector('.deepotsav-upload-placeholder');
     const removeBtn = card.querySelector('.mini-remove');
-    const storageKey = card.dataset.key;
+    const storageKey = 'deepotsav-' + key;
 
-    input?.addEventListener('change', e => {
+    function applyImage(dataUrl) {
+      img.src = dataUrl;
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+      card.classList.add('has-photo');
+      const layer = layers[target];
+      if (layer) {
+        layer.style.backgroundImage = `url("${dataUrl}")`;
+        layer.classList.add('has-image');
+      }
+    }
+
+    // Restore saved
+    (async function restore() {
+      const saved = await AyodhyaImages.load(storageKey);
+      if (saved) applyImage(saved);
+    })();
+
+    input?.addEventListener('change', async e => {
       const file = e.target.files[0];
-      readFile(file, dataUrl => {
-        compressAndSave(storageKey, dataUrl, compressed => {
-          applyImage(card, compressed);
-        });
-      });
+      if (!file) return;
+      try {
+        const compressed = await AyodhyaImages.save(storageKey, file);
+        applyImage(compressed);
+      } catch (err) { alert(err.message || 'Upload failed.'); }
       input.value = '';
     });
 
@@ -2617,19 +2885,373 @@ img { max-width: 100%; display: block; }
       input?.click();
     });
 
-    removeBtn?.addEventListener('click', e => {
+    removeBtn?.addEventListener('click', async e => {
       e.stopPropagation();
-      if (confirm('Remove this picture? It will revert to the default decoration.')) {
-        clearImage(card);
+      if (!confirm('Remove this picture? It will revert to the default.')) return;
+      await AyodhyaImages.remove(storageKey);
+      img.src = '';
+      img.style.display = 'none';
+      placeholder.style.display = 'flex';
+      card.classList.remove('has-photo');
+      const layer = layers[target];
+      if (layer) {
+        layer.style.backgroundImage = '';
+        layer.classList.remove('has-image');
+      }
+
+      // Reload default
+      const defaultSrc = window.AYODHYA_CONFIG.images[key];
+      if (defaultSrc) {
+        const probe = new Image();
+        probe.onload = () => applyImage(defaultSrc);
+        probe.src = defaultSrc;
       }
     });
+  });
+})();
 
+/* ============================================================
+   CELEBRATION MEMORIES — Permanent Upload (IndexedDB)
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const uploadZone = document.getElementById('uploadZone');
+  const input = document.getElementById('memoryInput');
+  const grid = document.getElementById('memoriesGrid');
+  const empty = document.getElementById('memoriesEmpty');
+  const counter = document.getElementById('memoriesCounter');
+  const clearAllBtn = document.getElementById('clearAllMemories');
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  if (!uploadZone || !input || !grid) return;
+
+  /* In-memory list — mirrored to IndexedDB under key "memories-list" */
+  let photos = [];
+
+  async function persistList() {
+    // Store only IDs (not dataUrls — those are saved individually)
     try {
-      const saved = localStorage.getItem(storageKey);
-      if (saved && saved.startsWith('data:image')) {
-        applyImage(card, saved);
+      await AyodhyaDB.put('memories-list', photos.map(p => p.id));
+    } catch {}
+  }
+
+  async function loadSavedMemories() {
+    // 1. Get list of IDs
+    let ids = [];
+    try { ids = (await AyodhyaDB.get('memories-list')) || []; } catch {}
+
+    // 2. Load each photo individually
+    for (const id of ids) {
+      try {
+        const dataUrl = await AyodhyaDB.get('memory-' + id);
+        if (dataUrl) {
+          photos.push({ id, dataUrl });
+          renderTile({ id, dataUrl });
+        }
+      } catch {}
+    }
+    updateUI();
+  }
+
+  function updateUI() {
+    empty.style.display = photos.length === 0 ? 'block' : 'none';
+    counter.textContent = photos.length
+      ? `${photos.length} ${photos.length === 1 ? 'memory' : 'memories'} saved permanently 🪔`
+      : '';
+  }
+
+  function renderTile(photo) {
+    const tile = document.createElement('div');
+    tile.className = 'memory-tile';
+    tile.dataset.id = photo.id;
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('aria-label', 'View photo');
+    tile.innerHTML = `
+      <img src="${photo.dataUrl}" alt="Diwali celebration memory" loading="lazy" />
+      <button class="memory-remove" aria-label="Remove photo" title="Remove">✕</button>
+    `;
+
+    const open = () => {
+      lbImg.src = photo.dataUrl;
+      lightbox.classList.add('open');
+    };
+    tile.addEventListener('click', e => {
+      if (e.target.closest('.memory-remove')) return;
+      open();
+    });
+    tile.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+
+    tile.querySelector('.memory-remove').addEventListener('click', async e => {
+      e.stopPropagation();
+      const idx = photos.findIndex(p => p.id === photo.id);
+      if (idx !== -1) photos.splice(idx, 1);
+
+      // Delete from IndexedDB
+      try { await AyodhyaDB.del('memory-' + photo.id); } catch {}
+      await persistList();
+
+      tile.style.animation = 'none';
+      tile.style.opacity = '0';
+      tile.style.transform = 'scale(0.85)';
+      setTimeout(() => { tile.remove(); updateUI(); }, 250);
+    });
+
+    grid.appendChild(tile);
+  }
+
+  async function handleFiles(fileList) {
+    const files = Array.from(fileList || []);
+    let rejected = 0;
+
+    for (const file of files) {
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) { rejected++; continue; }
+      if (file.size > 15 * 1024 * 1024) { rejected++; continue; }
+
+      try {
+        const id = 'm-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+        const compressed = await AyodhyaImages.save('memory-' + id, file);
+        const photo = { id, dataUrl: compressed };
+        photos.push(photo);
+        renderTile(photo);
+        updateUI();
+        await persistList();
+      } catch {
+        rejected++;
+      }
+    }
+
+    if (rejected > 0) alert(`${rejected} file(s) skipped — only JPG, PNG or WebP under 15 MB are allowed.`);
+    input.value = '';
+  }
+
+  input.addEventListener('change', e => handleFiles(e.target.files));
+
+  ['dragenter', 'dragover'].forEach(ev =>
+    uploadZone.addEventListener(ev, e => {
+      e.preventDefault(); e.stopPropagation();
+      uploadZone.classList.add('dragover');
+    })
+  );
+  ['dragleave', 'drop'].forEach(ev =>
+    uploadZone.addEventListener(ev, e => {
+      e.preventDefault(); e.stopPropagation();
+      uploadZone.classList.remove('dragover');
+    })
+  );
+  uploadZone.addEventListener('drop', e => {
+    if (e.dataTransfer?.files?.length) handleFiles(e.dataTransfer.files);
+  });
+
+  clearAllBtn?.addEventListener('click', async () => {
+    if (!confirm('Delete ALL your saved photos? This cannot be undone.')) return;
+    for (const p of photos) {
+      try { await AyodhyaDB.del('memory-' + p.id); } catch {}
+    }
+    photos = [];
+    grid.innerHTML = '';
+    try { await AyodhyaDB.del('memories-list'); } catch {}
+    updateUI();
+  });
+
+  // Initial load
+  loadSavedMemories();
+})();
+
+/* ============================================================
+   AUDIO — Permanent music (upload + save in IndexedDB)
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const toggleBtn = document.getElementById('audioToggle');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const muteBtn = document.getElementById('muteBtn');
+  const upload = document.getElementById('audioUpload');
+  const bellBtn = document.getElementById('bellBtn');
+  const fluteBtn = document.getElementById('fluteBtn');
+  if (!toggleBtn) return;
+
+  const audio = new Audio();
+  audio.loop = true;
+  audio.volume = parseFloat(localStorage.getItem('ayodhya-volume') || volumeSlider.value);
+  volumeSlider.value = audio.volume;
+  audio.preload = 'auto';
+
+  let isPlaying = false;
+  let lastVolume = audio.volume;
+  let currentUrl = null;
+
+  function refreshUI() {
+    toggleBtn.textContent = isPlaying ? '❚❚' : '▶';
+    muteBtn.textContent = audio.muted || audio.volume === 0 ? '🔇' : '🔊';
+  }
+
+  // Restore saved music from IndexedDB
+  (async function restoreMusic() {
+    try {
+      const saved = await AyodhyaDB.get('custom-music');
+      if (saved) {
+        if (currentUrl) URL.revokeObjectURL(currentUrl);
+        currentUrl = URL.createObjectURL(saved);
+        audio.src = currentUrl;
+        return;
       }
     } catch {}
+
+    // Fall back to bundled default
+    const defaultMusic = window.AYODHYA_CONFIG.audio?.defaultMusic;
+    if (defaultMusic) {
+      fetch(defaultMusic, { method: 'HEAD' })
+        .then(r => { if (r.ok) audio.src = defaultMusic; })
+        .catch(() => {});
+    }
+  })();
+
+  toggleBtn.addEventListener('click', async () => {
+    if (!audio.src) {
+      alert('Please upload a devotional music file first (🎵 icon).');
+      return;
+    }
+    if (isPlaying) { audio.pause(); isPlaying = false; }
+    else { try { await audio.play(); isPlaying = true; } catch { alert('Playback failed.'); } }
+    refreshUI();
+  });
+
+  volumeSlider.addEventListener('input', () => {
+    audio.volume = parseFloat(volumeSlider.value);
+    if (audio.volume > 0) audio.muted = false;
+    localStorage.setItem('ayodhya-volume', audio.volume);
+    refreshUI();
+  });
+
+  muteBtn.addEventListener('click', () => {
+    if (audio.volume === 0 || audio.muted) {
+      audio.muted = false;
+      audio.volume = lastVolume || 0.5;
+      volumeSlider.value = audio.volume;
+    } else {
+      lastVolume = audio.volume;
+      audio.muted = true;
+    }
+    refreshUI();
+  });
+
+  /* Music upload → save Blob permanently */
+  upload?.addEventListener('change', async e => {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('audio/')) {
+      alert('Please select an audio file.');
+      return;
+    }
+    try {
+      // Save the actual File blob in IndexedDB
+      await AyodhyaDB.put('custom-music', file);
+
+      if (currentUrl) URL.revokeObjectURL(currentUrl);
+      currentUrl = URL.createObjectURL(file);
+      audio.src = currentUrl;
+      audio.load();
+      isPlaying = false;
+      refreshUI();
+      alert('Music saved permanently! Click ▶ to play.');
+    } catch (err) {
+      alert('Could not save music: ' + (err.message || 'unknown error'));
+    }
+    e.target.value = '';
+  });
+
+  /* Temple bell */
+  let ctxAudio = null;
+  function getCtx() {
+    if (!ctxAudio) ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
+    return ctxAudio;
+  }
+  bellBtn?.addEventListener('click', () => {
+    try {
+      const ctx = getCtx();
+      const now = ctx.currentTime;
+      const freqs = [523.25, 1046.5, 1568, 2093, 2637];
+      freqs.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = f;
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.18 / (i + 1), now + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.5);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 3.6);
+      });
+      bellBtn.classList.add('active');
+      setTimeout(() => bellBtn.classList.remove('active'), 400);
+    } catch (e) {}
+  });
+
+  /* Flute */
+  let fluteOsc = null, fluteGain = null, fluteLfo = null;
+  let fluteOn = false;
+  fluteBtn?.addEventListener('click', () => {
+    try {
+      const ctx = getCtx();
+      if (!fluteOn) {
+        fluteOsc = ctx.createOscillator();
+        fluteGain = ctx.createGain();
+        fluteLfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        fluteOsc.type = 'sine';
+        fluteOsc.frequency.value = 392;
+        fluteGain.gain.value = 0.04;
+        fluteLfo.frequency.value = 4.5;
+        lfoGain.gain.value = 2;
+        fluteLfo.connect(lfoGain).connect(fluteOsc.frequency);
+        fluteOsc.connect(fluteGain).connect(ctx.destination);
+        fluteOsc.start();
+        fluteLfo.start();
+        fluteOn = true;
+        fluteBtn.classList.add('active');
+      } else {
+        fluteGain.gain.setTargetAtTime(0, ctxAudio.currentTime, 0.1);
+        setTimeout(() => {
+          try { fluteOsc.stop(); fluteLfo.stop(); } catch {}
+          fluteOsc = null; fluteGain = null; fluteLfo = null;
+        }, 400);
+        fluteOn = false;
+        fluteBtn.classList.remove('active');
+      }
+    } catch (e) {}
+  });
+
+  refreshUI();
+})();
+
+/* ============================================================
+   BACKGROUND IMAGE PICKER — Permanent via IndexedDB
+   ============================================================ */
+(function () {
+  'use strict';
+  const input = document.getElementById('bgImageUpload');
+  if (!input) return;
+
+  (async function restoreBg() {
+    const saved = await AyodhyaImages.load('page-background');
+    if (saved) {
+      document.documentElement.style.setProperty('--page-bg-image', `url(${saved})`);
+    }
+  })();
+
+  input.addEventListener('change', async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const compressed = await AyodhyaImages.save('page-background', file);
+      document.documentElement.style.setProperty('--page-bg-image', `url(${compressed})`);
+    } catch (err) { alert(err.message || 'Upload failed.'); }
+    e.target.value = '';
   });
 })();
 
@@ -2824,9 +3446,7 @@ img { max-width: 100%; display: block; }
       await navigator.clipboard.writeText(text);
       copyBtn.textContent = '✓ Copied';
       setTimeout(() => (copyBtn.textContent = 'Copy'), 1800);
-    } catch {
-      alert('Copy failed. Please select and copy manually.');
-    }
+    } catch { alert('Copy failed. Please select and copy manually.'); }
   });
 
   shareBtn.addEventListener('click', async () => {
@@ -2837,274 +3457,8 @@ img { max-width: 100%; display: block; }
       try {
         await navigator.clipboard.writeText(text);
         alert('Greeting copied — paste it anywhere to share!');
-      } catch {
-        alert('Sharing not available on this device.');
-      }
+      } catch { alert('Sharing not available on this device.'); }
     }
-  });
-})();
-
-/* ============================================================
-   CELEBRATION MEMORIES — Upload, grid, lightbox, remove
-   ============================================================ */
-(function () {
-  'use strict';
-
-  const uploadZone = document.getElementById('uploadZone');
-  const input = document.getElementById('memoryInput');
-  const grid = document.getElementById('memoriesGrid');
-  const empty = document.getElementById('memoriesEmpty');
-  const counter = document.getElementById('memoriesCounter');
-  const lightbox = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
-  if (!uploadZone || !input || !grid) return;
-
-  const photos = [];
-  const VALID = ['image/jpeg', 'image/png', 'image/webp'];
-  const MAX_SIZE = 8 * 1024 * 1024;
-
-  function updateUI() {
-    empty.style.display = photos.length === 0 ? 'block' : 'none';
-    counter.textContent = photos.length
-      ? `${photos.length} ${photos.length === 1 ? 'memory' : 'memories'} captured 🪔`
-      : '';
-  }
-
-  function renderTile(photo) {
-    const tile = document.createElement('div');
-    tile.className = 'memory-tile';
-    tile.setAttribute('role', 'button');
-    tile.setAttribute('tabindex', '0');
-    tile.setAttribute('aria-label', 'View photo');
-    tile.innerHTML = `
-      <img src="${photo.dataUrl}" alt="Diwali celebration memory" loading="lazy" />
-      <button class="memory-remove" aria-label="Remove photo" title="Remove">✕</button>
-    `;
-
-    const open = () => {
-      lbImg.src = photo.dataUrl;
-      lightbox.classList.add('open');
-    };
-    tile.addEventListener('click', e => {
-      if (e.target.closest('.memory-remove')) return;
-      open();
-    });
-    tile.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
-    });
-
-    tile.querySelector('.memory-remove').addEventListener('click', e => {
-      e.stopPropagation();
-      const idx = photos.indexOf(photo);
-      if (idx !== -1) photos.splice(idx, 1);
-      tile.style.animation = 'none';
-      tile.style.opacity = '0';
-      tile.style.transform = 'scale(0.85)';
-      setTimeout(() => { tile.remove(); updateUI(); }, 250);
-    });
-
-    grid.appendChild(tile);
-  }
-
-  function handleFiles(fileList) {
-    const files = Array.from(fileList || []);
-    let rejected = 0;
-
-    files.forEach(file => {
-      if (!VALID.includes(file.type)) { rejected++; return; }
-      if (file.size > MAX_SIZE) { rejected++; return; }
-
-      const reader = new FileReader();
-      reader.onload = e => {
-        const photo = { dataUrl: e.target.result, name: file.name };
-        photos.push(photo);
-        renderTile(photo);
-        updateUI();
-      };
-      reader.readAsDataURL(file);
-    });
-
-    if (rejected > 0) {
-      alert(`${rejected} file(s) skipped — only JPG, PNG or WebP under 8 MB are allowed.`);
-    }
-    input.value = '';
-  }
-
-  input.addEventListener('change', e => handleFiles(e.target.files));
-
-  ['dragenter', 'dragover'].forEach(ev =>
-    uploadZone.addEventListener(ev, e => {
-      e.preventDefault(); e.stopPropagation();
-      uploadZone.classList.add('dragover');
-    })
-  );
-  ['dragleave', 'drop'].forEach(ev =>
-    uploadZone.addEventListener(ev, e => {
-      e.preventDefault(); e.stopPropagation();
-      uploadZone.classList.remove('dragover');
-    })
-  );
-  uploadZone.addEventListener('drop', e => {
-    if (e.dataTransfer?.files?.length) handleFiles(e.dataTransfer.files);
-  });
-
-  updateUI();
-})();
-
-/* ============================================================
-   AUDIO CONTROLLER + SYNTH (temple bell + flute ambience)
-   ============================================================ */
-(function () {
-  'use strict';
-
-  const toggleBtn = document.getElementById('audioToggle');
-  const volumeSlider = document.getElementById('volumeSlider');
-  const muteBtn = document.getElementById('muteBtn');
-  const upload = document.getElementById('audioUpload');
-  const bellBtn = document.getElementById('bellBtn');
-  const fluteBtn = document.getElementById('fluteBtn');
-  if (!toggleBtn) return;
-
-  const audio = new Audio();
-  audio.loop = true;
-  audio.volume = parseFloat(localStorage.getItem('ayodhya-volume') || volumeSlider.value);
-  volumeSlider.value = audio.volume;
-  audio.preload = 'none';
-
-  let isPlaying = false;
-  let lastVolume = audio.volume;
-
-  function refreshUI() {
-    toggleBtn.textContent = isPlaying ? '❚❚' : '▶';
-    muteBtn.textContent = audio.muted || audio.volume === 0 ? '🔇' : '🔊';
-  }
-
-  toggleBtn.addEventListener('click', async () => {
-    if (!audio.src) {
-      alert('Please upload a devotional music file first (🎵 icon).');
-      return;
-    }
-    if (isPlaying) { audio.pause(); isPlaying = false; }
-    else { try { await audio.play(); isPlaying = true; } catch { alert('Playback failed.'); } }
-    refreshUI();
-  });
-
-  volumeSlider.addEventListener('input', () => {
-    audio.volume = parseFloat(volumeSlider.value);
-    if (audio.volume > 0) audio.muted = false;
-    localStorage.setItem('ayodhya-volume', audio.volume);
-    refreshUI();
-  });
-
-  muteBtn.addEventListener('click', () => {
-    if (audio.volume === 0 || audio.muted) {
-      audio.muted = false;
-      audio.volume = lastVolume || 0.5;
-      volumeSlider.value = audio.volume;
-    } else {
-      lastVolume = audio.volume;
-      audio.muted = true;
-    }
-    refreshUI();
-  });
-
-  upload?.addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (!file || !file.type.startsWith('audio/')) return;
-    const url = URL.createObjectURL(file);
-    audio.src = url;
-    audio.load();
-    isPlaying = false;
-    refreshUI();
-  });
-
-  let ctxAudio = null;
-  function getCtx() {
-    if (!ctxAudio) ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
-    return ctxAudio;
-  }
-  bellBtn?.addEventListener('click', () => {
-    try {
-      const ctx = getCtx();
-      const now = ctx.currentTime;
-      const freqs = [523.25, 1046.5, 1568, 2093, 2637];
-      freqs.forEach((f, i) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.value = f;
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.18 / (i + 1), now + 0.01);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.5);
-        osc.connect(gain).connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 3.6);
-      });
-      bellBtn.classList.add('active');
-      setTimeout(() => bellBtn.classList.remove('active'), 400);
-    } catch (e) { /* ignore */ }
-  });
-
-  let fluteOsc = null, fluteGain = null, fluteLfo = null;
-  let fluteOn = false;
-  fluteBtn?.addEventListener('click', () => {
-    try {
-      const ctx = getCtx();
-      if (!fluteOn) {
-        fluteOsc = ctx.createOscillator();
-        fluteGain = ctx.createGain();
-        fluteLfo = ctx.createOscillator();
-        const lfoGain = ctx.createGain();
-        fluteOsc.type = 'sine';
-        fluteOsc.frequency.value = 392;
-        fluteGain.gain.value = 0.04;
-        fluteLfo.frequency.value = 4.5;
-        lfoGain.gain.value = 2;
-        fluteLfo.connect(lfoGain).connect(fluteOsc.frequency);
-        fluteOsc.connect(fluteGain).connect(ctx.destination);
-        fluteOsc.start();
-        fluteLfo.start();
-        fluteOn = true;
-        fluteBtn.classList.add('active');
-      } else {
-        fluteGain.gain.setTargetAtTime(0, ctxAudio.currentTime, 0.1);
-        setTimeout(() => {
-          try { fluteOsc.stop(); fluteLfo.stop(); } catch {}
-          fluteOsc = null; fluteGain = null; fluteLfo = null;
-        }, 400);
-        fluteOn = false;
-        fluteBtn.classList.remove('active');
-      }
-    } catch (e) { /* ignore */ }
-  });
-
-  refreshUI();
-})();
-
-/* ============================================================
-   BACKGROUND IMAGE PICKER
-   ============================================================ */
-(function () {
-  'use strict';
-  const input = document.getElementById('bgImageUpload');
-  if (!input) return;
-
-  const saved = localStorage.getItem('ayodhya-bg');
-  if (saved) document.documentElement.style.setProperty('--page-bg-image', `url(${saved})`);
-
-  input.addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (!file || !['image/jpeg','image/png','image/webp'].includes(file.type)) {
-      alert('Please choose a JPG, PNG or WebP image.');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const url = ev.target.result;
-      document.documentElement.style.setProperty('--page-bg-image', `url(${url})`);
-      try { localStorage.setItem('ayodhya-bg', url); } catch {}
-    };
-    reader.readAsDataURL(file);
   });
 })();
 

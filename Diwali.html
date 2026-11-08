@@ -2099,7 +2099,7 @@ img { max-width: 100%; display: block; }
     <h2 class="section-title">Celebration Memories</h2>
     <p class="section-desc">
       Capture the joy of your Diwali — upload photos of your own celebration
-      and share the light that lives in your home. Your photos are saved permanently in this browser.
+      and share the light that lives in your home.
     </p>
   </div>
 
@@ -2177,32 +2177,49 @@ img { max-width: 100%; display: block; }
 <button id="backTop" class="back-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <script>
-/* ============================================================
-   ⚙️ CONFIGURATION — Default asset paths
-   ============================================================ */
+/* ══════════════════════════════════════════════════════════════
+   ⚙️ STEP 1 — CONFIGURATION (PASTE YOUR BASE64 IMAGES HERE)
+   
+   Every visitor on every device will see these images.
+   To use your own pictures:
+     1. Go to https://base64-image.de/ or https://www.image-to-base64.com/
+     2. Upload a picture, copy the long text (starts with data:image/...)
+     3. Paste it below in place of the example
+   
+   Leave a value as '' (empty) if you don't want a default.
+   ══════════════════════════════════════════════════════════════ */
 window.AYODHYA_CONFIG = {
   images: {
-    'featured':       'assets/images/ram-darbar.jpg',
-    'ram':            'assets/images/ram.jpg',
-    'sita':           'assets/images/sita.jpg',
-    'lakshman':       'assets/images/lakshman.jpg',
-    'hanuman':        'assets/images/hanuman.jpg',
-    'golden-temple':  'assets/images/golden-temple.jpg',
-    'ram-mandir':     'assets/images/ram-mandir.jpg',
-    'ram-statue':     'assets/images/ram-statue.jpg',
-    'deepotsav-sky':     'assets/images/sarayu-sky.jpg',
-    'deepotsav-temples': 'assets/images/sarayu-temples.jpg',
-    'deepotsav-river':   'assets/images/sarayu-river.jpg'
+
+    // ── Featured Ram Darbar (large centre card) ──
+    'featured':       '',   // ← paste base64 here
+
+    // ── 4 individual gallery cards ──
+    'ram':            '',   // ← Lord Shri Ram
+    'sita':           '',   // ← Mata Sita
+    'lakshman':       '',   // ← Lakshman Ji
+    'hanuman':        '',   // ← Lord Hanuman
+
+    // ── Divine City Awakens (3 layers) ──
+    'golden-temple':  '',   // ← Golden Temple
+    'ram-mandir':     '',   // ← Ram Mandir
+    'ram-statue':     '',   // ← Shri Ram statue
+
+    // ── Deepotsav on Sarayu (3 layers) ──
+    'deepotsav-sky':     '',   // ← Sarayu sky
+    'deepotsav-temples': '',   // ← Temple reflection
+    'deepotsav-river':   ''    // ← Floating diyas
   },
+
+  // ── Optional background music (base64 of an MP3) ──
+  // Leave '' to disable the bundled music; users can still upload.
   audio: {
-    defaultMusic: 'assets/audio/devotional.mp3'
+    defaultMusic: ''
   }
 };
 
 /* ============================================================
-   💾 PERMANENT STORAGE — IndexedDB wrapper
-   IndexedDB can store ~50+ MB (vs localStorage ~5 MB),
-   so ALL photos + music stay permanently across browser restarts.
+   💾 PERMANENT STORAGE — IndexedDB wrapper (user uploads)
    ============================================================ */
 window.AyodhyaDB = (function () {
   'use strict';
@@ -2236,7 +2253,6 @@ window.AyodhyaDB = (function () {
       tx.onerror = () => reject(tx.error);
     });
   }
-
   async function get(key) {
     const db = await openDB();
     return new Promise((resolve, reject) => {
@@ -2246,7 +2262,6 @@ window.AyodhyaDB = (function () {
       req.onerror = () => reject(req.error);
     });
   }
-
   async function del(key) {
     const db = await openDB();
     return new Promise((resolve, reject) => {
@@ -2256,27 +2271,14 @@ window.AyodhyaDB = (function () {
       tx.onerror = () => reject(tx.error);
     });
   }
-
-  async function keys() {
-    const db = await openDB();
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORE, 'readonly');
-      const req = tx.objectStore(STORE).getAllKeys();
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
-    });
-  }
-
-  return { put, get, del, keys };
+  return { put, get, del };
 })();
 
 /* ============================================================
-   🖼 IMAGE HELPER — Compress & persist (any image)
-   Returns a base64 data URL ready to display AND saves to IndexedDB
+   🖼 IMAGE HELPER — Compress & persist any image
    ============================================================ */
 window.AyodhyaImages = (function () {
   'use strict';
-
   const VALID = ['image/jpeg', 'image/png', 'image/webp'];
 
   function readFile(file) {
@@ -2290,7 +2292,6 @@ window.AyodhyaImages = (function () {
     });
   }
 
-  /** Compress a data URL to a max dimension + quality */
   function compress(dataUrl, maxDim = 1400, quality = 0.85) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -2312,30 +2313,24 @@ window.AyodhyaImages = (function () {
     });
   }
 
-  /** Save an image file permanently under `key` (after compression) */
   async function save(key, file) {
     const rawDataUrl = await readFile(file);
     const compressed = await compress(rawDataUrl);
     await AyodhyaDB.put(key, compressed);
     return compressed;
   }
-
-  /** Load a saved image by key (returns data URL or null) */
   async function load(key) {
     try { return await AyodhyaDB.get(key); }
     catch { return null; }
   }
-
-  /** Remove a saved image */
   async function remove(key) {
     try { await AyodhyaDB.del(key); } catch {}
   }
-
   return { save, load, remove, compress, readFile };
 })();
 
 /* ============================================================
-   MAIN — Bootstrap, nav, fullscreen, back-to-top, smooth scroll
+   MAIN — Bootstrap, nav, fullscreen, back-to-top
    ============================================================ */
 (function () {
   'use strict';
@@ -2387,13 +2382,11 @@ window.AyodhyaImages = (function () {
   const intro = document.getElementById('intro');
   const skip = document.getElementById('skipIntro');
   if (!intro) return;
-
   const timer = setTimeout(hideIntro, 7000);
   skip?.addEventListener('click', () => {
     clearTimeout(timer);
     hideIntro();
   });
-
   function hideIntro() {
     intro.classList.add('hidden');
     setTimeout(() => {
@@ -2412,7 +2405,6 @@ window.AyodhyaImages = (function () {
   const canvas = document.getElementById('particles');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-
   let W, H, particles = [], petals = [];
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2425,8 +2417,7 @@ window.AyodhyaImages = (function () {
 
   function createParticle() {
     return {
-      x: Math.random() * W,
-      y: Math.random() * H,
+      x: Math.random() * W, y: Math.random() * H,
       r: Math.random() * 1.6 + 0.4,
       vx: (Math.random() - 0.5) * 0.25,
       vy: -Math.random() * 0.35 - 0.05,
@@ -2436,8 +2427,7 @@ window.AyodhyaImages = (function () {
   }
   function createPetal() {
     return {
-      x: Math.random() * W,
-      y: -20 - Math.random() * 100,
+      x: Math.random() * W, y: -20 - Math.random() * 100,
       size: Math.random() * 8 + 6,
       vy: Math.random() * 0.6 + 0.4,
       vx: (Math.random() - 0.5) * 0.4,
@@ -2513,118 +2503,115 @@ window.AyodhyaImages = (function () {
 })();
 
 /* ============================================================
-   DEFAULT IMAGES — Load bundled images on page open
+   DEFAULT IMAGES — Preload base64 (or path) defaults
+   These are the SAME for every visitor on every device.
    ============================================================ */
 (function () {
   'use strict';
-  const DEFAULTS = window.AYODHYA_CONFIG.images;
+  const DEFAULTS = window.AYODHYA_CONFIG.images || {};
 
   function preload(src, cb) {
-    if (!src) return;
+    if (!src || typeof src !== 'string' || !src.trim()) return;
     const img = new Image();
     img.onload = () => cb(true);
     img.onerror = () => cb(false);
     img.src = src;
   }
 
-  (function loadGalleryDefaults() {
-    preload(DEFAULTS['featured'], ok => {
-      if (!ok) return;
-      const featuredImg = document.getElementById('featuredImg');
-      const featuredPlaceholder = document.getElementById('featuredPlaceholder');
-      if (!featuredImg || !featuredPlaceholder) return;
-      if (featuredImg.style.display === 'block') return;
-      featuredImg.src = DEFAULTS['featured'];
-      featuredImg.style.display = 'block';
-      featuredPlaceholder.style.display = 'none';
-    });
+  /* ---------- Gallery featured ---------- */
+  preload(DEFAULTS['featured'], ok => {
+    if (!ok) return;
+    const featuredImg = document.getElementById('featuredImg');
+    const featuredPlaceholder = document.getElementById('featuredPlaceholder');
+    if (!featuredImg || !featuredPlaceholder) return;
+    featuredImg.src = DEFAULTS['featured'];
+    featuredImg.style.display = 'block';
+    featuredPlaceholder.style.display = 'none';
+  });
 
-    document.querySelectorAll('.gallery-card').forEach(card => {
-      const key = card.dataset.key;
-      const src = DEFAULTS[key];
-      if (!src) return;
-      preload(src, ok => {
-        if (!ok) return;
-        const img = card.querySelector('.card-img');
-        const placeholder = card.querySelector('.card-placeholder');
-        if (!img || !placeholder) return;
-        if (img.style.display === 'block') return;
+  /* ---------- 4 gallery cards ---------- */
+  document.querySelectorAll('.gallery-card').forEach(card => {
+    const key = card.dataset.key;
+    const src = DEFAULTS[key];
+    if (!src) return;
+    preload(src, ok => {
+      if (!ok) return;
+      const img = card.querySelector('.card-img');
+      const placeholder = card.querySelector('.card-placeholder');
+      if (!img || !placeholder) return;
+      img.src = src;
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+    });
+  });
+
+  /* ---------- Divine City Awakens (3 layers) ---------- */
+  const templeLayers = {
+    'golden-temple': document.getElementById('layerGoldenTemple'),
+    'ram-mandir':    document.getElementById('layerRamMandir'),
+    'ram-statue':    document.getElementById('layerRamStatue')
+  };
+  const sceneAugmented = document.getElementById('experienceScene');
+  const sceneFallback = document.getElementById('experienceFallback');
+  let anyTempleLoaded = false;
+
+  document.querySelectorAll('.temple-upload-card').forEach(card => {
+    const target = card.dataset.target;
+    const src = DEFAULTS[target];
+    if (!src) return;
+    preload(src, ok => {
+      if (!ok) return;
+      anyTempleLoaded = true;
+      const img = card.querySelector('.temple-upload-preview img');
+      const placeholder = card.querySelector('.temple-upload-placeholder');
+      if (img && placeholder) {
         img.src = src;
         img.style.display = 'block';
         placeholder.style.display = 'none';
-      });
+      }
+      const layer = templeLayers[target];
+      if (layer) {
+        layer.style.backgroundImage = `url("${src}")`;
+        layer.classList.add('has-image');
+      }
+      if (sceneAugmented) sceneAugmented.style.display = 'block';
+      if (sceneFallback) sceneFallback.style.display = 'none';
     });
-  })();
+  });
 
-  (function loadTempleDefaults() {
-    const layers = {
-      'golden-temple': document.getElementById('layerGoldenTemple'),
-      'ram-mandir':    document.getElementById('layerRamMandir'),
-      'ram-statue':    document.getElementById('layerRamStatue')
-    };
-    const sceneAugmented = document.getElementById('experienceScene');
-    const sceneFallback = document.getElementById('experienceFallback');
-    if (!sceneAugmented) return;
+  /* ---------- Deepotsav (3 layers) ---------- */
+  const deepotsavLayers = {
+    'sky':     document.getElementById('sarayuCustomSky'),
+    'temples': document.getElementById('sarayuCustomTemples'),
+    'river':   document.getElementById('sarayuCustomRiver')
+  };
 
-    document.querySelectorAll('.temple-upload-card').forEach(card => {
-      const target = card.dataset.target;
-      const src = DEFAULTS[target];
-      if (!src) return;
-      preload(src, ok => {
-        if (!ok) return;
-        const img = card.querySelector('.temple-upload-preview img');
-        const placeholder = card.querySelector('.temple-upload-placeholder');
-        if (img && placeholder) {
-          img.src = src;
-          img.style.display = 'block';
-          placeholder.style.display = 'none';
-        }
-        const layer = layers[target];
-        if (layer) {
-          layer.style.backgroundImage = `url("${src}")`;
-          layer.classList.add('has-image');
-        }
-        sceneAugmented.style.display = 'block';
-        if (sceneFallback) sceneFallback.style.display = 'none';
-      });
+  document.querySelectorAll('.deepotsav-upload-card').forEach(card => {
+    const target = card.dataset.target;
+    const key = card.dataset.key;
+    const src = DEFAULTS[key];
+    if (!src) return;
+    preload(src, ok => {
+      if (!ok) return;
+      const img = card.querySelector('.deepotsav-upload-preview img');
+      const placeholder = card.querySelector('.deepotsav-upload-placeholder');
+      if (img && placeholder) {
+        img.src = src;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+        card.classList.add('has-photo');
+      }
+      const layer = deepotsavLayers[target];
+      if (layer) {
+        layer.style.backgroundImage = `url("${src}")`;
+        layer.classList.add('has-image');
+      }
     });
-  })();
-
-  (function loadDeepotsavDefaults() {
-    const layerMap = {
-      'sky':     document.getElementById('sarayuCustomSky'),
-      'temples': document.getElementById('sarayuCustomTemples'),
-      'river':   document.getElementById('sarayuCustomRiver')
-    };
-
-    document.querySelectorAll('.deepotsav-upload-card').forEach(card => {
-      const target = card.dataset.target;
-      const key = card.dataset.key;
-      const src = DEFAULTS[key];
-      if (!src) return;
-
-      preload(src, ok => {
-        if (!ok) return;
-        const img = card.querySelector('.deepotsav-upload-preview img');
-        const placeholder = card.querySelector('.deepotsav-upload-placeholder');
-        if (img && placeholder) {
-          img.src = src;
-          img.style.display = 'block';
-          placeholder.style.display = 'none';
-          card.classList.add('has-photo');
-        }
-        const layer = layerMap[target];
-        if (layer) {
-          layer.style.backgroundImage = `url("${src}")`;
-          layer.classList.add('has-image');
-        }
-      });
-    });
-  })();
+  });
 })();
 
 /* ============================================================
-   GALLERY — Permanent Uploads (featured + 4 cards)
+   GALLERY — Uploads (persistent in IndexedDB, override defaults)
    ============================================================ */
 (function () {
   'use strict';
@@ -2637,10 +2624,9 @@ window.AyodhyaImages = (function () {
   const lbImg = document.getElementById('lbImg');
   const lbClose = document.getElementById('lbClose');
 
-  /* --- Featured (permanent) --- */
   (async function restoreFeatured() {
     const saved = await AyodhyaImages.load('gallery-featured');
-    if (saved && featuredImg && featuredPlaceholder) {
+    if (saved) {
       featuredImg.src = saved;
       featuredImg.style.display = 'block';
       featuredPlaceholder.style.display = 'none';
@@ -2664,7 +2650,6 @@ window.AyodhyaImages = (function () {
     if (featuredImg.style.display === 'block') openLightbox(featuredImg.src);
   });
 
-  /* --- 4 individual cards (permanent) --- */
   document.querySelectorAll('.gallery-card').forEach(card => {
     const key = card.dataset.key;
     const input = card.querySelector('input[type="file"]');
@@ -2672,10 +2657,9 @@ window.AyodhyaImages = (function () {
     const placeholder = card.querySelector('.card-placeholder');
     const storageKey = 'gallery-' + key;
 
-    // Restore saved
     (async function restore() {
       const saved = await AyodhyaImages.load(storageKey);
-      if (saved && img && placeholder) {
+      if (saved) {
         img.src = saved;
         img.style.display = 'block';
         placeholder.style.display = 'none';
@@ -2719,11 +2703,10 @@ window.AyodhyaImages = (function () {
 })();
 
 /* ============================================================
-   DIVINE AYODHYA EXPERIENCE — Temple / Statue PERMANENT uploads
+   DIVINE AYODHYA EXPERIENCE — Temple uploads
    ============================================================ */
 (function () {
   'use strict';
-
   const cards = document.querySelectorAll('.temple-upload-card');
   const sceneAugmented = document.getElementById('experienceScene');
   const sceneFallback = document.getElementById('experienceFallback');
@@ -2744,16 +2727,13 @@ window.AyodhyaImages = (function () {
     const removeBtn = card.querySelector('.mini-remove');
     const storageKey = 'temple-' + key;
 
-    // Restore saved
     (async function restore() {
       const saved = await AyodhyaImages.load(storageKey);
       if (!saved) return;
-      if (img && placeholder) {
-        img.src = saved;
-        img.style.display = 'block';
-        placeholder.style.display = 'none';
-        card.classList.add('has-photo');
-      }
+      img.src = saved;
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+      card.classList.add('has-photo');
       const layer = layers[target];
       if (layer) {
         layer.style.backgroundImage = `url("${saved}")`;
@@ -2772,7 +2752,6 @@ window.AyodhyaImages = (function () {
         img.style.display = 'block';
         placeholder.style.display = 'none';
         card.classList.add('has-photo');
-
         const layer = layers[target];
         if (layer) {
           layer.style.backgroundImage = `url("${compressed}")`;
@@ -2793,30 +2772,24 @@ window.AyodhyaImages = (function () {
       e.stopPropagation();
       if (!confirm('Remove this photo? It will revert to the default.')) return;
       await AyodhyaImages.remove(storageKey);
-
-      if (img && placeholder) {
-        img.style.display = 'none';
-        img.src = '';
-        placeholder.style.display = 'flex';
-        card.classList.remove('has-photo');
-      }
+      img.style.display = 'none';
+      img.src = '';
+      placeholder.style.display = 'flex';
+      card.classList.remove('has-photo');
       const layer = layers[target];
       if (layer) {
         layer.style.backgroundImage = '';
         layer.classList.remove('has-image');
       }
-
-      // Try to reload the bundled default
+      // Try to reload bundled default
       const defaultSrc = window.AYODHYA_CONFIG.images[key];
       if (defaultSrc) {
         const probe = new Image();
         probe.onload = () => {
-          if (img && placeholder) {
-            img.src = defaultSrc;
-            img.style.display = 'block';
-            placeholder.style.display = 'none';
-            card.classList.add('has-photo');
-          }
+          img.src = defaultSrc;
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+          card.classList.add('has-photo');
           if (layer) {
             layer.style.backgroundImage = `url("${defaultSrc}")`;
             layer.classList.add('has-image');
@@ -2829,11 +2802,10 @@ window.AyodhyaImages = (function () {
 })();
 
 /* ============================================================
-   DEEPOTSAV — Permanent Upload (upgraded to IndexedDB)
+   DEEPOTSAV — Uploads (persistent in IndexedDB)
    ============================================================ */
 (function () {
   'use strict';
-
   const cards = document.querySelectorAll('.deepotsav-upload-card');
   const layers = {
     sky:     document.getElementById('sarayuCustomSky'),
@@ -2864,7 +2836,6 @@ window.AyodhyaImages = (function () {
       }
     }
 
-    // Restore saved
     (async function restore() {
       const saved = await AyodhyaImages.load(storageKey);
       if (saved) applyImage(saved);
@@ -2898,8 +2869,6 @@ window.AyodhyaImages = (function () {
         layer.style.backgroundImage = '';
         layer.classList.remove('has-image');
       }
-
-      // Reload default
       const defaultSrc = window.AYODHYA_CONFIG.images[key];
       if (defaultSrc) {
         const probe = new Image();
@@ -2915,7 +2884,6 @@ window.AyodhyaImages = (function () {
    ============================================================ */
 (function () {
   'use strict';
-
   const uploadZone = document.getElementById('uploadZone');
   const input = document.getElementById('memoryInput');
   const grid = document.getElementById('memoriesGrid');
@@ -2926,22 +2894,15 @@ window.AyodhyaImages = (function () {
   const lbImg = document.getElementById('lbImg');
   if (!uploadZone || !input || !grid) return;
 
-  /* In-memory list — mirrored to IndexedDB under key "memories-list" */
   let photos = [];
 
   async function persistList() {
-    // Store only IDs (not dataUrls — those are saved individually)
-    try {
-      await AyodhyaDB.put('memories-list', photos.map(p => p.id));
-    } catch {}
+    try { await AyodhyaDB.put('memories-list', photos.map(p => p.id)); } catch {}
   }
 
   async function loadSavedMemories() {
-    // 1. Get list of IDs
     let ids = [];
     try { ids = (await AyodhyaDB.get('memories-list')) || []; } catch {}
-
-    // 2. Load each photo individually
     for (const id of ids) {
       try {
         const dataUrl = await AyodhyaDB.get('memory-' + id);
@@ -2957,7 +2918,7 @@ window.AyodhyaImages = (function () {
   function updateUI() {
     empty.style.display = photos.length === 0 ? 'block' : 'none';
     counter.textContent = photos.length
-      ? `${photos.length} ${photos.length === 1 ? 'memory' : 'memories'} saved permanently 🪔`
+      ? `${photos.length} ${photos.length === 1 ? 'memory' : 'memories'} saved 🪔`
       : '';
   }
 
@@ -2989,11 +2950,8 @@ window.AyodhyaImages = (function () {
       e.stopPropagation();
       const idx = photos.findIndex(p => p.id === photo.id);
       if (idx !== -1) photos.splice(idx, 1);
-
-      // Delete from IndexedDB
       try { await AyodhyaDB.del('memory-' + photo.id); } catch {}
       await persistList();
-
       tile.style.animation = 'none';
       tile.style.opacity = '0';
       tile.style.transform = 'scale(0.85)';
@@ -3006,11 +2964,9 @@ window.AyodhyaImages = (function () {
   async function handleFiles(fileList) {
     const files = Array.from(fileList || []);
     let rejected = 0;
-
     for (const file of files) {
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) { rejected++; continue; }
       if (file.size > 15 * 1024 * 1024) { rejected++; continue; }
-
       try {
         const id = 'm-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
         const compressed = await AyodhyaImages.save('memory-' + id, file);
@@ -3019,12 +2975,9 @@ window.AyodhyaImages = (function () {
         renderTile(photo);
         updateUI();
         await persistList();
-      } catch {
-        rejected++;
-      }
+      } catch { rejected++; }
     }
-
-    if (rejected > 0) alert(`${rejected} file(s) skipped — only JPG, PNG or WebP under 15 MB are allowed.`);
+    if (rejected > 0) alert(`${rejected} file(s) skipped — only JPG, PNG or WebP under 15 MB.`);
     input.value = '';
   }
 
@@ -3057,16 +3010,14 @@ window.AyodhyaImages = (function () {
     updateUI();
   });
 
-  // Initial load
   loadSavedMemories();
 })();
 
 /* ============================================================
-   AUDIO — Permanent music (upload + save in IndexedDB)
+   AUDIO — Default base64 music + persistent user upload
    ============================================================ */
 (function () {
   'use strict';
-
   const toggleBtn = document.getElementById('audioToggle');
   const volumeSlider = document.getElementById('volumeSlider');
   const muteBtn = document.getElementById('muteBtn');
@@ -3090,8 +3041,8 @@ window.AyodhyaImages = (function () {
     muteBtn.textContent = audio.muted || audio.volume === 0 ? '🔇' : '🔊';
   }
 
-  // Restore saved music from IndexedDB
   (async function restoreMusic() {
+    // 1) Try user-saved music first (from IndexedDB)
     try {
       const saved = await AyodhyaDB.get('custom-music');
       if (saved) {
@@ -3102,12 +3053,10 @@ window.AyodhyaImages = (function () {
       }
     } catch {}
 
-    // Fall back to bundled default
+    // 2) Fall back to bundled default (base64 or path)
     const defaultMusic = window.AYODHYA_CONFIG.audio?.defaultMusic;
-    if (defaultMusic) {
-      fetch(defaultMusic, { method: 'HEAD' })
-        .then(r => { if (r.ok) audio.src = defaultMusic; })
-        .catch(() => {});
+    if (defaultMusic && typeof defaultMusic === 'string' && defaultMusic.trim()) {
+      audio.src = defaultMusic;
     }
   })();
 
@@ -3140,7 +3089,6 @@ window.AyodhyaImages = (function () {
     refreshUI();
   });
 
-  /* Music upload → save Blob permanently */
   upload?.addEventListener('change', async e => {
     const file = e.target.files[0];
     if (!file || !file.type.startsWith('audio/')) {
@@ -3148,9 +3096,7 @@ window.AyodhyaImages = (function () {
       return;
     }
     try {
-      // Save the actual File blob in IndexedDB
       await AyodhyaDB.put('custom-music', file);
-
       if (currentUrl) URL.revokeObjectURL(currentUrl);
       currentUrl = URL.createObjectURL(file);
       audio.src = currentUrl;
@@ -3164,7 +3110,6 @@ window.AyodhyaImages = (function () {
     e.target.value = '';
   });
 
-  /* Temple bell */
   let ctxAudio = null;
   function getCtx() {
     if (!ctxAudio) ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
@@ -3192,9 +3137,7 @@ window.AyodhyaImages = (function () {
     } catch (e) {}
   });
 
-  /* Flute */
-  let fluteOsc = null, fluteGain = null, fluteLfo = null;
-  let fluteOn = false;
+  let fluteOsc = null, fluteGain = null, fluteLfo = null, fluteOn = false;
   fluteBtn?.addEventListener('click', () => {
     try {
       const ctx = getCtx();
@@ -3230,7 +3173,7 @@ window.AyodhyaImages = (function () {
 })();
 
 /* ============================================================
-   BACKGROUND IMAGE PICKER — Permanent via IndexedDB
+   BACKGROUND IMAGE PICKER — Persistent
    ============================================================ */
 (function () {
   'use strict';
@@ -3524,12 +3467,10 @@ window.AyodhyaImages = (function () {
   const btn = document.getElementById('themeToggle');
   const stored = localStorage.getItem('ayodhya-theme');
   if (stored) html.setAttribute('data-theme', stored);
-
   function refreshIcon() {
     btn.textContent = html.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️';
   }
   refreshIcon();
-
   btn?.addEventListener('click', () => {
     const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-theme', next);
